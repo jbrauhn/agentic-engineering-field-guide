@@ -11,11 +11,11 @@ import { journeys, sitePath } from '../../data/navigation';
     </header>
     <section class="shell">
       <div class="grid three">
-        <div class="card purple-line"><span class="pill purple">Split View</span><h3>Reason across both sides</h3><p class="muted">Independently scroll <strong>How it works</strong> and <strong>How we work</strong> side by side. Use this when learning the mechanism and its operating practice together.</p></div>
         <div class="card blue-line"><span class="pill blue">How it works</span><h3>Study the system</h3><p class="muted">Purpose, mechanics, inputs/outputs, interactions, authority/enforcement, Human KSAs, agent support, failure modes, and implementation options.</p></div>
         <div class="card green-line"><span class="pill green">How we work</span><h3>Practice the method</h3><p class="muted">Human Owner + AI dialogue, decisions, review patterns, escalation, evidence, checklists, and training exercises grounded in the mechanism.</p></div>
+        <div class="card purple-line"><span class="pill purple">Split View</span><h3>Reason across both sides</h3><p class="muted">Independently scroll <strong>How it works</strong> and <strong>How we work</strong> side by side. Click a section in either pane and the other pane moves to the related section, keeping mechanism and practice connected while you compare them.</p></div>
       </div>
-      <div class="callout good"><strong>Depth is intentional.</strong> Start Here gives the map. Explore the System explains the why. Go Deeper is where the compact explanations give way to the full reference. On desktop you can switch among Split View, How it works, and How we work; on narrow screens Split View becomes a readable stacked flow.</div>
+      <div class="callout good"><strong>Depth is intentional.</strong> Start Here gives the map. Explore the System explains the why. Go Deeper is where the compact explanations give way to the full reference. On desktop you can move from How it works → How we work, or choose Split View when you want a linked side-by-side reference; on narrow screens Split View becomes a readable stacked flow.</div>
       <div class="landing-list">
         {journeys.deep.map((page,index) => <a class="landing-item" href={sitePath(page.path)}><span class="num">{String(index+1).padStart(2,'0')}</span><span><strong>{page.title}</strong><small>{page.short}</small></span><span class="arrow">→</span></a>)}
       </div>

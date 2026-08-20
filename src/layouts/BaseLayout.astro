@@ -84,6 +84,7 @@ const schema = {
     <meta name="author" content="jbrauhn" />
     <meta name="keywords" content={keywords.join(', ')} />
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <link rel="icon" type="image/svg+xml" href={sitePath('/favicon.svg')} />
     <link rel="canonical" href={canonical} />
     <link rel="sitemap" type="application/xml" href={`${base}/sitemap-index.xml`} />
     <link rel="license" href={licenseUrl} />
@@ -193,6 +194,23 @@ const schema = {
         desktopDropdowns.forEach((dropdown) => {
           if (dropdown instanceof HTMLDetailsElement) dropdown.open = false;
         });
+      });
+
+      // External destinations are supporting references, not exits from the Field Guide.
+      // Keep the guide open and put outside HTTP(S) destinations in a new tab.
+      document.querySelectorAll('a[href]').forEach((anchor) => {
+        if (!(anchor instanceof HTMLAnchorElement)) return;
+        const raw = anchor.getAttribute('href');
+        if (!raw || raw.startsWith('#') || raw.startsWith('mailto:') || raw.startsWith('tel:')) return;
+        try {
+          const destination = new URL(anchor.href, location.href);
+          if ((destination.protocol === 'http:' || destination.protocol === 'https:') && destination.origin !== location.origin) {
+            anchor.target = '_blank';
+            anchor.rel = 'noopener noreferrer';
+          }
+        } catch {
+          // Ignore malformed/non-navigation href values rather than breaking the page shell.
+        }
       });
     </script>
   </body>

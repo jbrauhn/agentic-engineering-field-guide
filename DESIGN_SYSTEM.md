@@ -20,6 +20,8 @@ The design should make rigorous engineering feel understandable rather than bure
 - Purple `#b89aff` — planning / architecture / detailed reference
 - Red `#ff8585` — blocked / failure / high risk
 
+The browser tab uses the AE favicon in `public/favicon.svg`; identity assets should remain simple enough to read at favicon scale.
+
 ## Progressive elaboration
 
 **Show the smallest useful explanation first. Expose the next layer only when the learner asks for it.**
@@ -53,6 +55,12 @@ The learning layers are intentionally different depths. Do not normalize them in
 - `/` opens search.
 - `Esc` closes open desktop navigation dropdowns.
 - Skip-to-content link for keyboard users.
+
+### Internal vs external links
+
+The Field Guide is the learner's working surface. **Internal links stay in the current tab. External HTTP(S) links open in a new tab** with `noopener noreferrer` so a supporting source never unexpectedly removes the learner from the guide.
+
+External links should normally be secondary references—especially on standards/practices pages. Explain the concept and its connection to AE on the Field Guide first; the source link is for readers who want the original specification, paper, or deeper background.
 
 ## Content model
 
@@ -94,6 +102,8 @@ Deep-reference reading modes appear in this order:
 1. **How it works** — full-width mechanics reference and the normal starting point for a topic.
 2. **How we work** — full-width operating/training reference.
 3. **Split View** — independently scrolling How it works / How we work panes on desktop; stacked on narrow screens.
+
+**Split View is linked, not merely adjacent.** On desktop, clicking a section in either pane pulls the opposite pane to the related section and visually marks the pair. This keeps system mechanics and Human + AI practice connected while the learner reasons across them. Explicit section-pair metadata may be added where a page needs more precise semantic mapping than the default relative-position mapping.
 
 The bottom navigation follows the instructional sequence. At the end of **How it works**, **Next** opens **How we work for the same topic**. At the end of **How we work**, **Next** advances to the next topic and returns to How it works. Split View is an alternate reference mode, not the first step in the teaching sequence.
 

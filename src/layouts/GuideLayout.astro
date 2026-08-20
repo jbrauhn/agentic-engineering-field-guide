@@ -55,7 +55,10 @@ const pageNavigation = {
     </header>
     {isDeep && (
       <div class="deep-modebar" data-pagefind-ignore aria-label="Deep reference reading mode">
-        <span class="mode-label">Reading mode</span>
+        <div class="deep-mode-copy">
+          <span class="mode-label">Reading mode</span>
+          <span class="split-mode-help">In Split View, click a section on either side to pull the other pane to its related section.</span>
+        </div>
         <div class="deep-mode-buttons" role="group" aria-label="Choose deep reference view">
           <button class="deep-mode-button" type="button" data-mode="how" aria-pressed="true">How it works</button>
           <button class="deep-mode-button" type="button" data-mode="work" aria-pressed="false">How we work</button>
@@ -146,6 +149,59 @@ const pageNavigation = {
           if (deepArticle.dataset.deepMode === 'work') localStorage.setItem(storageKey, 'how');
         });
       }
+
+      // Split View is a linked conversation surface, not just two columns.
+      // Clicking a section on either side pulls the opposite pane to the closest
+      // related section. Explicit data-sync-key values can override the ordinal
+      // relationship later; otherwise we map the relative position of the section.
+      const howPane = deepArticle.querySelector('.deep-how');
+      const workPane = deepArticle.querySelector('.deep-work');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const sectionsFor = (pane) => pane instanceof HTMLElement ? Array.from(pane.querySelectorAll(':scope > .deep-section')).filter((item) => item instanceof HTMLElement) : [];
+      const clearRelated = () => deepArticle.querySelectorAll('.deep-section-related').forEach((item) => item.classList.remove('deep-section-related'));
+      const scrollPaneTo = (pane, section) => {
+        if (!(pane instanceof HTMLElement) || !(section instanceof HTMLElement)) return;
+        const paneBox = pane.getBoundingClientRect();
+        const sectionBox = section.getBoundingClientRect();
+        const top = pane.scrollTop + sectionBox.top - paneBox.top - 70;
+        pane.scrollTo({ top: Math.max(0, top), behavior: reducedMotion ? 'auto' : 'smooth' });
+      };
+      const relatedSection = (sourceSection, sourcePane, targetPane) => {
+        const sourceSections = sectionsFor(sourcePane);
+        const targetSections = sectionsFor(targetPane);
+        if (!targetSections.length) return null;
+
+        const explicit = sourceSection instanceof HTMLElement ? sourceSection.dataset.syncKey : undefined;
+        if (explicit) {
+          const matched = targetSections.find((item) => item instanceof HTMLElement && item.dataset.syncKey === explicit);
+          if (matched instanceof HTMLElement) return matched;
+        }
+
+        const sourceIndex = sourceSections.indexOf(sourceSection);
+        if (sourceIndex < 0 || sourceSections.length <= 1) return targetSections[0] instanceof HTMLElement ? targetSections[0] : null;
+        const relativePosition = sourceIndex / (sourceSections.length - 1);
+        const targetIndex = Math.round(relativePosition * Math.max(0, targetSections.length - 1));
+        return targetSections[targetIndex] instanceof HTMLElement ? targetSections[targetIndex] : null;
+      };
+      const connectPane = (sourcePane, targetPane) => {
+        if (!(sourcePane instanceof HTMLElement) || !(targetPane instanceof HTMLElement)) return;
+        sourcePane.addEventListener('click', (event) => {
+          if (deepArticle.dataset.deepMode !== 'split') return;
+          const clicked = event.target;
+          if (!(clicked instanceof Element)) return;
+          if (clicked.closest('a,button,input,select,textarea,summary,code')) return;
+          const sourceSection = clicked.closest('.deep-section');
+          if (!(sourceSection instanceof HTMLElement)) return;
+          const targetSection = relatedSection(sourceSection, sourcePane, targetPane);
+          if (!(targetSection instanceof HTMLElement)) return;
+          clearRelated();
+          sourceSection.classList.add('deep-section-related');
+          targetSection.classList.add('deep-section-related');
+          scrollPaneTo(targetPane, targetSection);
+        });
+      };
+      connectPane(howPane, workPane);
+      connectPane(workPane, howPane);
     }
   </script>
 </BaseLayout>

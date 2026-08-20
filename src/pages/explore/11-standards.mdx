@@ -1,30 +1,194 @@
 ---
 layout: ../../layouts/GuideLayout.astro
 title: Supporting Standards, Patterns & Practices
-description: Agentic Engineering combines established software, architecture, security, risk, observability, and delivery disciplines with emerging agentic protocols and practices.
+description: How established engineering standards, practices, and emerging agent protocols connect directly to the Agentic Engineering System.
 section: explore
 kicker: Explore · What this system builds on
 keywords:
-  - NIST Zero Trust
+  - Agile Manifesto
+  - SOLID
+  - ISO 42010
   - C4 model
-  - ADR
+  - Architecture Decision Record
+  - NIST Zero Trust
+  - NIST AI RMF
+  - OpenTelemetry
   - MCP
   - A2A
-  - OpenTelemetry
 ---
-Agentic Engineering does not invent every principle it uses. It combines established software, architecture, security, and delivery disciplines with emerging agentic practices. **Not everything here is a formal standard.**
+Agentic Engineering does not replace professional engineering practice. It gives those practices explicit places to operate inside an AI-assisted lifecycle. This page explains **what each standard or practice contributes, where it appears in AE, and what failure it helps prevent**. The external source links are intentionally secondary: use them when you want the original specification or deeper background.
+
+<div className="callout warn"><strong>Classification matters:</strong> formal standards/frameworks, established engineering practices, emerging protocols, and AE-local patterns do not carry the same authority. We label them honestly instead of blending everything into one “standard” bucket.</div>
+
+## Software, architecture & delivery foundations
 
 <div className="grid two">
-  <div className="card"><h3>Agile mindset</h3><p className="muted">Working outcomes, collaboration, responsiveness to change, iterative learning.</p><a href="https://agilemanifesto.org/">Agile Manifesto →</a></div>
-  <div className="card"><h3>SOLID principles</h3><p className="muted">Design guidance for maintainable, change-tolerant software; review signal, not blind dogma.</p><a href="https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html">Robert C. Martin →</a></div>
-  <div className="card"><h3>Architecture discipline + C4</h3><p className="muted">Architecture views create a shared system model that Plans and decisions can reference.</p><a href="https://c4model.com/">C4 Model →</a></div>
-  <div className="card"><h3>Architecture Decision Records</h3><p className="muted">Preserve architecturally significant decisions, rationale, alternatives, and consequences.</p><a href="https://adr.github.io/">ADR community →</a></div>
-  <div className="card"><h3>Zero Trust</h3><p className="muted">Resource-focused authorization and enforcement rather than implicit trust.</p><a href="https://csrc.nist.gov/pubs/sp/800/207/final">NIST SP 800-207 →</a></div>
-  <div className="card"><h3>AI risk management</h3><p className="muted">Risk-oriented governance for trustworthy AI.</p><a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI RMF →</a></div>
-  <div className="card"><h3>MCP + A2A</h3><p className="muted">Interoperability options for tools/context and independent agents; useful options, not requirements.</p><a href="https://modelcontextprotocol.io/">MCP →</a> · <a href="https://a2a-protocol.org/">A2A →</a></div>
-  <div className="card"><h3>Observability</h3><p className="muted">Vendor-neutral telemetry can expose logs, metrics, and traces as evidence.</p><a href="https://opentelemetry.io/docs/">OpenTelemetry →</a></div>
-  <div className="card"><h3>Simple-first agent design</h3><p className="muted">Start simple; increase orchestration complexity only when task shape or evidence warrants it.</p><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic →</a></div>
-  <div className="card"><h3>Memory & continuity patterns</h3><p className="muted">AGENTS.md-style guidance, structured knowledge, handoffs, session memory, compaction, retrieval, and fresh-agent relays are selectable mechanisms to experiment with.</p><a href="https://openai.com/index/harness-engineering/">OpenAI Harness Engineering →</a></div>
+<div className="card blue-line">
+<span className="pill blue">Foundational values</span>
+<h3>Agile Manifesto & iterative delivery</h3>
+<p><strong>What it contributes.</strong> Working outcomes, close collaboration, responsiveness to change, and learning through short feedback cycles instead of trying to predict everything up front.</p>
+<p><strong>How AE uses it.</strong> Contract gives each loop a durable target, but Plans remain revisable and Execution remains locally adaptive. New information is welcome; it becomes evidence for a Plan revision, Contract change proposal, or next increment rather than an excuse to silently rewrite history.</p>
+<p><strong>What it prevents.</strong> Turning agentic engineering into a giant deterministic workflow where every step is frozen before the team learns anything.</p>
+<p className="muted"><small>Curious about the original values? <a href="https://agilemanifesto.org/" target="_blank" rel="noopener noreferrer">Agile Manifesto ↗</a></small></p>
 </div>
 
-<div className="callout"><strong>Classification matters:</strong> formal standards/frameworks, established practices, emerging protocols, and AE house patterns should be labeled honestly rather than blended into one authority tier.</div>
+<div className="card teal-line">
+<span className="pill teal">Established design practice</span>
+<h3>SOLID design principles</h3>
+<p><strong>What it contributes.</strong> A vocabulary for reasoning about responsibilities, coupling, interfaces, substitutability, and change-tolerant object-oriented design.</p>
+<p><strong>How AE uses it.</strong> SOLID is a review lens during Planning, Execution, and independent review—not a mechanical scoring system. An agent can flag likely responsibility overload, brittle dependencies, or poor interface boundaries and explain the tradeoff against the actual architecture and Contract.</p>
+<p><strong>What it prevents.</strong> High-volume AI code that “works” locally but becomes expensive to understand, test, or change because generated implementation ignores maintainability.</p>
+<p className="muted"><small>Want the principle lineage? <a href="https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html" target="_blank" rel="noopener noreferrer">Robert C. Martin ↗</a></small></p>
+</div>
+
+<div className="card purple-line">
+<span className="pill purple">Formal architecture standard</span>
+<h3>ISO/IEC/IEEE 42010 architecture description</h3>
+<p><strong>What it contributes.</strong> Architecture descriptions should serve identifiable stakeholders and concerns through useful viewpoints and views. Architecture is not just a box diagram—it is a structured way to communicate the system from perspectives that matter.</p>
+<p><strong>How AE uses it.</strong> The canonical architecture baseline gives Planning and Human Owners a shared model to reason against. Different views can expose runtime boundaries, data flow, deployment, trust boundaries, or component responsibilities without forcing every concern into one picture.</p>
+<p><strong>What it prevents.</strong> Architecture-blind decomposition: producing task lists without understanding the system relationships those tasks will change.</p>
+<p className="muted"><small>Need the formal standard? <a href="https://www.iso.org/standard/74393.html" target="_blank" rel="noopener noreferrer">ISO 42010 ↗</a></small></p>
+</div>
+
+<div className="card purple-line">
+<span className="pill purple">Architecture model</span>
+<h3>C4 — Context, Container, Component, Code</h3>
+<p><strong>What it contributes.</strong> A zoomable visual vocabulary for software architecture. System Context explains the ecosystem, Containers show major deployable/runtime pieces, Components show important internal structure, and Code is optional when source-level detail is actually useful.</p>
+<p><strong>How AE uses it.</strong> Plans reference the canonical C4 model and identify the exact elements and relationships affected by the increment. Architecture Decision Records, review findings, tasks, Proof hooks, and human decisions can point back to those same stable architecture IDs.</p>
+<p><strong>What it prevents.</strong> Humans being forced to infer coupling from prose and agents making locally reasonable changes that conflict with the larger system.</p>
+<p className="muted"><small>See the original model when you want the notation details: <a href="https://c4model.com/" target="_blank" rel="noopener noreferrer">C4 Model ↗</a></small></p>
+</div>
+
+<div className="card gold-line">
+<span className="pill gold">Established decision practice</span>
+<h3>Architecture Decision Records (ADRs)</h3>
+<p><strong>What they contribute.</strong> A durable record of an architecturally significant decision: the context, choice, alternatives, rationale, and consequences.</p>
+<p><strong>How AE uses them.</strong> When Planning encounters a significant architecture decision, the AI can prepare alternatives against the actual C4 model, surface consequences, and draft an ADR. The Human Owner or delegated architecture authority decides. The accepted ADR references affected architecture elements and is preserved rather than silently rewritten later.</p>
+<p><strong>What they prevent.</strong> Re-litigating old choices without context, losing why a constraint exists, and allowing an agent to introduce architecture changes that look like ordinary implementation details.</p>
+<p className="muted"><small>Explore the practice itself: <a href="https://adr.github.io/" target="_blank" rel="noopener noreferrer">ADR community resources ↗</a></small></p>
+</div>
+</div>
+
+## Security, risk & evidence
+
+<div className="grid two">
+<div className="card orange-line">
+<span className="pill orange">Formal security architecture</span>
+<h3>NIST SP 800-207 Zero Trust Architecture</h3>
+<p><strong>What it contributes.</strong> Trust is not granted simply because an actor is “inside” a network. Access decisions are resource-focused and should be evaluated using identity, context, policy, and the requested action.</p>
+<p><strong>How AE uses it.</strong> Governed Access separates <strong>Identity → Access Path → Entitlement → Operational Authority → Decision Authority → Enforcement</strong>. Planning can identify needed capabilities, but protected actions are evaluated again when they reach the boundary. Policy Enforcement Points actually permit, constrain, block, or pause the action for approval.</p>
+<p><strong>What it prevents.</strong> Treating “the agent has shell/API access” as equivalent to “the agent is authorized to make every possible change with that access.”</p>
+<p className="muted"><small>Read the security architecture directly: <a href="https://csrc.nist.gov/pubs/sp/800/207/final" target="_blank" rel="noopener noreferrer">NIST SP 800-207 ↗</a></small></p>
+</div>
+
+<div className="card orange-line">
+<span className="pill orange">Risk framework</span>
+<h3>NIST AI Risk Management Framework (AI RMF)</h3>
+<p><strong>What it contributes.</strong> A voluntary framework for governing, mapping, measuring, and managing risks associated with AI systems and their use.</p>
+<p><strong>How AE uses it.</strong> AE turns risk thinking into concrete lifecycle locations: Contract constraints and Proof, risk-aware Planning, Human Decision Authority, Governed Access, independent Validation, observability, and experiment/incident memory. Risk can change how much review or enforcement a loop needs without making every loop heavyweight.</p>
+<p><strong>What it prevents.</strong> “AI governance” becoming a policy document disconnected from the actual engineering actions, evidence, and decisions where risk is created.</p>
+<p className="muted"><small>For the complete framework: <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener noreferrer">NIST AI RMF ↗</a></small></p>
+</div>
+
+<div className="card green-line">
+<span className="pill green">Open observability standard</span>
+<h3>OpenTelemetry (OTel)</h3>
+<p><strong>What it contributes.</strong> Vendor-neutral conventions and tooling for producing and transporting traces, metrics, and logs.</p>
+<p><strong>How AE uses it.</strong> Observability is part of the evidence architecture. Runtime telemetry can show what an agent did, how a service behaved after deployment, whether performance or reliability thresholds were met, and what happened during a failed attempt. AE keeps the evidence semantics portable so organizations can choose their telemetry backend.</p>
+<p><strong>What it prevents.</strong> “It passed in the agent session” becoming the only evidence available after the work reaches a real environment.</p>
+<p className="muted"><small>Implementation details live here: <a href="https://opentelemetry.io/docs/" target="_blank" rel="noopener noreferrer">OpenTelemetry docs ↗</a></small></p>
+</div>
+</div>
+
+## Agent interoperability & agentic practice
+
+<div className="grid two">
+<div className="card blue-line">
+<span className="pill blue">Emerging open protocol</span>
+<h3>Model Context Protocol (MCP)</h3>
+<p><strong>What it contributes.</strong> A standard way for AI applications to connect to tools and context providers through discoverable interfaces rather than one-off integrations for every model/runtime combination.</p>
+<p><strong>How AE uses it.</strong> MCP can be one implementation of Capability Interfaces: source control, knowledge, business systems, telemetry, databases, and other capabilities may be exposed through MCP when it is the simplest useful connection. AE does not require MCP; direct APIs, enterprise brokers, product-native integrations, and custom adapters remain valid.</p>
+<p><strong>What it prevents.</strong> Mistaking a particular tool integration mechanism for the architecture itself. The system defines required capabilities and authority semantics; the organization chooses the connection mechanism.</p>
+<p className="muted"><small>Protocol details: <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP ↗</a></small></p>
+</div>
+
+<div className="card blue-line">
+<span className="pill blue">Open agent protocol</span>
+<h3>Agent2Agent (A2A) Protocol</h3>
+<p><strong>What it contributes.</strong> A common protocol for independent or opaque agentic applications to discover capabilities, communicate, and coordinate without sharing their internal implementation. A2A 1.0 is maintained under the Linux Foundation.</p>
+<p><strong>How AE uses it.</strong> A2A is an option when independently deployed agents truly need cross-system interoperability. It belongs at an agent-to-agent boundary; it is not the normal mechanism for an agent invoking its own tools, and it does not imply that a multi-agent topology is better.</p>
+<p><strong>What it prevents.</strong> Proprietary point-to-point agent integrations becoming the only way to compose systems—and the opposite failure of adding multiple agents merely because an interoperability protocol exists.</p>
+<p className="muted"><small>See the protocol and current specification: <a href="https://a2a-protocol.org/" target="_blank" rel="noopener noreferrer">A2A ↗</a></small></p>
+</div>
+
+<div className="card gold-line">
+<span className="pill gold">Established agent design guidance</span>
+<h3>Simple-first agent design</h3>
+<p><strong>What it contributes.</strong> Start with the simplest architecture that solves the task and add orchestration only when the task shape and observed results justify it.</p>
+<p><strong>How AE uses it.</strong> Planning Depth, Planning Method, model placement, and Execution topology are selectable—not maturity levels. A single agent may be correct for one loop; Maker → Checker, fresh-agent relay, or coordinated workers may be warranted for another. Experiment results should inform future recommendations.</p>
+<p><strong>What it prevents.</strong> “More agents” and “more process” becoming status symbols that increase coordination cost without improving validated outcomes.</p>
+<p className="muted"><small>Useful source background: <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Anthropic — Building Effective Agents ↗</a></small></p>
+</div>
+</div>
+
+## Memory, context & continuity patterns
+
+The exact AE memory stack remains deliberately composable. These are mechanisms the system can combine and experiment with—not a claim that one vendor pattern is mandatory.
+
+<div className="grid two">
+<div className="card blue-line">
+<span className="pill blue">Established repository convention</span>
+<h3>Persistent agent instructions</h3>
+<p><strong>What they contribute.</strong> Repository-local instructions give a fresh agent durable operational guidance before it begins work.</p>
+<p><strong>How AE uses them.</strong> A concise instruction file should act as a map into deeper sources of truth, not become an encyclopedia. <code>AGENTS.md</code> is an established convention; AE may also experiment with <code>agent.md</code> for operating guidance. <code>soul.md</code> is explicitly an AE/local convention for interaction style, not an industry standard and never a source of authority.</p>
+<p><strong>What they prevent.</strong> Every fresh session having to rediscover repository rules—or accumulating enormous prompt files that crowd out task reasoning.</p>
+<p className="muted"><small>See an example of the repository-map pattern: <a href="https://openai.com/index/harness-engineering/" target="_blank" rel="noopener noreferrer">OpenAI Harness Engineering ↗</a></small></p>
+</div>
+
+<div className="card purple-line">
+<span className="pill purple">AE candidate pattern</span>
+<h3>Repository / LLM Wiki as system-owned knowledge</h3>
+<p><strong>What it contributes.</strong> Durable architecture, decisions, standards, lessons, and references live outside any one conversation and can be retrieved when relevant.</p>
+<p><strong>How AE uses it.</strong> The system owns memory; agents read and write under rules. A structured knowledge base becomes the canonical durable layer while fresh-agent context contains only the subset needed for the current task.</p>
+<p><strong>What it prevents.</strong> Valuable engineering context being trapped in one long chat transcript or one provider account.</p>
+<p className="muted"><small>Related implementation thinking: <a href="https://openai.com/index/harness-engineering/" target="_blank" rel="noopener noreferrer">OpenAI Harness Engineering ↗</a></small></p>
+</div>
+
+<div className="card green-line">
+<span className="pill green">Context-engineering practice</span>
+<h3>Structured memory & just-in-time retrieval</h3>
+<p><strong>What it contributes.</strong> Context is an attention budget. Good systems assemble high-signal task context and retrieve deeper material only when it becomes useful.</p>
+<p><strong>How AE uses it.</strong> Durable knowledge, project state, architecture, handoffs, and experiment memory are stored separately; a fresh context assembly step chooses what the worker needs now. Compaction can summarize a session, but it is not the canonical handoff mechanism.</p>
+<p><strong>What it prevents.</strong> Endless conversations where old low-value tokens consume the same context window needed for current reasoning, tool results, and evidence.</p>
+<p className="muted"><small>Context-engineering background: <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Anthropic ↗</a></small></p>
+</div>
+
+<div className="card gold-line">
+<span className="pill gold">AE structured pattern</span>
+<h3>Cross-session handoff packs</h3>
+<p><strong>What they contribute.</strong> A structured transfer of current task, decisions, changes, evidence, verification results, blockers, source pointers, and next action between work sessions or agents.</p>
+<p><strong>How AE uses them.</strong> Handoffs are generated from system state so a fresh worker can orient quickly without inheriting an entire transcript. Durable decisions still go to the Contract, Plan, Decision Record, architecture, or knowledge base rather than being buried only in the handoff.</p>
+<p><strong>What they prevent.</strong> Fresh-agent resets causing repeated discovery, lost decisions, or accidental divergence from the approved target.</p>
+<p className="muted"><small>Related long-running-agent practice: <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents" target="_blank" rel="noopener noreferrer">Anthropic ↗</a></small></p>
+</div>
+
+<div className="card">
+<span className="pill teal">Runtime mechanism</span>
+<h3>Session memory</h3>
+<p><strong>What it contributes.</strong> Convenient continuity inside a runtime: recent messages, local state, and prior turns can persist across an interaction.</p>
+<p><strong>How AE uses it.</strong> Session memory is useful working memory, but it is not automatically canonical project memory. Important decisions and evidence must graduate into governed system-owned artifacts when they need to survive or be shared.</p>
+<p><strong>What it prevents.</strong> Confusing “the model remembers our chat” with a trustworthy, portable engineering record.</p>
+<p className="muted"><small>One implementation example: <a href="https://openai.github.io/openai-agents-python/sessions/" target="_blank" rel="noopener noreferrer">OpenAI Agents SDK Sessions ↗</a></small></p>
+</div>
+
+<div className="card">
+<span className="pill teal">Runtime mechanism</span>
+<h3>Agent-to-agent handoffs</h3>
+<p><strong>What they contribute.</strong> A runtime can transfer control to a specialized agent and deliberately choose what context goes with that transfer.</p>
+<p><strong>How AE uses it.</strong> Runtime handoffs are an Execution/orchestration option. They are distinct from the AE cross-session Handoff Pack: one routes active control; the other preserves durable work continuity. A system may use both.</p>
+<p><strong>What they prevent.</strong> Treating every kind of “handoff” as the same mechanism and accidentally assuming transient runtime context is durable system memory.</p>
+<p className="muted"><small>One implementation example: <a href="https://openai.github.io/openai-agents-python/handoffs/" target="_blank" rel="noopener noreferrer">OpenAI Agents SDK Handoffs ↗</a></small></p>
+</div>
+</div>
+
+<div className="callout good"><strong>The pattern underneath the page:</strong> AE does not bolt “AI” onto the side of engineering. It gives established architecture, design, security, delivery, risk, observability, and decision practices explicit places inside the agentic lifecycle—then uses agents to help people apply them with less mechanical effort.</div>
