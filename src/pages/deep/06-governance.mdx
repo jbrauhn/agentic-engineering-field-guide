@@ -1,0 +1,46 @@
+---
+layout: ../../layouts/GuideLayout.astro
+title: Governed Access & Zero Trust
+description: Detailed Identity, Access Path, Entitlement, Operational Authority, Decision Authority, scoped grants, and Policy Enforcement Point mechanics for agentic systems.
+section: deep
+kicker: Go Deeper · Access, authority, enforcement
+keywords:
+  - agent Zero Trust
+  - Operational Authority
+  - Decision Authority
+  - Policy Enforcement Point
+---
+<div className="split">
+<section className="pane">
+<span className="pill purple">How it works</span>
+
+## Five questions
+| Dimension | Question |
+| --- | --- |
+| **Identity** | Who or what is acting? |
+| **Access Path** | How can it technically reach the resource? |
+| **Entitlement** | What standing rights exist? |
+| **Operational Authority (OA)** | What may this actor do in this task/runtime? |
+| **Decision Authority (DA)** | Who may approve consequential decisions? |
+
+## Decision vs enforcement
+Policy/control logic decides what should be allowed. Policy Enforcement Points (PEPs) at protected boundaries make that decision real.
+
+<div className="flow"><div className="step"><h3>Request</h3></div><div className="step"><h3>Identity + context</h3></div><div className="step"><h3>Policy decision</h3></div><div className="step"><h3>Scoped grant</h3></div><div className="step"><h3>PEP + evidence</h3></div></div>
+</section>
+<section className="pane">
+<span className="pill blue">How we work</span>
+
+## Setup
+Define reserved Decision Authority, immutable objects, standing entitlements, and high-impact actions.
+
+## Planning
+Identify required resources and capabilities and propose the least practical Operational Authority for the work.
+
+## Action time
+Evaluate actual actor + task + target + environment + requested action. Permit, constrain, block, or route for approval.
+
+## Evidence
+Record policy decision, approval where required, enforcement result, actor identity, target, and task context. Unauthorized Contract mutation fails closed.
+</section>
+</div>
