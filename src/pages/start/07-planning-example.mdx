@@ -1,0 +1,27 @@
+---
+layout: ../../layouts/GuideLayout.astro
+title: Architecture and Architecture Decision Records
+description: Planning presents architecture visually so the Human Owner can understand affected system elements and consequential choices before execution.
+section: start
+kicker: Start Here · Planning
+keywords:
+  - C4 architecture
+  - Architecture Decision Records
+  - architecture-aware planning
+---
+Planning presents architecture visually and converses against the diagram so the Human Owner understands the affected system before approving consequential choices.
+
+<div className="flow">
+  <div className="step"><span className="pill blue">User</span><h3>Employee browser</h3></div>
+  <div className="step"><span className="pill purple">App</span><h3>Modular monolith</h3></div>
+  <div className="step"><span className="pill gold">Identity</span><h3>Microsoft Entra ID</h3></div>
+  <div className="step"><span className="pill teal">Data</span><h3>Azure SQL</h3></div>
+  <div className="step"><span className="pill green">Ops</span><h3>Email + telemetry + CI/CD</h3></div>
+</div>
+
+<div className="grid two">
+  <div className="card gold-line"><span className="pill gold">ADR-001</span><h3>Modular monolith</h3><p className="muted">For this scale and team, lower operational complexity outweighs microservice independence. Preserve module boundaries for possible later extraction.</p></div>
+  <div className="card gold-line"><span className="pill gold">ADR-002</span><h3>Entra ID authentication</h3><p className="muted">Use the enterprise identity boundary and document consequences on the architecture.</p></div>
+</div>
+
+<div className="callout"><strong>Rule:</strong> significant architecture decisions reference exact affected C4 elements and become Architecture Decision Records (ADRs). Not every product decision is an ADR.</div>
