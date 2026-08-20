@@ -1,0 +1,46 @@
+---
+layout: ../../layouts/GuideLayout.astro
+title: Knowledge & Context
+description: Detailed memory architecture for durable knowledge, workflow state, architecture/code context, structured handoffs, retrieval, compaction, and fresh agent context.
+section: deep
+kicker: Go Deeper · System-owned memory
+keywords:
+  - context engineering
+  - AI agent memory
+  - structured handoff
+  - AGENTS.md
+---
+<div className="split">
+<section className="pane">
+<span className="pill purple">How it works</span>
+
+## Memory layers
+1. **Durable knowledge / system of record** — architecture, standards, decisions, lessons.
+2. **Workflow state** — current Plan, tasks, artifacts, risks, approvals.
+3. **Architecture/code graph** — components, interfaces, dependencies.
+4. **Structured handoff pack** — deliberate continuation state.
+5. **Fresh agent context** — the smallest trustworthy slice needed now.
+
+<div className="quote">The agent does not own memory; the system owns memory. Agents read and write under rules.</div>
+
+## Candidate mechanisms
+`AGENTS.md`, `agent.md`, `soul.md`, an LLM Wiki or knowledge base, repository docs, state stores, session memory, compaction, just-in-time retrieval, experiment memory, and fresh-agent relays are composable mechanisms—not one mandatory stack.
+
+`AGENTS.md` is an established repository convention. `agent.md`, `soul.md`, the AE Handoff Pack, and “LLM Wiki” are AE/local candidate patterns rather than formal standards.
+</section>
+<section className="pane">
+<span className="pill blue">How we work</span>
+
+## Context assembly
+Start with standing instructions, the Contract/Plan slice, current handoff/state, and relevant architecture. Retrieve deeper knowledge only when the next decision needs it.
+
+## Handoff pack
+Include current task, decisions, changes, evidence/results, verification state, blockers/risks, source pointers, next action, and stop/escalation condition.
+
+## Compaction
+Use compaction as lossy historical reference, not canonical state. **Compaction ≠ handoff.**
+
+## Economic context design
+Context consumes model capacity and money. A smaller model with excellent context and verification may outperform indiscriminate frontier-model use. Measure model + context strategy by work type, quality, cost, retries, and rework.
+</section>
+</div>

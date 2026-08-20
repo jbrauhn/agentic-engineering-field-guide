@@ -1,0 +1,58 @@
+---
+layout: ../../layouts/GuideLayout.astro
+title: Planning & Plan Review
+description: Detailed architecture-aware Planning mechanics, C4 and ADR orientation, Planning Depth and Method, L2/L3 decomposition, verification strategy, and independent Plan Review.
+section: deep
+kicker: Go Deeper · Architecture-aware execution design
+keywords:
+  - C4 planning
+  - Plan Review
+  - Planning Depth
+  - Planning Method
+---
+<div className="split">
+<section className="pane">
+<span className="pill purple">How it works</span>
+
+## Purpose
+Convert the approved Contract into architecture-aware, bounded, verifiable work.
+
+## Required orientation
+Contract + canonical C4 (Context, Container, Component, Code) architecture + relevant Architecture Decision Records (ADRs) + codebase/system state.
+
+## Outputs
+- architecture changes or references;
+- significant ADRs;
+- Planning Depth + Planning Method;
+- L2 execution increments;
+- L3 implementation/test tasks;
+- dependencies and parallelism;
+- execution topology and context strategy;
+- verification/test strategy mapped to Proof.
+
+## Depth
+Most ongoing loops reference the durable L1 product/system baseline and create L2/L3 artifacts. L4 is local agent micro-planning during execution.
+
+<div className="callout good"><strong>Heavier process is not more mature.</strong> Add planning, review, or orchestration complexity only when it earns its cost.</div>
+</section>
+<section className="pane">
+<span className="pill blue">How we work</span>
+
+## Human Owner
+Review decisions against visual architecture, choose among consequential alternatives, approve reserved decisions, and challenge assumptions. The human should not have to discover hidden coupling from prose.
+
+## AI planner
+Analyze architecture/code, propose alternatives, create or update C4 views, draft ADRs, decompose work, map dependencies, derive verification work, and explain decisions visually.
+
+## Plan Review
+1. Planner self-review.
+2. Fresh capable independent reviewer.
+3. Optional diverse/external reviewer for high-risk work.
+4. Resolve findings and re-review material changes.
+
+The Plan may change if it still satisfies the Contract. It may propose a Contract change; it cannot silently redefine Proof or expand scope.
+
+## Experiments
+Record method/depth, model placement, context strategy, quality, cost, human time, attempts, and rework. Use results to improve future recommendations.
+</section>
+</div>

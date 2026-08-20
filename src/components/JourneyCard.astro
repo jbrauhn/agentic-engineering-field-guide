@@ -1,0 +1,16 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  description: string;
+  href: string;
+  tone?: 'blue' | 'gold' | 'purple' | 'green';
+}
+const { number, title, description, href, tone = 'blue' } = Astro.props;
+---
+<a class={`card ${tone}`} href={href}>
+  <span class="number">{number}</span>
+  <span class="arrow" aria-hidden="true">↗</span>
+  <h3>{title}</h3>
+  <p>{description}</p>
+</a>

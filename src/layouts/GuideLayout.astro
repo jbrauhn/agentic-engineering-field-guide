@@ -1,0 +1,89 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { journeys, sectionMeta, sitePath, relativeSitePath, type SectionId } from '../data/navigation';
+
+const { frontmatter } = Astro.props;
+const section = frontmatter.section as 'start' | 'explore' | 'deep';
+const pages = journeys[section];
+const currentPath = relativeSitePath(Astro.url.pathname);
+const index = pages.findIndex((page) => page.path === currentPath);
+const previous = index > 0 ? pages[index - 1] : null;
+const next = index >= 0 && index < pages.length - 1 ? pages[index + 1] : null;
+const progress = index >= 0 ? ((index + 1) / pages.length) * 100 : 0;
+const landing = sectionMeta[section].landing;
+const keywords = frontmatter.keywords || ['Agentic Engineering', sectionMeta[section].label];
+---
+<BaseLayout title={frontmatter.title} description={frontmatter.description} section={section as SectionId} type="article" keywords={keywords}>
+  <main id="main-content">
+    <header class="article-hero shell">
+      <nav class="breadcrumbs" aria-label="Breadcrumb" data-pagefind-ignore>
+        <a href={sitePath('/')}>Field Guide</a><span aria-hidden="true">/</span><a href={sitePath(landing)}>{sectionMeta[section].label}</a>
+      </nav>
+      <p class="kicker">{frontmatter.kicker}</p>
+      <h1>{frontmatter.title}</h1>
+      {frontmatter.description && <p class="lede">{frontmatter.description}</p>}
+      <div class="journey-status" data-pagefind-ignore>
+        <div class="progress-copy"><span>{sectionMeta[section].label}</span><span>{index + 1} of {pages.length}</span></div>
+        <div class="progress-track" aria-hidden="true"><span style={`width:${progress}%`}></span></div>
+      </div>
+      <details class="journey-map" data-pagefind-ignore>
+        <summary>Journey map <span>See all {pages.length} pages</span></summary>
+        <ol>
+          {pages.map((page, i) => (
+            <li class:list={{ current: i === index }}>
+              <a href={sitePath(page.path)} aria-current={i === index ? 'page' : undefined}>
+                <span class="journey-number">{String(i + 1).padStart(2, '0')}</span>
+                <span><strong>{page.title}</strong><small>{page.short}</small></span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </details>
+    </header>
+    <article class="prose shell" data-pagefind-body>
+      <slot />
+    </article>
+    <nav class="page-nav shell" aria-label="Page navigation" data-pagefind-ignore>
+      {previous ? (
+        <a class="page-nav-card prev" href={sitePath(previous.path)} data-prev-link>
+          <span>← Previous</span><strong>{previous.title}</strong>
+        </a>
+      ) : (
+        <a class="page-nav-card prev" href={sitePath(landing)} data-prev-link>
+          <span>← {sectionMeta[section].label}</span><strong>Journey overview</strong>
+        </a>
+      )}
+      {next ? (
+        <a class="page-nav-card next" href={sitePath(next.path)} data-next-link>
+          <span>Next →</span><strong>{next.title}</strong>
+        </a>
+      ) : (
+        <a class="page-nav-card next" href={sitePath('/')} data-next-link>
+          <span>Continue →</span><strong>Choose another path</strong>
+        </a>
+      )}
+    </nav>
+  </main>
+  <script>
+    document.addEventListener('keydown', (event) => {
+      if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      const target = event.target;
+      const typing = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement || target?.isContentEditable;
+      if (typing) return;
+      const previous = document.querySelector('[data-prev-link]');
+      const next = document.querySelector('[data-next-link]');
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+        event.preventDefault();
+        if (previous instanceof HTMLAnchorElement) location.href = previous.href;
+      }
+      if (event.key === 'ArrowRight' || event.key === 'PageDown') {
+        event.preventDefault();
+        if (next instanceof HTMLAnchorElement) location.href = next.href;
+      }
+      if (event.key.toLowerCase() === 'h') {
+        event.preventDefault();
+        location.href = document.body.dataset.base + '/';
+      }
+    });
+  </script>
+</BaseLayout>

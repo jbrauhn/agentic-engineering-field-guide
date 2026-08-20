@@ -1,0 +1,30 @@
+---
+layout: ../../layouts/GuideLayout.astro
+title: Loop Context & Contract
+description: Loop Context classifies the work; the Contract anchors human-owned intent as Goal, Spec, and Proof before agents choose how to execute.
+section: explore
+kicker: Explore · Anchor intent before action
+keywords:
+  - Goal Spec Proof
+  - AI agent Contract
+  - Loop Context
+---
+import InfoTip from '../../components/InfoTip.astro';
+
+Before an agent can choose how to work, the system needs a stable definition of what the work is trying to achieve.
+
+<div className="grid four">
+  <div className="card"><h3>What it is</h3><p className="muted">Loop Context plus Goal / Spec / Proof <InfoTip label="Goal Spec Proof">Goal = desired outcome. Spec = requirements, constraints, non-goals, invariants, assumptions, and boundaries. Proof = the evidence required to demonstrate success.</InfoTip></p></div>
+  <div className="card"><h3>Why it matters</h3><p className="muted">Agents are very good at making progress—even toward the wrong target.</p></div>
+  <div className="card"><h3>Failure prevented</h3><p className="muted">“Seems good” completion and moving acceptance criteria.</p></div>
+  <div className="card gold-line"><h3>Core philosophy</h3><p className="muted"><strong>Welcome new information; control mutation.</strong> Agents propose Contract changes; they never silently rewrite an approved target.</p></div>
+</div>
+
+## Proof is not the whole test plan
+
+<div className="grid two">
+  <div className="card green-line"><h3>Contract Proof</h3><p className="muted">States what evidence must exist for the outcome to be accepted.</p></div>
+  <div className="card purple-line"><h3>Planning verification strategy</h3><p className="muted">Determines how tests, evals, reviews, environments, fixtures, and instrumentation will generate that evidence.</p></div>
+</div>
+
+<a className="deep-link" href="../deep/01-contract.html"><strong>Go Deeper:</strong> Contract mechanics, change proposals, versioning, non-goals, and authority →</a>

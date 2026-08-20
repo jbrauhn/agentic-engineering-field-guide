@@ -1,0 +1,129 @@
+---
+import '../styles/global.css';
+import SearchOverlay from '../components/SearchOverlay.astro';
+import { sectionMeta, sitePath, type SectionId } from '../data/navigation';
+
+interface Props {
+  title: string;
+  description: string;
+  section?: SectionId | 'home';
+  type?: 'website' | 'article';
+  keywords?: string[];
+}
+
+const {
+  title,
+  description,
+  section = 'home',
+  type = 'website',
+  keywords = ['Agentic Engineering', 'AI agents', 'software engineering', 'AI engineering']
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const siteUrl = new URL(`${base}/`, Astro.site);
+const fullTitle = title === 'Agentic Engineering Field Guide' ? title : `${title} — Agentic Engineering Field Guide`;
+const licenseUrl = 'https://creativecommons.org/licenses/by/4.0/';
+const sourceUrl = 'https://github.com/jbrauhn/agentic-engineering-field-guide';
+const primarySections = ['start', 'explore', 'deep', 'practice'] as SectionId[];
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl.href}#website`,
+      url: siteUrl.href,
+      name: 'Agentic Engineering Field Guide',
+      description: 'A progressive guide and reference for trustworthy, architecture-aware Agentic Engineering.',
+      inLanguage: 'en',
+      isAccessibleForFree: true,
+      license: licenseUrl
+    },
+    {
+      '@type': type === 'article' ? 'TechArticle' : 'WebPage',
+      '@id': `${canonical.href}#page`,
+      url: canonical.href,
+      name: fullTitle,
+      headline: title,
+      description,
+      keywords,
+      inLanguage: 'en',
+      isAccessibleForFree: true,
+      license: licenseUrl,
+      isPartOf: { '@id': `${siteUrl.href}#website` },
+      author: {
+        '@type': 'Person',
+        name: 'jbrauhn',
+        url: 'https://github.com/jbrauhn'
+      }
+    }
+  ]
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#07111d" />
+    <meta name="color-scheme" content="dark" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="jbrauhn" />
+    <meta name="keywords" content={keywords.join(', ')} />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" type="application/xml" href={`${base}/sitemap-index.xml`} />
+    <link rel="license" href={licenseUrl} />
+    <meta property="og:type" content={type === 'article' ? 'article' : 'website'} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Agentic Engineering Field Guide" />
+    <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body data-base={base}>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header" data-pagefind-ignore>
+      <div class="shell nav-shell">
+        <a class="brand" href={sitePath('/')} aria-label="Agentic Engineering Field Guide home">
+          <span class="brand-mark">AE</span>
+          <span class="brand-copy"><strong>Agentic Engineering</strong><small>Field Guide</small></span>
+        </a>
+        <nav class="desktop-nav" aria-label="Primary navigation">
+          {primarySections.map((id) => (
+            <a href={sitePath(sectionMeta[id].landing)} aria-current={section === id ? 'page' : undefined}>{sectionMeta[id].label}</a>
+          ))}
+        </nav>
+        <div class="nav-actions">
+          <SearchOverlay />
+          <details class="mobile-menu">
+            <summary aria-label="Open navigation">Menu</summary>
+            <nav aria-label="Mobile navigation">
+              {primarySections.map((id) => (
+                <a href={sitePath(sectionMeta[id].landing)} aria-current={section === id ? 'page' : undefined}>{sectionMeta[id].label}</a>
+              ))}
+              <a href={sitePath('/about.html')}>About</a>
+            </nav>
+          </details>
+        </div>
+      </div>
+    </header>
+    <slot />
+    <footer class="site-footer" data-pagefind-ignore>
+      <div class="shell footer-grid">
+        <div>
+          <strong>Agentic Engineering Field Guide</strong>
+          <p>AI changes the scale of engineering—not the need for engineering discipline.</p>
+        </div>
+        <nav aria-label="Footer navigation">
+          <a href={sitePath('/about.html')}>About & licensing</a>
+          <a href={sourceUrl}>GitHub source</a>
+          <a href={sitePath('/llms.txt')}>AI-readable guide map</a>
+        </nav>
+        <p class="license-note">Learning/reference content: CC BY 4.0<br />Site code: Apache-2.0</p>
+      </div>
+    </footer>
+  </body>
+</html>

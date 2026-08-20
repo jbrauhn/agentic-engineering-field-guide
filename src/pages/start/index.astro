@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { journeys, sitePath } from '../../data/navigation';
+---
+<BaseLayout title="Start Here" description="Get the Agentic Engineering mental model, shared vocabulary, operating loop, and worked example without needing the full architecture first." section="start">
+  <main id="main-content" data-pagefind-body>
+    <header class="landing-hero shell"><p class="kicker">Learning path 01 · The map</p><h1>Start Here</h1><p class="lede">Get enough of the system to understand the value, the vocabulary, and the delivery loop. The worked task-app example turns the concepts into something concrete.</p></header>
+    <section class="shell">
+      <div class="callout good"><strong>Progressive elaboration:</strong> you do not need the whole architecture yet. Each page answers one nearby question and points to the next layer only when it becomes useful.</div>
+      <div class="landing-list">
+        {journeys.start.map((page,index) => <a class="landing-item" href={sitePath(page.path)}><span class="num">{String(index+1).padStart(2,'0')}</span><span><strong>{page.title}</strong><small>{page.short}</small></span><span class="arrow">→</span></a>)}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

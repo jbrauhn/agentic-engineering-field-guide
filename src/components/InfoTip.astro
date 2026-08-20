@@ -1,0 +1,10 @@
+---
+interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+---
+<details class="info-tip">
+  <summary aria-label={`More information about ${label}`}>i</summary>
+  <div class="tip-panel"><slot /></div>
+</details>

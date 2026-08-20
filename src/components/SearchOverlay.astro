@@ -1,0 +1,77 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<button class="search-trigger" type="button" data-search-open aria-haspopup="dialog">
+  <span aria-hidden="true">⌕</span><span>Search</span><kbd>/</kbd>
+</button>
+<dialog class="search-dialog" data-search-dialog>
+  <div class="search-head">
+    <label for="site-search">Search the Field Guide</label>
+    <button type="button" class="icon-button" data-search-close aria-label="Close search">×</button>
+  </div>
+  <input id="site-search" data-search-input type="search" autocomplete="off" placeholder="Try “Contract Proof”, “memory”, or “Zero Trust”…" />
+  <p class="search-status" data-search-status>Type at least two characters.</p>
+  <div class="search-results" data-search-results></div>
+</dialog>
+<script define:vars={{ base }}>
+  const dialog = document.querySelector('[data-search-dialog]');
+  const input = document.querySelector('[data-search-input]');
+  const results = document.querySelector('[data-search-results]');
+  const status = document.querySelector('[data-search-status]');
+  const openers = document.querySelectorAll('[data-search-open]');
+  const close = document.querySelector('[data-search-close]');
+  let pagefind;
+
+  const openSearch = () => {
+    if (!(dialog instanceof HTMLDialogElement)) return;
+    dialog.showModal();
+    requestAnimationFrame(() => input?.focus());
+  };
+
+  openers.forEach((button) => button.addEventListener('click', openSearch));
+  close?.addEventListener('click', () => dialog?.close());
+  dialog?.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  document.addEventListener('keydown', (event) => {
+    const target = event.target;
+    const typing = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement || target?.isContentEditable;
+    if (event.key === '/' && !typing) {
+      event.preventDefault();
+      openSearch();
+    }
+  });
+
+  async function ensurePagefind() {
+    if (pagefind) return pagefind;
+    pagefind = await import(`${base}/pagefind/pagefind.js`);
+    await pagefind.init();
+    return pagefind;
+  }
+
+  input?.addEventListener('input', async () => {
+    const query = input.value.trim();
+    results.innerHTML = '';
+    if (query.length < 2) {
+      status.textContent = 'Type at least two characters.';
+      return;
+    }
+    status.textContent = 'Searching…';
+    try {
+      const pf = await ensurePagefind();
+      const search = await pf.search(query);
+      const rows = await Promise.all(search.results.slice(0, 10).map((result) => result.data()));
+      status.textContent = rows.length ? `${search.results.length} result${search.results.length === 1 ? '' : 's'}` : 'No results found.';
+      for (const row of rows) {
+        const href = row.url.startsWith(base) ? row.url : `${base}${row.url.startsWith('/') ? '' : '/'}${row.url}`;
+        const item = document.createElement('a');
+        item.className = 'search-result';
+        item.href = href;
+        item.innerHTML = `<strong>${row.meta.title || 'Untitled'}</strong><span>${row.excerpt || ''}</span>`;
+        results.appendChild(item);
+      }
+    } catch (error) {
+      status.textContent = 'Search index is available on the published build.';
+    }
+  });
+</script>

@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { journeys, sitePath } from '../../data/navigation';
+---
+<BaseLayout title="Explore the System" description="Understand why each Agentic Engineering component exists, the failure it prevents, its philosophy, and how the parts reinforce one another." section="explore">
+  <main id="main-content" data-pagefind-body>
+    <header class="landing-hero shell"><p class="kicker">Learning path 02 · The why</p><h1>Explore the System</h1><p class="lede">This is the philosophy layer. Each page explains what a component is, why it exists, what failure it prevents, and how it interacts with the rest of the system.</p></header>
+    <section class="shell">
+      <div class="quote">A model can be brilliant and still be an unreliable production system. Agentic Engineering surrounds model capability with intent, architecture, context, tools, controls, evidence, and human judgment.</div>
+      <div class="landing-list">
+        {journeys.explore.map((page,index) => <a class="landing-item" href={sitePath(page.path)}><span class="num">{String(index+1).padStart(2,'0')}</span><span><strong>{page.title}</strong><small>{page.short}</small></span><span class="arrow">→</span></a>)}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

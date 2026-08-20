@@ -1,0 +1,24 @@
+---
+layout: ../../layouts/GuideLayout.astro
+title: The agentic ecosystem in one picture
+description: An agent is not just a model; production outcomes come from the surrounding instructions, context, tools, runtime, state, verification, and governance.
+section: start
+kicker: Start Here · Shared vocabulary
+keywords:
+  - AI agent
+  - agentic system
+  - model context tools
+---
+<div className="flow">
+  <div className="step"><span className="pill purple">Model</span><h3>Reasoning engine</h3><p className="muted">Generates, reasons, and chooses among available actions.</p></div>
+  <div className="step"><span className="pill blue">Instructions + Context</span><h3>What it knows now</h3><p className="muted">Goals, rules, retrieved knowledge, current state, and tool results.</p></div>
+  <div className="step"><span className="pill orange">Tools</span><h3>What it can do</h3><p className="muted">Code, files, APIs, browsers, databases, infrastructure, and enterprise systems.</p></div>
+  <div className="step"><span className="pill teal">Agent Loop</span><h3>How it acts</h3><p className="muted">Plan → act → observe → adjust → repeat.</p></div>
+  <div className="step"><span className="pill green">Verification + Governance</span><h3>How we trust it</h3><p className="muted">Evidence, permissions, authority, monitoring, and human gates.</p></div>
+</div>
+
+<div className="callout"><strong>Model ≠ Agent. Tool ≠ Agent. Workflow ≠ necessarily Agent. Multi-agent ≠ automatically better.</strong></div>
+
+A useful teaching simplification is: **Model + Instructions + Context + Tools + Runtime/Loop + State + Controls = an agentic worker.** One or more workers plus orchestration, integrations, verification, and governance become an agentic system.
+
+**Model Context Protocol (MCP)** equips a worker with tools and context. **Agent2Agent (A2A)** supports communication between independent agents. Neither protocol is itself an agent.

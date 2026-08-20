@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { journeys, sitePath } from '../../data/navigation';
+---
+<BaseLayout title="Go Deeper" description="Detailed Agentic Engineering reference for Contract, Planning, Knowledge and Context, Execution, Capability Interfaces, Governance, Validation, and the Human Owner." section="deep">
+  <main id="main-content" data-pagefind-body>
+    <header class="landing-hero shell"><p class="kicker">Learning path 03 · Detailed reference</p><h1>Go Deeper</h1><p class="lede">Each breakout keeps two questions side-by-side: <strong>How does the mechanism work?</strong> and <strong>How do a Human Owner and AI actually work with it?</strong></p></header>
+    <section class="shell">
+      <div class="callout"><strong>Reference pattern:</strong> Purpose → How it works → Inputs/outputs → Interactions → Access/authority/enforcement → Human KSAs → Agent support → Failure modes → Implementation options.</div>
+      <div class="landing-list">
+        {journeys.deep.map((page,index) => <a class="landing-item" href={sitePath(page.path)}><span class="num">{String(index+1).padStart(2,'0')}</span><span><strong>{page.title}</strong><small>{page.short}</small></span><span class="arrow">→</span></a>)}
+      </div>
+    </section>
+  </main>
+</BaseLayout>
