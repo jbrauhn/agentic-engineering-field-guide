@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import JourneyCard from '../components/JourneyCard.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<BaseLayout
+  title="Agentic Engineering Field Guide"
+  description="A practical field guide for trustworthy Agentic Engineering: human judgment, AI execution, architecture, context, governance, verification, and iterative learning."
+  section="home"
+>
+  <main>
+    <section class="hero">
+      <div class="shell">
+        <div class="eyebrow">Human–AI engineering, built for trustworthy outcomes</div>
+        <h1>Engineer the system, not just the <span class="accent">prompt.</span></h1>
+        <p class="lede">In this Field Guide, <strong>Agentic Engineering</strong> means engineering a human–AI system that can repeatedly turn intent into validated outcomes. The model matters—but so do architecture, context, tools, authority, evidence, and human judgment.</p>
+        <div class="hero-actions">
+          <a class="button primary" href={`${base}/start/`}>Start with the map <span aria-hidden="true">→</span></a>
+          <a class="button" href={`${base}/explore/`}>Explore the system</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="statement"><strong>AI changes the scale of engineering—not the need for engineering discipline.</strong> Agents can multiply useful work dramatically; they can also multiply defects, weak decisions, and low-quality output just as quickly.</div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="journeys">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">Choose your learning path</div><h2 id="journeys">One system. Four depths.</h2></div>
+          <p class="section-intro">You do not need to understand the whole architecture before you can understand the value. Start with the smallest useful mental model, then go deeper when the next question appears.</p>
+        </div>
+        <div class="grid four">
+          <JourneyCard number="01" title="Start Here" description="Get the map, the core mental model, and a worked example." href={`${base}/start/`} tone="blue" />
+          <JourneyCard number="02" title="Explore the System" description="Understand why each component exists and what failure it prevents." href={`${base}/explore/`} tone="gold" />
+          <JourneyCard number="03" title="Go Deeper" description="Study mechanics, interfaces, governance, memory, and validation." href={`${base}/deep/`} tone="purple" />
+          <JourneyCard number="04" title="Learn by Doing" description="Practice the method in guided loops and eventually in a configured system." href={`${base}/practice/`} tone="green" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="loop">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">The operating loop</div><h2 id="loop">Intent becomes evidence.</h2></div>
+          <p class="section-intro">The system does heavy work, but it does not get to silently redefine success or approve its own outcome.</p>
+        </div>
+        <div class="flow" aria-label="Agentic Engineering operating loop">
+          <div class="flow-step"><b>Loop Context</b><small>What kind of work is this?</small></div>
+          <div class="flow-step"><b>Contract</b><small>Goal · Spec · Proof</small></div>
+          <div class="flow-step"><b>Planning</b><small>Architecture-aware route</small></div>
+          <div class="flow-step"><b>Execution</b><small>Bounded adaptive work</small></div>
+          <div class="flow-step"><b>Validation</b><small>Independent judgment</small></div>
+          <div class="flow-step"><b>Learn</b><small>Capture evidence and improve</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="collaboration">
+      <div class="shell">
+        <div class="section-head"><div><div class="eyebrow">Human–AI collaboration</div><h2 id="collaboration">Different strengths. Shared work.</h2></div></div>
+        <div class="grid two">
+          <article class="card blue"><span class="number">AI VALUE</span><h3>Speed, scale, persistence.</h3><p>Rapid synthesis, broad technical knowledge, repeated bounded execution, tool use, testing, comparison, and continuous work across large problem spaces.</p></article>
+          <article class="card gold"><span class="number">HUMAN VALUE</span><h3>Context, ingenuity, judgment.</h3><p>Logic, creativity, taste, values, mission context, authority, accountability, and the ability to decide what should happen—not merely what can happen.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
