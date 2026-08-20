@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import InfoTip from '../../components/InfoTip.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const topics = [
+  ['The elevator pitch', '01-elevator.html', 'Understand the value in under a minute.'],
+  ['The agentic ecosystem', '02-ecosystem.html', 'Model, tools, context, runtime, state, controls.'],
+  ['From AI assistant to engineering system', '03-bridge.html', 'See what changes when the whole machine matters.'],
+  ['The operating model', '04-operating-model.html', 'Follow work from intent through evidence.'],
+  ['Why engineering discipline matters', '05-discipline.html', 'Use established practice as leverage, not legacy overhead.'],
+  ['Worked example: Contract', '06-contract-example.html', 'Turn an outcome into Goal, Spec, and Proof.'],
+  ['Worked example: Planning', '07-planning-example.html', 'Plan against architecture, decisions, and evidence.'],
+  ['Planning depth and decomposition', '08-decomposition.html', 'Choose the simplest useful planning pattern.'],
+  ['Where to go next', '09-continue.html', 'Move from the map into the philosophy layer.']
+];
+---
+<BaseLayout title="Start Here" description="Start Here gives the map of Agentic Engineering: the ecosystem, operating loop, engineering foundation, Contract, Planning, and a worked example." section="start">
+  <main>
+    <section class="page-hero"><div class="shell">
+      <div class="breadcrumbs"><a href={`${base}/`}>Field Guide</a><span>/</span><b>Start Here</b></div>
+      <div class="eyebrow">01 · The map</div>
+      <h1>Start with the smallest useful mental model.</h1>
+      <p class="lede">This path is deliberately compact. It gives you enough structure to understand what Agentic Engineering is, why it exists, and how work moves through the system—without requiring the full architecture first.</p>
+    </div></section>
+    <section class="content"><div class="shell">
+      <div class="statement"><strong>Never make someone understand the whole architecture before they can understand the value.</strong></div>
+      <h2>The core idea</h2>
+      <p>Agentic Engineering treats AI as part of an engineered delivery system rather than as a standalone answer generator. The system makes intent explicit, plans against real architecture, gives agents bounded room to adapt, and requires evidence before outcomes are accepted.</p>
+      <p><strong>Contract = Goal / Spec / Proof.</strong> Proof defines the evidence required for acceptance—not the test plan itself. Planning derives how that evidence will be produced.</p>
+      <h2>Planning has two separate choices</h2>
+      <p><strong>Planning Depth</strong><InfoTip label="Planning Depth">How far down the hierarchy the system decomposes work before execution—from durable product/system baseline through increment, tasks, and local agent micro-plans.</InfoTip> asks <em>how far</em> to decompose. <strong>Planning Method</strong><InfoTip label="Planning Method">How the work is sliced and ordered: lightweight, explicit task plan, vertical slice, dependency-first, rolling wave, evidence-first, orchestrator-worker, and other patterns.</InfoTip> asks <em>how</em> to slice and order the work. Heavier planning is not automatically more mature.</p>
+      <h2>Walk the path</h2>
+      <div class="topic-list">
+        {topics.map(([title, href, note], index) => <a class="topic" href={`${base}/start/${href}`}><span><small>{String(index + 1).padStart(2,'0')}</small><br/><strong>{title}</strong></span><span aria-hidden="true">→</span></a>)}
+      </div>
+    </div></section>
+  </main>
+</BaseLayout>
