@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { dirname, join, normalize, posix, relative } from 'node:path';
+import { dirname, join, posix, relative } from 'node:path';
 
 const root = new URL('../dist/', import.meta.url).pathname;
 const base = '/agentic-engineering-field-guide';
@@ -57,6 +57,25 @@ for (const file of htmlFiles) {
   }
 }
 
+// Go Deeper is intentionally the full reference layer. Protect against future
+// migrations accidentally collapsing the pages back into Explore-level summaries.
+for (const slug of deep) {
+  const path = join(root, `deep/${slug}.html`);
+  if (!existsSync(path)) continue;
+  const html = readFileSync(path, 'utf8');
+  if (!html.includes('deep-columns') || !html.includes('deep-how') || !html.includes('deep-work')) {
+    errors.push(`deep/${slug}.html: missing required How it works / How we work deep-reference panes`);
+  }
+  if (!html.includes('data-deep-mode')) errors.push(`deep/${slug}.html: missing deep reading-mode support`);
+  const h3Count = (html.match(/<h3/g) || []).length;
+  if (h3Count < 10) errors.push(`deep/${slug}.html: reference depth appears too shallow (${h3Count} h3 sections; expected at least 10)`);
+}
+
+const deepLanding = existsSync(join(root,'deep/index.html')) ? readFileSync(join(root,'deep/index.html'),'utf8') : '';
+if (!deepLanding.includes('Split View') || !deepLanding.includes('How it works') || !deepLanding.includes('How we work')) {
+  errors.push('deep/index.html: missing explanation of Go Deeper reading modes.');
+}
+
 const robots = existsSync(join(root,'robots.txt')) ? readFileSync(join(root,'robots.txt'),'utf8') : '';
 if (!robots.includes('User-agent: *') || !robots.includes('Allow: /')) errors.push('robots.txt is not broadly crawlable.');
 if (!robots.includes(`${base}/sitemap-index.xml`)) errors.push('robots.txt does not reference the project sitemap.');
@@ -71,4 +90,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Validated ${htmlFiles.length} HTML pages, ${expected.length} required outputs, metadata, crawler files, and local links.`);
+console.log(`Validated ${htmlFiles.length} HTML pages, ${expected.length} required outputs, deep-reference structure, metadata, crawler files, and local links.`);
