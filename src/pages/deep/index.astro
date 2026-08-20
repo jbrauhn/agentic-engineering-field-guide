@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const topics = [
+  ['Contract', '01-contract.html', 'How Goal, Spec, Proof, change proposals, and authority work.'],
+  ['Planning & Plan Review', '02-planning.html', 'Depth, method, architecture, ADRs, task topology, and review.'],
+  ['Knowledge & Context', '03-knowledge-context.html', 'Memory layers, handoffs, retrieval, fresh-agent context.'],
+  ['Execution', '04-execution.html', 'Adaptive work, retries, maker-checker, and agent topologies.'],
+  ['Capability Interfaces', '05-capabilities.html', 'Tools, services, integrations, and portability.'],
+  ['Governed Access', '06-governance.html', 'Identity, entitlement, authority, PEPs, and evidence.'],
+  ['Verification & Observability', '07-validation.html', 'From Contract Proof to independent Validation.'],
+  ['Human Owner KSAs', '08-human-owner.html', 'Knowledge, skills, abilities, and AI support for human judgment.']
+];
+---
+<BaseLayout title="Go Deeper" description="Detailed Agentic Engineering reference for Contract, Planning, memory and context, execution, capability interfaces, governed access, verification, observability, and Human Owner responsibilities." section="deep">
+  <main>
+    <section class="page-hero"><div class="shell">
+      <div class="breadcrumbs"><a href={`${base}/`}>Field Guide</a><span>/</span><b>Go Deeper</b></div>
+      <div class="eyebrow">03 · Mechanics and implementation</div>
+      <h1>Study the system as an engineer.</h1>
+      <p class="lede">Each breakout answers the same practical questions: purpose, mechanics, inputs and outputs, interactions, access and authority, human knowledge/skills/abilities, agent support, failure modes, and implementation options.</p>
+    </div></section>
+    <section class="content"><div class="shell">
+      <div class="statement"><strong>Choose the simplest useful pattern.</strong> Increase planning or orchestration complexity only when task shape, evidence, risk, or observed results justify it.</div>
+      <h2>Detailed breakouts</h2>
+      <div class="topic-list">
+        {topics.map(([title, href, note], index) => <a class="topic" href={`${base}/deep/${href}`}><span><small>{String(index + 1).padStart(2,'0')} · {note}</small><br/><strong>{title}</strong></span><span aria-hidden="true">→</span></a>)}
+      </div>
+    </div></section>
+  </main>
+</BaseLayout>
