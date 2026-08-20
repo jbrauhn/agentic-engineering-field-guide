@@ -1,0 +1,37 @@
+---
+layout: ../../layouts/GuideLayout.astro
+title: Planning
+description: Architecture-aware Planning turns an approved Contract into a bounded, verifiable route through the real system rather than decomposing tickets in isolation.
+section: explore
+kicker: Explore · Understand the system before decomposing work
+keywords:
+  - architecture-aware planning
+  - C4 model
+  - Architecture Decision Record
+---
+import InfoTip from '../../components/InfoTip.astro';
+
+Planning exists because “break the work into tasks” is unsafe if the planner does not first understand the system those tasks will change.
+
+<div className="callout good"><strong>Choose the simplest useful pattern. Heavier process is not more mature.</strong> Increase planning depth, review, model capability, and orchestration only when task shape or evidence warrants it.</div>
+
+<div className="grid four">
+  <div className="card"><h3>What it is</h3><p className="muted">Architecture-aware solution design: orient to the Contract, current architecture/codebase, and existing Architecture Decision Records (ADRs) <InfoTip label="Architecture Decision Record">A durable record of an architecturally significant decision: context, options, rationale, and consequences.</InfoTip>; then choose architecture, verification, decomposition, tasks, dependencies, and execution pattern.</p></div>
+  <div className="card"><h3>Why it matters</h3><p className="muted">A coding agent can solve one ticket beautifully while damaging the whole system.</p></div>
+  <div className="card"><h3>Failure prevented</h3><p className="muted">Architecture-blind decomposition and hidden coupling.</p></div>
+  <div className="card purple-line"><h3>Core philosophy</h3><p className="muted">Tasks are the output of system understanding—not a substitute for it.</p></div>
+</div>
+
+## Normal loops usually reference L1
+
+<div className="flow">
+  <div className="step"><h3>Contract</h3><p className="muted">Target for this loop</p></div>
+  <div className="step"><h3>L1 baseline</h3><p className="muted">Usually referenced, not recreated</p></div>
+  <div className="step"><h3>L2 increment</h3><p className="muted">Bounded deliverable</p></div>
+  <div className="step"><h3>L3 tasks</h3><p className="muted">Dependency-aware work</p></div>
+  <div className="step"><h3>L4 micro-plan</h3><p className="muted">Local agent steps</p></div>
+</div>
+
+Architecture-impacting L1 changes use the ADR process. Ordinary product/capability changes use normal product governance.
+
+<a className="deep-link" href="../deep/02-planning.html"><strong>Go Deeper:</strong> C4, ADRs, Planning Depth/Method, verification strategy, task topology, and Plan Review →</a>
