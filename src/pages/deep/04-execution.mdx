@@ -1,46 +1,370 @@
 ---
 layout: ../../layouts/GuideLayout.astro
-title: Execution Loop & Pattern Library
-description: Detailed bounded adaptive execution loop, retry and escalation boundaries, fresh-agent relays, Maker-to-Checker, parallel work, and coordinated multi-agent patterns.
+title: Execution Loop & Patterns
+description: "Detailed bounded adaptive execution, retry and escalation behavior, maker-checker patterns, fresh-agent relays, multi-agent choices, evidence production, and Human + AI operating practice."
 section: deep
-kicker: Go Deeper · Bounded adaptive work
+kicker: Go Deeper · Adaptive execution without wandering
 keywords:
   - agent execution loop
-  - Maker Checker
+  - maker checker AI
   - multi-agent orchestration
+  - bounded autonomy
+  - fresh agent relay
 ---
-<div className="split">
-<section className="pane">
-<span className="pill purple">How it works</span>
+<div className="deep-columns">
+<section className="deep-pane deep-how">
+<div className="deep-pane-header"><span className="pill purple">How it works</span><h2>The system mechanics</h2></div>
 
-## Loop
-<div className="flow"><div className="step"><h3>Execute</h3></div><div className="step"><h3>Observe</h3></div><div className="step"><h3>Compare</h3></div><div className="step"><h3>Adjust</h3></div><div className="step"><h3>Continue / Validate / Escalate</h3></div></div>
+<div className="deep-section">
+### Purpose
+Execution is where the system turns a reviewed Plan into working output and evidence. The agent receives room to adapt locally—use tools, inspect results, diagnose failures, retry, and choose implementation details—without receiving permission to silently change the approved Contract or materially rewrite the Plan.
 
-## Boundaries
-Execution may adapt local implementation inside the reviewed Plan. If a Plan assumption fails, route to Planning. If the target should change, submit a Contract proposal.
+<div className="deep-note deep-good"><strong>Local adaptation:</strong> change implementation steps as evidence arrives; route Plan-level changes back to Planning and Contract-level changes to an explicit Human Owner decision.</div>
+</div>
 
-## Patterns
-- single-agent iterative loop;
-- fresh-agent relay;
-- parallel independent workers;
-- Maker → Checker;
-- coordinated multi-agent orchestration.
+<div className="deep-section">
+### Core execution loop
+A worker normally repeats a bounded loop:
 
-<div className="callout"><strong>More agents ≠ more agentic.</strong> Use the simplest topology that fits the task.</div>
+```text
+Orient → Act → Observe → Verify locally → Decide
+   ↑                                  ↓
+   └──── retry / adapt / escalate ────┘
+```
+
+1. **Orient** — load the active task, Contract/Plan references, architecture slice, authority, and current state.
+2. **Act** — edit code/config/content, call tools, query systems, create test assets, or perform other planned work.
+3. **Observe** — read tool results, compiler/test output, telemetry, diffs, environment state, and errors.
+4. **Verify locally** — run fast feedback checks appropriate to the task.
+5. **Decide** — continue, retry with a changed local approach, complete the task, request more context/authority, return to Planning, propose Contract change, or escalate.
+
+The loop is adaptive, but bounded by explicit stop conditions and external authority controls.
+</div>
+
+<div className="deep-section">
+### What the worker may change
+Normally allowed within task/Plan bounds:
+- implementation order;
+- local algorithms or code structure that preserve architectural constraints;
+- diagnostic steps;
+- retry strategy;
+- temporary scratch artifacts;
+- test/verification implementation details;
+- use of approved tools/capabilities;
+- minor refactoring required to complete the bounded work when scope rules permit it.
+
+Normally **not** allowed without routing:
+- redefining Goal / Spec / Proof;
+- expanding the increment because adjacent work looks useful;
+- changing significant architecture without the Planning/ADR path;
+- granting itself new authority;
+- suppressing failed evidence to claim success;
+- accepting its own work as independent Validation.
+</div>
+
+<div className="deep-section">
+### Execution outcomes are routed, not flattened into pass/fail
+A failed attempt can mean different things:
+- **Execution defect** — the route is fine; implementation failed. Retry or fix locally.
+- **Plan defect** — dependencies, architecture assumptions, sequencing, or verification strategy are wrong. Return to Planning.
+- **Contract issue** — new evidence suggests Goal/Spec/Proof should change. Submit a versioned proposal.
+- **Authority issue** — required action is not permitted. Request approval or alter the Plan.
+- **Uncertain evidence** — neither worker nor checker can confidently classify the result. Escalate.
+
+Good orchestration preserves this distinction because “try again” is not the right response to every failure.
+</div>
+
+<div className="deep-section">
+### Execution topology patterns
+The system chooses the simplest useful pattern rather than equating more agents with more sophistication.
+
+#### 1. Single-agent loop
+One capable worker executes a bounded task and runs local feedback checks.
+
+**Best fit:** ordinary well-scoped work with strong context and inexpensive verification.
+
+#### 2. Fresh-agent relay
+A fresh worker continues from a structured handoff instead of preserving one long conversation.
+
+**Best fit:** long-running work, context degradation, model switching, or natural phase boundaries.
+
+#### 3. Parallel independent workers
+Multiple agents work on independent or deliberately duplicated slices.
+
+**Best fit:** separable tasks, independent solution exploration, or redundancy where comparison has value.
+
+#### 4. Maker → Checker
+One worker produces an artifact; another checks it before the attempt proceeds.
+
+**Best fit:** work where rapid independent feedback during Execution is valuable.
+
+<div className="deep-note"><strong>Maker → Checker is an execution topology, not the Validation lifecycle stage.</strong> Final independent Validation still judges the completed evidence against Contract Proof.</div>
+
+#### 5. Coordinated multi-agent
+An orchestrator delegates to specialized workers and reconciles results.
+
+**Best fit:** genuinely decomposable work with enough parallel value to justify coordination cost.
+
+<div className="quote">More agents ≠ more agentic.</div>
+</div>
+
+<div className="deep-section">
+### Structured handoffs inside Execution
+When control moves to a fresh agent, the handoff should carry current state rather than a conversational autobiography:
+- Contract/Plan/task refs;
+- current implementation state;
+- decisions and constraints;
+- changed files/resources;
+- commands/tools already run;
+- evidence and failures;
+- unresolved risks/blockers;
+- source pointers;
+- next action and stop conditions.
+
+A handoff allows the receiving agent to verify the state itself instead of trusting a lossy summary.
+</div>
+
+<div className="deep-section">
+### Evidence production
+Execution creates the artifacts Planning said would satisfy Proof:
+- implementation and configuration;
+- tests/evals/fixtures;
+- scan results;
+- benchmark results;
+- deployment/runtime observations;
+- telemetry traces/metrics/logs;
+- screenshots or human-review artifacts where appropriate;
+- provenance showing what version/environment produced the result.
+
+Evidence should be linked to the relevant Proof item so Validation is not forced to reconstruct what each result means.
+</div>
+
+<div className="deep-section">
+### Capability use
+Workers interact with real capabilities—source control, CI/CD, runtime, telemetry, secrets, databases, business systems, issue trackers, or other tools—through whatever interfaces the organization has chosen.
+
+AE does not require every tool call to pass through one adapter or protocol. Direct APIs, CLIs, Model Context Protocol (MCP), enterprise brokers, and custom integrations can all be appropriate.
+
+The invariant is that tool access does not silently imply authority.
+</div>
+
+<div className="deep-section">
+### Access, authority, and enforcement
+At execution time, the actual action should be evaluated with real context:
+
+```text
+Actor identity
++ current task / Contract / Plan
++ target resource
++ environment
++ requested action
+→ policy decision
+→ scoped grant / approval / deny
+→ Policy Enforcement Point
+→ evidence
+```
+
+The worker may have broad filesystem or shell access and still lack Decision Authority to deploy production, alter an approved Contract, rotate secrets, delete data, or accept the final outcome.
+
+Enforcement should happen where the protected action occurs—not merely as text in the Plan.
+</div>
+
+<div className="deep-section">
+### Retry and stop discipline
+An autonomous loop without stop rules becomes expensive wandering. Useful stop conditions include:
+- attempt count / time / cost budget;
+- repeated identical failure signature;
+- Plan assumption disproven;
+- required authority unavailable;
+- new Contract-level ambiguity;
+- unsafe or destructive action required;
+- evidence remains inconclusive after defined checks;
+- dependency outside worker control.
+
+The stop result should contain diagnostic evidence and a recommended routing decision.
+</div>
+
+<div className="deep-section">
+### Model placement
+Execution can mix model capability by task. Budget/local/specialist models may handle repetitive bounded work while stronger models handle difficult diagnosis, architecture-sensitive decisions, or failed attempts.
+
+Routing should become evidence-driven over time. Measure total cost, human intervention, elapsed time, first-pass effectiveness, rework, and Validation outcome—not token price alone.
+</div>
+
+<div className="deep-section">
+### Interactions
+- **Plan** supplies bounded tasks, architecture context, dependencies, verification hooks, and authority expectations.
+- **Knowledge & Context** supplies fresh task packets and receives handoffs/lessons.
+- **Governed Access** decides/enforces protected actions.
+- **Verification** provides rapid feedback during the loop.
+- **Validation** independently judges the completed increment.
+- **Metrics & Learning** records attempts, retries, model/tool mix, costs, rework, and failure classifications.
+</div>
+
+<div className="deep-section">
+### Failure modes
+- **Autonomous wandering:** no stop conditions or Plan boundary.
+- **Retry blindness:** repeatedly changing code when the Plan assumption is wrong.
+- **Scope creep disguised as helpful refactor:** adjacent improvements enter the increment silently.
+- **Self-approval:** the same worker interprets ambiguous results in its own favor.
+- **Context decay:** one long-running agent forgets earlier constraints.
+- **Multi-agent theater:** many workers add coordination without parallel value.
+- **Tool access mistaken for authority:** administrative credentials become blanket permission.
+- **No evidence capture:** work succeeds but cannot later be validated or reproduced.
+</div>
+
+<div className="deep-section">
+### Implementation options
+Execution can run through coding agents, general-purpose agents, workflow engines, CI workers, remote sandboxes, local servers, cloud runtimes, or mixed systems. Required capabilities are more important than runtime brand:
+- bounded task state;
+- tool use and observation;
+- retry/adaptation;
+- authority-aware action path;
+- evidence capture;
+- handoff/escalation;
+- traceability to Plan and Contract.
+</div>
 </section>
-<section className="pane">
-<span className="pill blue">How we work</span>
 
-## Give the worker
-A bounded L3 task or L2 increment, relevant Contract + architecture + dependencies, fresh context/handoff, allowed capabilities and authority, and required evidence hooks.
+<section className="deep-pane deep-work">
+<div className="deep-pane-header"><span className="pill blue">How we work</span><h2>Human Owner + AI practice</h2></div>
 
-## Worker behavior
-Use tools, inspect feedback, test continuously, retry where reasonable, capture state, and stop or escalate when evidence says the boundary or Plan is wrong.
+<div className="deep-section">
+### Give the agent outcomes and rails, not keystrokes
+A well-planned task should let the worker choose local implementation moves. Humans should not script every command unless the task genuinely requires a procedure.
 
-## Maker → Checker
-Maker → Checker is a useful **execution topology**. It does not replace lifecycle Validation against Contract Proof.
+Before execution, the human should be able to answer:
+- What outcome is this task supposed to produce?
+- What architecture/decision boundaries matter?
+- What evidence will tell us it worked?
+- What can the agent do without asking?
+- What must route back to a human or Planning?
+</div>
 
-## Open experiment
-Whether Execution Loop deserves its own reusable skill remains intentionally unresolved; validate the pattern through real work rather than declaring it universal up front.
+<div className="deep-section">
+### Start with a task brief and state check
+The agent should restate:
+- active Contract/Plan/task versions;
+- affected architecture;
+- current repository/environment state;
+- authority available;
+- local feedback checks;
+- stop/escalation conditions.
+
+Then it should inspect the real system before editing. A stale Plan plus a changed codebase is a reason to reconcile state, not charge ahead.
+</div>
+
+<div className="deep-section">
+### Encourage fast local feedback
+During implementation, the worker should use the cheapest credible checks available:
+- compiler/type/lint feedback;
+- focused unit/integration tests;
+- local security/static analysis;
+- schema or migration checks;
+- representative eval cases;
+- rendered visual inspection;
+- runtime smoke test;
+- telemetry/log inspection.
+
+These checks help the worker converge. They do not replace final independent Validation.
+</div>
+
+<div className="deep-section">
+### Diagnose before retrying
+When something fails, ask the agent to classify the failure before changing anything:
+
+1. Is the implementation wrong?
+2. Is the local environment wrong?
+3. Is a dependency unavailable?
+4. Was the task/Plan assumption wrong?
+5. Is the Contract ambiguous or contradicted by new evidence?
+6. Is additional authority required?
+
+This tiny discipline prevents expensive chains of random edits.
+</div>
+
+<div className="deep-section">
+### Use Maker → Checker selectively
+For risky implementation steps, create a fresh checker with a different job: find defects, not help finish the code.
+
+Useful checker prompts focus on evidence:
+- inspect the diff against the task/architecture constraints;
+- run independent tests/checks;
+- look for hidden scope expansion;
+- identify security or operational consequences;
+- classify findings by severity and route.
+
+Do not let the maker choose which checker findings “count” merely because they are inconvenient.
+</div>
+
+<div className="deep-section">
+### When to start a fresh agent
+A fresh-agent relay is useful when:
+- the context has become noisy or heavily compacted;
+- work crosses a natural phase boundary;
+- a different capability/model is better for the next task;
+- independence matters;
+- a long-running session is showing repeated confusion;
+- the current agent has become anchored to one failed approach.
+
+Have the outgoing worker write a structured handoff, then let the incoming worker verify current state.
+</div>
+
+<div className="deep-section">
+### Multi-agent decision test
+Before adding workers, ask:
+- Can the work actually proceed in parallel?
+- Are outputs independently checkable?
+- Will coordination cost exceed saved elapsed time?
+- Does specialization materially improve quality?
+- Can authority be scoped per worker?
+- Is there a clear reconciliation point?
+
+If not, use one agent. Simplicity is a feature.
+</div>
+
+<div className="deep-section">
+### Human intervention should be consequential
+Humans are most valuable when the system surfaces a real judgment:
+- architecture alternative with meaningful tradeoff;
+- new information that changes scope/intent;
+- authority request for a protected action;
+- repeated failure suggesting the Plan is wrong;
+- risk acceptance;
+- ambiguous evidence;
+- user/mission quality judgment that cannot be reduced to an automated check.
+
+The interface should present context, alternatives, consequences, and evidence at that moment—not merely ask “continue? yes/no.”
+</div>
+
+<div className="deep-section">
+### Capture attempt history without drowning in logs
+For each execution→validation attempt, retain compact structured data:
+- Plan/task version;
+- model/tool/runtime mix;
+- elapsed time and cost;
+- key changes;
+- verification/evidence results;
+- failure classification;
+- human interventions;
+- next route.
+
+Raw logs can remain available by pointer. The system memory should preserve what future planning/routing can learn from.
+</div>
+
+<div className="deep-section">
+### Practical execution checklist
+Before declaring an execution attempt ready for Validation:
+- Did the worker stay inside Contract/Plan boundaries?
+- Were material Plan changes routed and reviewed?
+- Are architecture-significant changes recorded appropriately?
+- Did required local verification run?
+- Is evidence linked to Proof?
+- Are protected actions auditable?
+- Are unresolved risks/blockers explicit?
+- Could a fresh validator reproduce or inspect the evidence?
+
+If yes, stop optimizing and hand the increment to Validation.
+</div>
 </section>
 </div>

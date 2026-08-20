@@ -1,39 +1,365 @@
 ---
 layout: ../../layouts/GuideLayout.astro
 title: Verification & Observability
-description: Detailed mapping from Contract Proof to verification strategy, execution evidence, observability, independent Validation, and result routing.
+description: "Detailed Contract Proof, Planning verification strategy, execution feedback checks, independent Validation, observability evidence, provenance, routing outcomes, and Human + AI operating practice."
 section: deep
-kicker: Go Deeper · Evidence against Proof
+kicker: Go Deeper · Evidence before acceptance
 keywords:
-  - AI agent verification
+  - AI agent validation
+  - Contract Proof
+  - verification strategy
   - observability evidence
-  - independent validation
+  - independent AI validation
 ---
-<div className="split">
-<section className="pane">
-<span className="pill purple">How it works</span>
+<div className="deep-columns">
+<section className="deep-pane deep-how">
+<div className="deep-pane-header"><span className="pill purple">How it works</span><h2>The system mechanics</h2></div>
 
-## Definitions
-**Proof** defines required evidence. **Verification** creates and evaluates tests, checks, reviews, evals, and observations. **Observability** makes system evidence available. **Validation** is the gate that determines whether the outcome satisfies the Contract.
+<div className="deep-section">
+### Purpose
+Verification & Observability make “done” an evidence question instead of an assertion. The system should know **what evidence was required, how it was produced, which version/environment produced it, and who independently judged it**.
 
-<div className="flow"><div className="step"><h3>Contract Proof</h3></div><div className="step"><h3>Planned verification</h3></div><div className="step"><h3>Execution evidence</h3></div><div className="step"><h3>Independent Validation</h3></div><div className="step"><h3>Route result</h3></div></div>
+<div className="quote">The doer should not control the judge or rewrite the Proof.</div>
+</div>
 
-## Independence
-The executor cannot rewrite Proof, suppress failure, or control the final judge. Use as much independence as risk warrants.
+<div className="deep-section">
+### Proof, verification, and Validation are different
+**Contract Proof** defines **what evidence must exist** before the Goal and Spec may be accepted.
+
+**Verification strategy** is created during Planning and defines **how that evidence will be produced**.
+
+**Execution verification** is the feedback the worker uses while building: tests, compilers, scans, local evals, smoke checks, visual inspection, instrumentation, and similar fast signals.
+
+**Validation** is the lifecycle judgment performed independently after the bounded increment: does the produced evidence actually satisfy the approved Contract Proof?
+
+```text
+Contract Proof
+     ↓
+Planning verification/test strategy
+     ↓
+L3 evidence-producing tasks
+     ↓
+Execution + local verification
+     ↓
+Evidence package
+     ↓
+Independent Validation
+     ↓
+Accept / route backward / escalate
+```
+</div>
+
+<div className="deep-section">
+### Proof is not a test plan
+Proof may require evidence that is not executable test code:
+- human acceptance of a workflow or visual outcome;
+- architecture review;
+- benchmark threshold;
+- security scan / threat review;
+- operational observation;
+- telemetry confirming runtime behavior;
+- policy/compliance review;
+- representative user scenario;
+- migration/recovery demonstration.
+
+Planning decides which mechanisms, environments, fixtures, reviewers, thresholds, and instruments will create credible evidence.
+</div>
+
+<div className="deep-section">
+### Verification strategy scales with risk and complexity
+For a tiny documentation correction, verification may be rendered inspection plus link validation.
+
+For an internal CRUD feature, it may include unit/integration tests, representative end-to-end scenarios, security checks, and staging acceptance.
+
+For a production migration, it may add migration dry runs, backward compatibility evidence, rollback proof, production telemetry, security review, and explicit human release judgment.
+
+The strategy is mandatory; heavyweight test infrastructure is not.
+</div>
+
+<div className="deep-section">
+### Evidence should be traceable
+A useful evidence record links:
+- Contract version and Proof item;
+- Plan/version and verification method;
+- implementation/build/commit version;
+- environment/configuration;
+- tool/test/eval version where relevant;
+- timestamp;
+- result and threshold;
+- raw artifact/source pointer;
+- actor that produced it;
+- reviewer/validator that judged it.
+
+This is what makes a result reproducible and reviewable instead of merely persuasive.
+</div>
+
+<div className="deep-section">
+### Independent Validation
+The validator should receive fresh enough context to evaluate the result rather than inherit the maker’s confidence.
+
+A validator needs:
+- approved Contract / Proof;
+- reviewed Plan and material Plan changes;
+- architecture context needed to understand impact;
+- implementation/evidence package;
+- relevant policies/standards;
+- clear authority boundaries.
+
+It does **not** need the maker’s entire conversational history. Independence is strengthened when the validator can inspect sources and rerun checks itself.
+</div>
+
+<div className="deep-section">
+### Validation routes outcomes instead of only saying “fail”
+A failed or uncertain Validation result should classify the likely layer:
+
+| Route | Meaning | Next move |
+| --- | --- | --- |
+| **Pass** | Evidence satisfies Proof | Human acceptance if required → complete |
+| **Execution defect** | Implementation/evidence production is wrong | return to Execution |
+| **Plan defect** | route/decomposition/verification strategy is wrong | return to Planning |
+| **Contract proposal** | new evidence suggests target/Proof should change | Human Owner proposal path |
+| **Uncertain evidence** | result cannot be judged confidently | gather more evidence / expert escalation |
+
+This prevents teams from repeatedly patching implementation when the real problem is the Plan or Contract.
+</div>
+
+<div className="deep-section">
+### Observability is an evidence capability
+Observability makes internal/runtime behavior available for reasoning through traces, metrics, logs, events, health signals, and related telemetry.
+
+AE treats observability as vendor-neutral capability. OpenTelemetry is one established option for portable telemetry semantics; organizations may use any backend that can produce trustworthy evidence.
+
+Observability can support:
+- diagnosing Execution failures;
+- proving performance/reliability behavior;
+- detecting regressions after deployment;
+- correlating an attempt with runtime events;
+- measuring escaped defects/rework;
+- feeding operational learning back into future Plans.
+</div>
+
+<div className="deep-section">
+### Observability is not “collect all logs forever”
+Useful telemetry is designed around decisions and evidence. Ask:
+- What behavior would we need to observe?
+- At what granularity?
+- How will events correlate to version/task/request?
+- What retention is necessary?
+- Does telemetry contain sensitive information?
+- Who can access it?
+- Which signal is evidence versus diagnostic noise?
+
+More telemetry can increase cost and privacy/security exposure without increasing understanding.
+</div>
+
+<div className="deep-section">
+### Validator independence can be implemented several ways
+- fresh agent/model with no maker conversation;
+- dedicated validator persona/runtime;
+- human reviewer;
+- specialist security/performance evaluator;
+- automated acceptance suite plus independent interpretation;
+- multi-stage validation combining machine and human evidence.
+
+The invariant is separation of interests: the party motivated to finish the work should not be the sole authority deciding ambiguous evidence is sufficient.
+</div>
+
+<div className="deep-section">
+### Human judgment in Validation
+Some Proof can be machine-checked. Some requires human evaluation of value, usability, mission suitability, policy, taste, risk, or contextual consequences.
+
+The system should route a human the **evidence and decision**, not a pile of logs. Human acceptance should be explicit where the Contract requires it and absent where it adds no value.
+</div>
+
+<div className="deep-section">
+### Interactions
+- **Contract** owns Proof.
+- **Planning** creates verification strategy and evidence-producing tasks.
+- **Execution** runs fast checks and produces evidence.
+- **Capability Interfaces** connect to tests/scanners/telemetry/environments.
+- **Governed Access** protects independent environments/evidence and privileged checks.
+- **Knowledge & Context** retains validated results and source pointers.
+- **Metrics & Learning** aggregates attempt/rework/quality/cost outcomes after Validation.
+</div>
+
+<div className="deep-section">
+### Access, authority, and enforcement
+Validators need enough Operational Authority to inspect or rerun evidence without being able to rewrite the target.
+
+Protected invariants can include:
+- active Contract Proof is read-only to validator/worker;
+- maker cannot delete inconvenient evidence;
+- validation result is separately attributable;
+- required checks cannot be bypassed by worker-owned configuration;
+- human-required acceptance routes to the authorized decision holder.
+
+Repository rulesets, protected environments, independent CI, immutable evidence stores, or policy gateways can implement these controls.
+</div>
+
+<div className="deep-section">
+### Failure modes
+- **Doer = judge:** worker declares success from its own interpretation.
+- **Proof rewritten late:** acceptance gets easier after implementation struggles.
+- **Test-count theater:** many tests exist but do not cover required evidence.
+- **Flaky evidence:** inconsistent checks are treated as authoritative.
+- **Untraceable screenshot/log:** no version/environment/provenance.
+- **Validator inherits maker framing:** independence becomes cosmetic.
+- **Observability flood:** huge telemetry volume with no decision model.
+- **Human approval with no evidence synthesis:** reviewer clicks through noise.
+- **Validation as final-only testing:** feedback arrives too late because Execution did no local verification.
+</div>
+
+<div className="deep-section">
+### Implementation options
+Verification/Validation may use CI systems, test frameworks, eval harnesses, security scanners, benchmark tools, visual regression, architecture checks, telemetry stacks, manual review workflows, policy engines, or mixed evidence packages.
+
+AE specifies the evidence lifecycle and independence boundary, not one test framework.
+</div>
 </section>
-<section className="pane">
-<span className="pill blue">How we work</span>
 
-## During Planning
-Map each load-bearing Proof item to credible tests, evals, reviews, environment, fixtures, thresholds, and evidence collection.
+<section className="deep-pane deep-work">
+<div className="deep-pane-header"><span className="pill blue">How we work</span><h2>Human Owner + AI practice</h2></div>
 
-## During Execution
-Run fast feedback continuously: unit/integration tests, static and security checks, benchmarks, telemetry, and Maker → Checker where useful.
+<div className="deep-section">
+### Start Validation thinking during Contract formation
+When defining Proof, ask the Human Owner:
+- What would make you confident this outcome is real?
+- Which failures would be unacceptable even if the happy path works?
+- What must remain unchanged?
+- Which evidence can be automated?
+- Which evidence requires contextual human judgment?
 
-## At Validation
-Evaluate evidence independently and route: accept; execution defect/retry; Plan defect/replan; Contract-change proposal; or uncertain evidence/escalation.
+This prevents acceptance from becoming whatever the implementation happens to demonstrate later.
+</div>
 
-## Quality
-Include human-rated mission/user quality and independent engineering quality where automation cannot fully judge the outcome.
+<div className="deep-section">
+### During Planning, map every Proof item to evidence production
+Have the AI build a simple trace:
+
+| Proof requirement | Evidence method | Producer | Environment | Validator |
+| --- | --- | --- | --- | --- |
+| User can reassign task | representative functional scenario | Execution | staging | fresh validator |
+| Unauthorized user cannot edit | auth/security checks | Execution/CI | test+staging | validator/security reviewer |
+| p95 response under target | benchmark + telemetry | Execution | staging | validator |
+| Product Owner accepts workflow | guided scenario | working increment | staging | Human Owner |
+
+If a row has no credible evidence method, the Plan is incomplete.
+</div>
+
+<div className="deep-section">
+### Let Execution verify continuously
+Encourage the worker to run focused checks after meaningful changes. The goal is fast diagnosis, not bureaucratic proof generation after every line.
+
+When a check fails, retain enough result information to classify the failure. Avoid the common anti-pattern where the agent keeps editing until output becomes green without understanding why.
+</div>
+
+<div className="deep-section">
+### Build a clean evidence package
+Before handoff to Validation, the worker should summarize evidence by Proof item and provide raw pointers.
+
+Good package:
+- Proof P1 → test suite X, commit SHA, 12/12 pass, result artifact link;
+- Proof P2 → security scan Y, no high/critical findings, artifact link;
+- Proof P3 → staging benchmark, p95 180 ms vs 250 ms threshold, telemetry link;
+- Proof P4 → requires Human Owner representative scenario; not yet accepted.
+
+Bad package:
+> “Everything looks good; tests passed.”
+</div>
+
+<div className="deep-section">
+### Give the validator a skeptical job
+The validator prompt should optimize for finding unsupported acceptance, not helping the maker finish.
+
+Ask it to:
+1. enumerate Contract Proof items;
+2. inspect evidence provenance;
+3. rerun or independently sample checks where useful;
+4. inspect likely edge/failure cases;
+5. identify evidence gaps or contradictions;
+6. classify any failure by Execution / Plan / Contract / uncertainty;
+7. produce a recommendation with confidence and supporting sources.
+</div>
+
+<div className="deep-section">
+### Human acceptance should be scenario-based
+When human judgment is required, present the real working outcome and representative scenarios rather than a generated status summary.
+
+For example:
+- “Create task, assign to another user, reassign, complete, verify reminder behavior.”
+- Show evidence of preserved permissions and performance.
+- Highlight known limitations/non-goals.
+- Ask the Human Owner to accept or identify a specific mismatch.
+
+This keeps human judgment grounded in the product rather than paperwork.
+</div>
+
+<div className="deep-section">
+### Use observability during and after release
+For runtime-sensitive Proof, define what to watch after deployment:
+- error rate;
+- latency;
+- queue backlog;
+- authorization failures;
+- business outcome signal;
+- resource saturation;
+- user-impact events.
+
+Tie telemetry to the deployed version and acceptance window. If post-release evidence contradicts Validation, treat it as new evidence for a new loop—not as something to hide because the ticket is closed.
+</div>
+
+<div className="deep-section">
+### Treat flaky or contradictory evidence as uncertainty
+Do not let the AI vote among inconsistent results. Route uncertainty:
+- rerun under controlled conditions;
+- inspect environment drift;
+- improve instrumentation;
+- ask a specialist;
+- revise the Plan verification strategy;
+- propose Contract clarification if the target itself is ambiguous.
+
+“Green on one run” is not strong evidence when the check is unstable.
+</div>
+
+<div className="deep-section">
+### Metrics after a Validated Increment
+Once accepted, capture diagnostic outcome measures such as:
+- end-to-end elapsed time;
+- Planning revisions;
+- execution attempts;
+- Validation attempts;
+- first-pass effectiveness;
+- human hours;
+- model/tool/infra cost;
+- model capability mix;
+- escaped defects/downstream rework;
+- user/mission quality;
+- complexity/risk band.
+
+These are learning signals, not automatic performance targets. The system should use them to improve future recommendations.
+</div>
+
+<div className="deep-section">
+### Practical Validation checklist
+Before acceptance:
+- Is the active Contract version unambiguous?
+- Is every material Proof item addressed?
+- Is evidence tied to the correct implementation/environment?
+- Can important checks be reproduced or independently inspected?
+- Is the validator meaningfully independent?
+- Are missing/contradictory results visible?
+- Are human-required judgments routed to the right person?
+- Does the result classify failures instead of only saying pass/fail?
+- Are post-release observation needs explicit where relevant?
+
+If the evidence is sufficient, accept. If not, route to the layer that actually needs change.
+</div>
+
+<div className="deep-section">
+### Training exercise
+Give a team a simple feature with a deliberately vague Proof statement: “all tests pass.” Ask them to rewrite Proof as concrete evidence, derive a verification strategy, then have one agent implement and a separate agent validate.
+
+The gap between “tests passed” and “we have evidence the outcome is correct” becomes obvious quickly.
+</div>
 </section>
 </div>

@@ -1,58 +1,365 @@
 ---
 layout: ../../layouts/GuideLayout.astro
 title: Planning & Plan Review
-description: Detailed architecture-aware Planning mechanics, C4 and ADR orientation, Planning Depth and Method, L2/L3 decomposition, verification strategy, and independent Plan Review.
+description: "Detailed architecture-aware planning, L1-L4 decomposition, Planning Depth and Method, verification strategy, ADRs, Plan Review, and Human + AI working practice."
 section: deep
-kicker: Go Deeper · Architecture-aware execution design
+kicker: Go Deeper · Architecture-aware planning
 keywords:
-  - C4 planning
-  - Plan Review
+  - agentic engineering planning
+  - architecture-aware planning
   - Planning Depth
   - Planning Method
+  - Plan Review
 ---
-<div className="split">
-<section className="pane">
-<span className="pill purple">How it works</span>
+<div className="deep-columns">
+<section className="deep-pane deep-how">
+<div className="deep-pane-header"><span className="pill purple">How it works</span><h2>The system mechanics</h2></div>
 
-## Purpose
-Convert the approved Contract into architecture-aware, bounded, verifiable work.
+<div className="deep-section">
+### Purpose
+Planning converts an approved Contract into a **reviewed, architecture-aware route to evidence**. It answers how the system will satisfy Goal / Spec / Proof without confusing the Plan with the Contract itself.
 
-## Required orientation
-Contract + canonical C4 (Context, Container, Component, Code) architecture + relevant Architecture Decision Records (ADRs) + codebase/system state.
+The Plan is allowed to evolve when implementation evidence shows the route is wrong. The Contract is a different governance object: Planning may propose a Contract change, but cannot redefine success by editing it.
 
-## Outputs
-- architecture changes or references;
-- significant ADRs;
-- Planning Depth + Planning Method;
-- L2 execution increments;
-- L3 implementation/test tasks;
-- dependencies and parallelism;
-- execution topology and context strategy;
-- verification/test strategy mapped to Proof.
+<div className="deep-note deep-good"><strong>Planning principle:</strong> choose the simplest useful pattern. Increase planning or orchestration complexity only when task shape, risk, uncertainty, or evidence justifies it.</div>
+</div>
 
-## Depth
-Most ongoing loops reference the durable L1 product/system baseline and create L2/L3 artifacts. L4 is local agent micro-planning during execution.
+<div className="deep-section">
+### How it works
+A practical Planning pass normally performs these moves, though not every task needs them with equal depth:
 
-<div className="callout good"><strong>Heavier process is not more mature.</strong> Add planning, review, or orchestration complexity only when it earns its cost.</div>
+1. **Orient to Contract and Loop Context.** Confirm the approved target, lifecycle situation, Plan category, risk, and current architecture version.
+2. **Orient to the real system.** Inspect canonical architecture, affected code/services, interfaces, relevant Decision Records / Architecture Decision Records (ADRs), operational constraints, and prior lessons.
+3. **Identify impact.** Mark the exact architecture elements and relationships likely to change or carry risk.
+4. **Choose Planning Depth.** Decide how far to decompose before execution.
+5. **Choose Planning Method.** Decide how to slice and order the work.
+6. **Make significant design decisions.** Record architecture-significant choices through the ADR process and update affected architecture views when necessary.
+7. **Derive verification strategy from Contract Proof.** Decide how required evidence will be created.
+8. **Create bounded work packages.** Produce L2 increments and L3 executable tasks with dependencies, evidence hooks, authority needs, and context strategy.
+9. **Review the Plan independently.** Challenge assumptions, architecture fit, evidence coverage, dependencies, and change boundaries before Execution.
+</div>
+
+<div className="deep-section">
+### Contract sits above the planning hierarchy
+The Contract is not “Level 1.” It defines the target the hierarchy must serve.
+
+```text
+Contract — Goal / Spec / Proof
+       ↓
+L1 — durable product/system baseline
+       ↓
+L2 — bounded execution increment
+       ↓
+L3 — executable implementation / verification tasks
+       ↓
+L4 — local agent micro-plan
+```
+
+**L1** is the durable product/capability and canonical architecture baseline. Greenfield work may establish enough L1 to begin. Existing products usually reference an existing L1 and may first reconstruct or validate it from code, architecture, docs, and prior decisions.
+
+**Most ordinary work does not change L1.** A feature, defect, sustainment action, security fix, or dependency upgrade usually references the existing product/system baseline and creates L2/L3 work beneath it.
+
+**L2** is a bounded increment derived from the Contract. It is not another name for Contract.
+
+**L3** is dependency-aware executable work created during Planning: implementation, tests/evals, migrations, documentation, instrumentation, reviewer preparation, and related tasks.
+
+**L4** is the agent’s local execution plan. It is usually ephemeral unless a durable decision, lesson, or handoff-worthy state emerges.
+</div>
+
+<div className="deep-section">
+### Architecture-aware planning
+A Plan should reference the canonical **C4 (Context, Container, Component, Code)** architecture and visually identify the affected elements and relationships.
+
+At minimum, many teams can work effectively with:
+- canonical System Context;
+- canonical Container view;
+- Component detail when internal structure matters to the decision.
+
+The diagram is not decorative documentation. It is a **conversation surface**. When a human must choose between alternatives, the system should show the exact affected components/interfaces plus consequences rather than forcing the person to discover coupling from prose.
+
+<div className="deep-note"><strong>Architecture-blind decomposition:</strong> a ticket list that does not show where work lands, what interfaces it touches, what depends on it, or which decisions constrain it.</div>
+</div>
+
+<div className="deep-section">
+### Architecture Decision Records
+An ADR captures an architecturally significant choice, context, alternatives/tradeoffs, rationale, and consequences. The ADR should reference stable architecture element IDs or otherwise make the affected part of the system unambiguous.
+
+Not every L1 change is architecture-significant:
+- architecture-impacting L1 change → ADR process + affected C4 update;
+- product/capability reprioritization without architecture significance → product governance, not a forced ADR.
+
+Older decisions should not be silently rewritten. Supersede them with a new decision that preserves history.
+</div>
+
+<div className="deep-section">
+### Planning Depth
+Planning Depth controls **how far down the hierarchy to decompose before Execution**. It is a mandatory decision, even when the answer is “lightweight.”
+
+A useful spectrum:
+- orient and execute with minimal explicit decomposition;
+- define an L2 increment and let the agent derive local tasks;
+- define L2 + explicit L3 tasks and dependencies;
+- create sub-plans/spec-of-specs for complex or high-risk work.
+
+Depth is not maturity. Excess decomposition can become stale before Execution learns anything.
+</div>
+
+<div className="deep-section">
+### Planning Method
+Planning Method controls **how work is sliced and ordered**. Candidate methods are intentionally experimental rather than a single mandated best practice:
+
+| Method | Useful when | Main tradeoff |
+| --- | --- | --- |
+| Lightweight / agent-led | bounded, familiar, low-risk work | fastest; depends on strong context and verification |
+| Explicit task plan | dependencies must be visible | more reviewable; can over-plan |
+| Increment / vertical slice | user-visible value can be delivered in slices | good feedback; cross-cutting foundations may be awkward |
+| Foundation / dependency-first | prerequisites dominate | reduces blocked work; delays visible value |
+| Rolling-wave | uncertainty is high | adapts well; requires re-planning discipline |
+| Spec-of-specs / sub-plan | large bounded subsystems | isolates complexity; adds coordination |
+| Orchestrator-worker | parallel specialized work is genuinely useful | throughput vs coordination cost |
+| Evidence / test-first | Proof or risk should shape implementation | strong feedback; can be excessive for inspection-only evidence |
+
+Teams should compile actual quality, rework, elapsed-time, cost, and review outcomes so the system can learn which methods fit which work.
+</div>
+
+<div className="deep-section">
+### Verification strategy belongs to Planning
+Contract Proof defines **what evidence is required**. Planning derives **how to produce it**.
+
+```text
+Contract Proof
+   ↓
+Planning verification / test strategy
+   ↓
+L3 test, eval, instrumentation, review, environment tasks
+   ↓
+Execution produces evidence
+   ↓
+Independent Validation judges evidence against Proof
+```
+
+Verification strategy is never optional, but “test code” is not always required. Evidence may be inspection, benchmark, security scan, human acceptance, operational observation, architecture review, telemetry, or other suitable proof.
+</div>
+
+<div className="deep-section">
+### Dual-format Plan
+A strong Plan has two complementary forms:
+
+**Human-readable view** — architecture diagram context, alternatives, consequences, sequencing, decision points, and evidence strategy.
+
+**Machine-readable companion** — work package IDs, dependencies, affected architecture IDs, context strategy, Proof hooks, authority requirements, review state, and traceability.
+
+The human view supports judgment. The machine view supports execution and governance. Neither should force the other into an unusable shape.
+</div>
+
+<div className="deep-section">
+### Plan Review
+Before Execution, material Plans receive an independent challenge appropriate to risk:
+- planner self-review;
+- fresh, high-capability independent reviewer;
+- diverse/external review when risk warrants it;
+- Human Owner / domain expert review for consequential choices;
+- re-review after material Plan changes.
+
+Review asks whether the Plan still satisfies the Contract, reflects the real architecture, covers required Proof, exposes dependencies and authority, and avoids unnecessary complexity.
+
+The reviewer may recommend a Contract-change proposal. It may not quietly redefine Contract Proof or expand scope.
+</div>
+
+<div className="deep-section">
+### Inputs and outputs
+<div className="deep-mini-flow">
+<div><strong>Inputs</strong>Approved Contract, Loop Context, canonical architecture, code/system state, ADRs/DRs, standards, operational constraints, prior results.</div>
+<div><strong>Transformation</strong>Impact analysis, decisions, depth/method selection, verification strategy, decomposition, dependency and authority analysis, review.</div>
+<div><strong>Outputs</strong>Reviewed versioned Plan, affected architecture map, ADRs/DRs if needed, L2/L3 work, verification strategy, authority/context requirements.</div>
+</div>
+</div>
+
+<div className="deep-section">
+### Access, authority, and enforcement
+Planning can propose work and required Operational Authority. It does not automatically grant that authority.
+
+A Plan may state that Execution will need access to a repository, deployment environment, secrets broker, telemetry platform, or business system. At action time, the real actor/task/target/environment/action is evaluated again and enforced at the protected boundary.
+
+Planning cannot:
+- mutate an approved Contract;
+- self-grant Decision Authority;
+- bypass protected deployment/data boundaries;
+- define its own Validation result.
+</div>
+
+<div className="deep-section">
+### Failure modes
+- **Ticket decomposition before architecture orientation.** Tasks look complete but miss coupling and interfaces.
+- **Contract/Plan collapse.** Changing the route silently changes the target.
+- **Planning ceremony by default.** Every trivial task receives heavyweight decomposition.
+- **No Planning Method decision.** Work ordering is accidental.
+- **Proof ignored until Validation.** Testing/evidence becomes a scramble at the end.
+- **ADR everything.** Decision records become noise and stop signaling significance.
+- **No independent review.** Planner assumptions survive directly into Execution.
+- **Frontier-model reflex.** Every planning step goes to the most expensive model without evidence that the cost reduces rework.
+</div>
+
+<div className="deep-section">
+### Implementation options
+Planning may be implemented through a portal, repository-based plan artifacts, work-management system, architecture tool, agent runtime, or hybrid. The reference architecture requires behavior, not a vendor:
+- Contract-linked Plan versions;
+- architecture references;
+- explicit Planning Depth and Method;
+- verification strategy;
+- L2/L3 decomposition where needed;
+- dependency/context/authority metadata;
+- independent review state;
+- traceability into Execution and Validation.
+</div>
 </section>
-<section className="pane">
-<span className="pill blue">How we work</span>
 
-## Human Owner
-Review decisions against visual architecture, choose among consequential alternatives, approve reserved decisions, and challenge assumptions. The human should not have to discover hidden coupling from prose.
+<section className="deep-pane deep-work">
+<div className="deep-pane-header"><span className="pill blue">How we work</span><h2>Human Owner + AI practice</h2></div>
 
-## AI planner
-Analyze architecture/code, propose alternatives, create or update C4 views, draft ADRs, decompose work, map dependencies, derive verification work, and explain decisions visually.
+<div className="deep-section">
+### Start from the approved target, not an empty planning canvas
+The AI should begin by restating the smallest useful Contract summary and showing the current system architecture. The Human Owner corrects context before the Plan expands.
 
-## Plan Review
-1. Planner self-review.
-2. Fresh capable independent reviewer.
-3. Optional diverse/external reviewer for high-risk work.
-4. Resolve findings and re-review material changes.
+For existing products, the first question is often not “what tasks should we create?” but **“what system do we actually have?”** The AI may need to inspect code, deployment configuration, docs, runtime behavior, architecture, and prior decisions before proposing work.
+</div>
 
-The Plan may change if it still satisfies the Contract. It may propose a Contract change; it cannot silently redefine Proof or expand scope.
+<div className="deep-section">
+### Step 1 — show the affected architecture
+Have the AI mark likely affected C4 elements and relationships. This creates an immediate shared surface for questions:
+- Is this really the system boundary?
+- Are these integrations correct?
+- Is there an existing component that already owns this behavior?
+- What could break downstream?
+- Is the proposed change architecture-significant?
 
-## Experiments
-Record method/depth, model placement, context strategy, quality, cost, human time, attempts, and rework. Use results to improve future recommendations.
+The human should be able to select or point to an exact component/interface and ask about alternatives and consequences.
+</div>
+
+<div className="deep-section">
+### Step 2 — choose Planning Depth explicitly
+Ask the AI to recommend a depth and explain why. The Human Owner or engineering decision holder may accept or adjust it.
+
+**Good recommendation format:**
+- proposed depth;
+- task/risk signals that justify it;
+- what will be specified now;
+- what will intentionally remain adaptive during Execution;
+- cost of planning deeper;
+- signal that would trigger re-planning.
+
+Do not reward a plan for being long.
+</div>
+
+<div className="deep-section">
+### Step 3 — choose Planning Method explicitly
+Have the AI compare the simplest plausible methods rather than jumping directly to an orchestration pattern.
+
+Examples:
+- “This is a bounded defect in one component; lightweight agent-led planning should be enough.”
+- “This spans three interfaces with a database migration; explicit dependency-first tasks reduce avoidable blocking.”
+- “The product uncertainty is high; a rolling-wave vertical slice gives us evidence before committing the whole design.”
+- “Required evidence is the dominant risk; evidence-first planning should shape implementation.”
+
+Capture the selected method as part of the Plan so outcomes can later be compared.
+</div>
+
+<div className="deep-section">
+### Step 4 — make architecture decisions where they belong
+When a significant choice appears, pause task decomposition and reason about the decision itself.
+
+The AI should show:
+1. affected architecture elements;
+2. alternatives;
+3. tradeoffs and constraints;
+4. downstream consequences;
+5. recommendation and confidence;
+6. whether this needs an ADR.
+
+The human decides where required. Then the Plan incorporates the decision rather than burying it inside a task.
+</div>
+
+<div className="deep-section">
+### Step 5 — derive the verification strategy from Proof
+For every Contract Proof item, ask: **what will produce credible evidence?**
+
+The AI maps Proof to:
+- checks/tests/evals;
+- fixtures or representative scenarios;
+- environments;
+- instrumentation;
+- thresholds;
+- independent reviewers;
+- security/architecture scans;
+- human acceptance points.
+
+This exposes missing Proof early. If Proof itself is wrong, stop and propose a Contract change rather than “fixing” it inside the Plan.
+</div>
+
+<div className="deep-section">
+### Step 6 — create L2/L3 work only as far as useful
+A bounded L2 increment should tell the team what coherent slice will be executed and validated. L3 tasks should make dependencies, interfaces, evidence, and ownership clear enough for agents to execute without losing architecture context.
+
+Useful task anatomy can include:
+- task outcome;
+- affected architecture IDs;
+- dependencies;
+- expected files/services/interfaces;
+- context sources;
+- Proof/evidence hook;
+- authority/environment needs;
+- stop/escalation conditions.
+
+Avoid turning L3 into pseudo-code for every implementation decision. That removes the adaptive advantage of an agent.
+</div>
+
+<div className="deep-section">
+### Step 7 — independent Plan Review
+Use a fresh reviewer that did not author the Plan. For consequential work, consider a stronger or differently trained model and/or a human domain reviewer.
+
+Ask the reviewer to classify findings:
+- Contract misunderstanding;
+- architecture mismatch;
+- missing dependency;
+- verification gap;
+- security/authority issue;
+- unnecessary complexity;
+- plausible alternative;
+- uncertainty requiring experiment.
+
+Resolve material findings and re-review material changes.
+</div>
+
+<div className="deep-section">
+### Model placement as an experiment
+Do not assume the most capable model must plan everything. A reasonable baseline hypothesis is **budget/mid-tier models for as much as practical + selective high-capability escalation**.
+
+Compare completed Validated Increments. Did stronger up-front planning reduce execution errors, review cycles, rework, elapsed time, or total cost enough to justify its unit cost? Store the result so future routing improves.
+</div>
+
+<div className="deep-section">
+### Worked decision conversation
+**Human:** “We need reminders for overdue tasks.”
+
+**AI:** “The current architecture shows the web app owns task state, while outbound mail is an external capability. Two plausible patterns are synchronous send from the app or an asynchronous reminder worker. The asynchronous option adds a component but isolates retries and scheduling. This crosses a container boundary and is architecture-significant enough to record. Shall I compare the two on reliability, operational complexity, and cost before drafting an ADR?”
+
+That is the desired interaction: architecture and consequences are visible at the moment of human judgment.
+</div>
+
+<div className="deep-section">
+### Planning completion checklist
+Before Execution:
+- Is the Plan demonstrably derived from the active Contract?
+- Does it reference the real architecture and exact affected elements?
+- Are architecture-significant decisions captured without ADR inflation?
+- Were Planning Depth and Method chosen deliberately?
+- Does verification strategy cover every material Proof requirement?
+- Are L2/L3 boundaries sufficient but not excessively scripted?
+- Are dependencies, context, and authority needs visible?
+- Did a fresh reviewer challenge the Plan?
+- Are unresolved uncertainties explicit?
+
+If the Plan is strong enough to guide bounded adaptive execution, stop planning and execute.
+</div>
 </section>
 </div>

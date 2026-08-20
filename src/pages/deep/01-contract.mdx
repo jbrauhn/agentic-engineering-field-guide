@@ -1,51 +1,309 @@
 ---
 layout: ../../layouts/GuideLayout.astro
 title: Contract
-description: Detailed Goal / Spec / Proof mechanics, authority, change proposals, non-goals, and the Human + AI workflow for establishing a durable target.
+description: "Detailed Goal / Spec / Proof mechanics, authority, change proposals, non-goals, and the Human + AI workflow for establishing a durable target."
 section: deep
 kicker: Go Deeper · Goal / Spec / Proof
 keywords:
   - Goal Spec Proof
   - immutable AI Contract
   - Contract change proposal
+  - agentic engineering contract
 ---
-<div className="split">
-<section className="pane">
-<span className="pill purple">How it works</span>
+<div className="deep-columns">
+<section className="deep-pane deep-how">
+<div className="deep-pane-header"><span className="pill purple">How it works</span><h2>The system mechanics</h2></div>
 
-## Purpose
-Provide a durable, human-owned target that Planning, Execution, and Validation can all reference without letting implementation redefine success.
+<div className="deep-section">
+### Purpose
+The Contract is the durable, human-owned definition of **what success means** for a bounded loop of work. Planning determines the route, Execution performs the work, and Validation judges the evidence—but none of those stages may quietly redefine the target.
 
-## Structure
-- **Loop Context:** lifecycle context + Plan category.
-- **Goal:** desired outcome.
-- **Spec:** requirements, constraints, non-goals, invariants, assumptions, boundaries.
-- **Proof:** required evidence of success.
+A useful Contract is compact enough to reason against and strong enough to prevent three common failures: building the wrong thing quickly, expanding scope invisibly, and allowing implementation convenience to redefine acceptance.
 
-## Authority
-Approved Contracts are immutable to agents. Agents can submit versioned change proposals; any accepted change requires Human Owner approval and downstream impact review.
+<div className="deep-note deep-good"><strong>Core model:</strong> Contract = <strong>Goal / Spec / Proof</strong>. Loop Context sits immediately before it and tells the system what kind of lifecycle situation and work category it is dealing with.</div>
+</div>
 
-<div className="callout"><strong>Machine rules:</strong> `contract_mutable_by_agents=false` · `changes_via_versioned_proposal_only=true` · `any_change_requires_owner_approval=true`</div>
+<div className="deep-section">
+### How it works
 
-A useful change proposal includes the trigger/evidence, rationale, exact diff, alternatives, downstream impact, consequence if deferred, priority recommendation, and provenance.
+#### 0. Establish Loop Context
+Before writing the Contract, classify enough context to choose appropriate planning and control strength:
+- Product / System
+- Lifecycle Context — Inception/Architecture, Build/Initial Delivery, Evolution, Operate/Sustain, Modernize/Migrate, or Retire
+- Plan Category
+- Scope boundary
+- Current architecture version
+- Risk / criticality
+- Trigger or source of the work
+
+Loop Context is metadata about the work. It is **not** part of Goal / Spec / Proof and does not become an excuse to create a giant intake form.
+
+#### 1. Goal — define the outcome
+Goal states the desired result in outcome language. It should be specific enough that a reviewer can tell whether the work mattered, but not so implementation-specific that it prematurely chooses the solution.
+
+#### 2. Spec — define meaning and boundaries
+Spec explains what the Goal means in this increment. It can include:
+- functional requirements and behavior;
+- constraints and policies;
+- explicit non-goals;
+- invariants that must remain true;
+- assumptions and environmental boundaries;
+- compatibility, security, performance, accessibility, or operational expectations.
+
+**Non-goals are first-class.** They are one of the cheapest ways to stop agent-driven scope expansion.
+
+#### 3. Proof — define required evidence
+Proof states the evidence, checks, tests, reviews, observations, or acceptance demonstrations that must exist before the Goal and Spec may be considered satisfied.
+
+<div className="deep-note"><strong>Proof is not a test plan.</strong> Contract Proof says <em>what evidence must exist</em>. Planning later decides <em>how that evidence will be produced</em>, including verification strategy, test assets, reviewers, environments, instrumentation, and thresholds.</div>
+
+#### 4. Approve and lock
+Once approved, the Contract becomes a controlled object. It may be superseded by an approved version, but an agent may not silently rewrite the active Contract during Planning, Execution, or Validation.
+</div>
+
+<div className="deep-section">
+### Inputs and outputs
+
+<div className="deep-mini-flow">
+<div><strong>Inputs</strong>User or mission need, observed problem, product context, architecture context, policies, constraints, evidence, prior decisions.</div>
+<div><strong>Transformation</strong>Human + AI refine intent into Goal / Spec / Proof and expose ambiguity, conflicts, non-goals, and acceptance evidence.</div>
+<div><strong>Outputs</strong>Approved versioned Contract, Loop Context metadata, source/provenance references, and any unresolved assumptions or explicit risks.</div>
+</div>
+
+A Contract should be addressable by stable identity/version so Plans, tasks, evidence, Validation results, Decision Records, and change proposals can trace back to the exact approved target.
+</div>
+
+<div className="deep-section">
+### Interactions with the rest of AE
+- **Planning** consumes the Contract and must produce a route that satisfies it. Planning may propose a Contract change; it cannot mutate the Contract.
+- **Architecture** constrains feasible interpretations of the Spec and gives Planning a real system model to reason against.
+- **Execution** adapts locally inside the reviewed Plan while preserving Contract boundaries.
+- **Validation** independently compares produced evidence against Contract Proof.
+- **Human Owner** owns consequential intent and accepts or rejects Contract versions and change proposals.
+- **Knowledge / memory** preserves the approved Contract, its provenance, prior versions, and relevant downstream impacts.
+- **Observability** may be part of the evidence path when Proof depends on runtime behavior.
+</div>
+
+<div className="deep-section">
+### Access, authority, and enforcement
+The Contract is intentionally asymmetric: many actors may contribute information, but only authorized decision holders may change the accepted target.
+
+**Decision Authority (DA):** the Human Owner retains authority to approve the Contract and any later change. Organizations may define additional required approvers for regulated, safety-critical, security-sensitive, financial, or mission-significant work.
+
+**Operational Authority (OA):** agents may read the Contract, reference it, annotate working state, and create a **versioned change proposal**. They do not receive OA to overwrite the approved Contract object.
+
+**Enforcement:** the system should fail closed on unauthorized mutation attempts and retain an auditable version transition when an approved proposal creates a new Contract version.
+
+```text
+contract_mutable_by_agents: false
+changes_via_versioned_proposal_only: true
+any_change_requires_owner_approval: true
+invite_change_proposals: true
+audit_all_version_transitions: true
+downstream_impact_review: true
+```
+
+The intent is not to reject new information. It is to **welcome new information; control mutation**.
+</div>
+
+<div className="deep-section">
+### Change proposal anatomy
+A strong proposal carries enough information for a human to make a decision without rediscovering the entire situation:
+1. trigger / new evidence;
+2. rationale;
+3. exact proposed diff;
+4. alternatives considered;
+5. downstream impact on Plan, architecture, tasks, evidence, cost, schedule, or risk;
+6. consequence if deferred;
+7. priority recommendation;
+8. provenance / source pointers.
+
+Approved changes create a new version. Rejected proposals remain evidence that the issue was considered.
+</div>
+
+<div className="deep-section">
+### Human knowledge, skills, and abilities
+The Contract requires more than approval authority. Human contributors bring:
+- contextual knowledge of users, mission, organization, policy, and history;
+- logic to distinguish outcome from implementation detail;
+- ingenuity and creativity when reframing the problem;
+- judgment about meaningful tradeoffs and acceptable evidence;
+- values and risk appetite;
+- authority and accountability for consequential commitments.
+
+A weak Human Owner who simply accepts machine-generated wording creates a nominal control, not meaningful governance.
+</div>
+
+<div className="deep-section">
+### Agent support
+AI is useful as a **Contract facilitator**, not Contract owner. It can:
+- interview for missing intent;
+- detect ambiguous words and hidden assumptions;
+- distinguish Goal from solution detail;
+- surface likely non-goals and preservation constraints;
+- challenge vague Proof such as “works correctly”;
+- inspect architecture or existing product behavior to expose conflicts;
+- propose exact version diffs when new information appears;
+- trace downstream artifacts potentially affected by a proposed change.
+
+The agent should communicate with human-native artifacts—conversation, examples, diagrams, alternatives, consequences—not force the human to fill out a form merely because the machine prefers fields.
+</div>
+
+<div className="deep-section">
+### Failure modes
+- **Vague Goal:** “Improve the app” gives Planning no durable outcome.
+- **Spec as giant requirements dump:** useful meaning is buried in low-signal text.
+- **Solution masquerading as Goal:** the Contract prematurely fixes architecture or implementation.
+- **No non-goals:** agents expand into adjacent “helpful” work.
+- **Proof = “tests pass”:** evidence is underspecified and implementation gets to define success.
+- **Mutable acceptance criteria during execution:** the doer changes the judge’s target.
+- **Frozen against reality:** teams refuse legitimate change because “the Contract is immutable.” Immutability applies to unauthorized mutation, not to approved version evolution.
+- **Approval theater:** a human clicks approve without understanding the consequential choices.
+</div>
+
+<div className="deep-section">
+### Implementation options
+The architecture does not require one storage product. A Contract can live in:
+- a versioned repository document plus machine-readable companion;
+- a database-backed portal object;
+- a work-management system with immutable approved versions;
+- a signed artifact in a regulated workflow;
+- a hybrid system where the human-readable view is rendered from structured canonical data.
+
+Minimum capabilities matter more than vendor choice: stable identity, version history, explicit approval, protected mutation, provenance, traceability, and downstream impact visibility.
+</div>
 </section>
-<section className="pane">
-<span className="pill blue">How we work</span>
 
-## Human Owner
-Articulate intent, correct assumptions, decide non-goals and constraints, judge acceptable evidence, and approve the final Contract.
+<section className="deep-pane deep-work">
+<div className="deep-pane-header"><span className="pill blue">How we work</span><h2>Human Owner + AI practice</h2></div>
 
-## AI partner
-Interview, structure, challenge ambiguity, expose likely scope bleed, draft Goal / Spec / Proof, identify missing evidence, and propose exact change diffs when new information arrives.
+<div className="deep-section">
+### Purpose in practice
+Treat Contract formation as a short reasoning conversation, not a document-production ceremony. The objective is shared understanding strong enough to let agents do substantial downstream work without continually guessing what “done” means.
 
-## Contract-writing loop
-1. Classify Loop Context.
-2. Refine Goal.
-3. Refine Spec and non-goals.
-4. Define Proof.
-5. Human Owner approves.
-6. Lock the approved version against agent mutation.
+A good session feels closer to two colleagues at a whiteboard: the AI asks, sketches, challenges, and summarizes; the Human Owner corrects context and makes consequential choices.
+</div>
 
-<div className="quote">Welcome new information; control mutation.</div>
+<div className="deep-section">
+### Step 1 — orient before asking for answers
+The AI should first gather the smallest useful context: what product/system this is, why the work exists, lifecycle state, relevant architecture, current behavior, and known constraints.
+
+The Human Owner should correct false premises early. A five-minute correction here can avoid hours of excellent execution against the wrong problem.
+
+**Useful AI questions:**
+- What observable outcome would make this worth doing?
+- Who experiences the result?
+- What existing behavior must not change?
+- What are we explicitly not trying to solve in this increment?
+- Which constraints are real policy/mission constraints versus inherited assumptions?
+</div>
+
+<div className="deep-section">
+### Step 2 — draft Goal in outcome language
+The AI proposes a concise Goal and at least one alternative framing when ambiguity is meaningful.
+
+The Human Owner checks whether the wording describes the result rather than the implementation. If the Goal names a database, framework, agent count, or UI pattern, ask whether that is genuinely a required constraint or merely an early solution idea.
+
+<div className="deep-note deep-good"><strong>Healthy signal:</strong> different technical Plans could satisfy the same Goal.</div>
+</div>
+
+<div className="deep-section">
+### Step 3 — build Spec around decisions and boundaries
+Work outward from the Goal. Capture only information that changes meaning, acceptance, risk, or feasible implementation.
+
+Use concrete categories as prompts, not mandatory bureaucracy:
+- behavior / user rules;
+- preservation / invariants;
+- security / privacy;
+- performance / reliability;
+- platform / environment;
+- compatibility / integration;
+- policy / regulatory constraints;
+- non-goals;
+- assumptions needing validation.
+
+When a requirement conflicts with architecture or another constraint, the AI should surface the collision explicitly rather than smoothing it into prose.
+</div>
+
+<div className="deep-section">
+### Step 4 — write Proof as evidence
+Ask: **What would we need to see to confidently accept this?**
+
+Possible Proof can include:
+- representative user scenarios;
+- functional or security checks;
+- benchmark thresholds;
+- architecture or code review evidence;
+- deployment and runtime observations;
+- accessibility evaluation;
+- telemetry showing operational behavior;
+- human acceptance of a visual or mission outcome.
+
+Do not over-specify the implementation of those checks here. Planning owns the verification/test strategy.
+</div>
+
+<div className="deep-section">
+### Step 5 — adversarial read before approval
+Have the AI perform a fresh Contract review from several perspectives:
+- **Planner:** can I derive a route without inventing requirements?
+- **Executor:** where could I interpret this two different ways?
+- **Validator:** can I tell what evidence is sufficient?
+- **Risk reviewer:** which consequential constraint is missing?
+- **User/stakeholder:** does the stated outcome match the actual need?
+
+Resolve material ambiguity or mark it explicitly. Do not hide uncertainty simply to make the artifact look complete.
+</div>
+
+<div className="deep-section">
+### Step 6 — Human Owner approves
+Approval should be an understanding gate. The interface should surface the exact Goal, important Spec decisions/non-goals, and Proof—not merely present a long generated document and an Approve button.
+
+After approval, the system records the version and protects it from agent mutation.
+</div>
+
+<div className="deep-section">
+### When new information arrives
+Do not tell agents to ignore reality. Tell them to stop silent mutation.
+
+**Working loop:**
+1. Agent observes new evidence.
+2. Agent decides whether it is local implementation detail, a Plan issue, or a Contract issue.
+3. If Contract-level, agent drafts a versioned proposal with exact diff and impacts.
+4. Human Owner accepts, rejects, or requests revision.
+5. If accepted, downstream Plan / tasks / Proof strategy are reviewed for impact.
+6. Work resumes against the new approved version.
+
+This makes change easy to propose and impossible to hide.
+</div>
+
+<div className="deep-section">
+### Coaching the Human Owner
+Early teams often need practice distinguishing:
+
+| Weak framing | Better question |
+| --- | --- |
+| “Build a React app.” | What user/mission outcome requires an application, and is React actually constrained? |
+| “Make it secure.” | Which identities, data, threats, and protected actions matter? |
+| “All tests pass.” | What evidence demonstrates the required behaviors and risks? |
+| “Also integrate Teams while you’re there.” | Is that required for this increment or a separate proposal? |
+| “The agent found a better requirement.” | What evidence changed, what exact Contract diff is proposed, and who approves it? |
+
+The goal is not perfect prose. The goal is disciplined intent.
+</div>
+
+<div className="deep-section">
+### Practical completion checklist
+Before handing to Planning, ask:
+- Can someone explain the Goal in one sentence?
+- Are important non-goals explicit?
+- Are invariants/preservation requirements visible?
+- Are hidden implementation choices separated from actual constraints?
+- Does Proof describe evidence rather than merely “tests”?
+- Is the Human Owner actually authorized to approve this target?
+- Is the approved version protected and traceable?
+- Would a planner know when to return with a Contract-change proposal instead of guessing?
+
+If yes, stop elaborating. Heavier Contract process is not more mature.
+</div>
 </section>
 </div>

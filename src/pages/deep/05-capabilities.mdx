@@ -1,42 +1,291 @@
 ---
 layout: ../../layouts/GuideLayout.astro
 title: Capability Interfaces
-description: Detailed integration guidance for connecting Agentic Engineering runtimes to source control, CI/CD, sandboxes, identity, data, observability, and business systems without vendor lock-in.
+description: "Detailed vendor-neutral capability architecture, integration choices, tool contracts, MCP and API options, organizational adapters, authority boundaries, and Human + AI operating practice."
 section: deep
-kicker: Go Deeper · Connect to real systems
+kicker: Go Deeper · Open interfaces, organizational tool choice
 keywords:
-  - MCP integration
-  - agent tools API
-  - vendor-neutral AI architecture
+  - agent capability interfaces
+  - Model Context Protocol
+  - AI tools APIs
+  - vendor neutral agent architecture
 ---
-<div className="split">
-<section className="pane">
-<span className="pill purple">How it works</span>
+<div className="deep-columns">
+<section className="deep-pane deep-how">
+<div className="deep-pane-header"><span className="pill purple">How it works</span><h2>The system mechanics</h2></div>
 
-## Purpose
-Let AE runtimes use source control, continuous integration/continuous delivery (CI/CD), sandboxes, databases, observability, identity, and business systems without making the method dependent on one product.
+<div className="deep-section">
+### Purpose
+Capability Interfaces connect agents to the real systems where engineering work happens without making the AE architecture depend on a particular vendor or protocol.
 
-## Implementation options
-Direct governed product integration, application programming interfaces (APIs), Model Context Protocol (MCP), enterprise brokers, or organization-specific adapters.
+The reference architecture specifies the **kinds of capabilities** an agent may need—source control, continuous integration / continuous delivery (CI/CD), runtime, telemetry, secrets, data stores, business systems, knowledge, messaging, architecture tools—not the single product or transport every organization must use.
 
 <div className="quote">Open interfaces; organizational tool choice.</div>
+</div>
 
-## Key property
-The Plan describes needed capability semantics and evidence; installation determines how the organization fulfills them.
+<div className="deep-section">
+### What a capability is
+A capability is an externally useful action or information surface the agent can invoke or query. Examples:
+- read/write repository content;
+- create branches, commits, pull requests, or reviews;
+- run CI jobs or inspect results;
+- deploy to an environment;
+- query logs/traces/metrics;
+- retrieve a secret through an approved path;
+- query or mutate a database;
+- read/update a work-management item;
+- retrieve architecture or decision context;
+- send a message or create an approval request.
+
+A capability is not automatically an agent. A tool endpoint is not an agent simply because an AI can call it.
+</div>
+
+<div className="deep-section">
+### Interface options
+AE intentionally permits several integration styles:
+
+#### Direct product/API integration
+An agent/runtime calls GitHub, GitLab, cloud, ticketing, telemetry, or another system directly through its supported application programming interface (API) or command-line interface (CLI).
+
+**Strengths:** low indirection, full product capability, easier adoption when a strong native integration already exists.
+
+**Tradeoffs:** product-specific semantics and credentials may be embedded in the runtime.
+
+#### Model Context Protocol (MCP)
+MCP provides a standardized way for AI applications to access tools and context exposed by an MCP server.
+
+**Strengths:** reusable discovery/invocation model and growing ecosystem.
+
+**Tradeoffs:** does not by itself solve organizational authorization, policy, audit, semantic normalization, or cross-agent orchestration.
+
+#### Enterprise broker / service layer
+An organization exposes approved engineering/business capabilities through a governed broker or internal service.
+
+**Strengths:** centralized policy, normalization, audit, credential isolation, organization-specific controls.
+
+**Tradeoffs:** added platform engineering and possible feature lag versus direct APIs.
+
+#### Custom adapter
+A thin adapter translates AE-needed semantics to a legacy, proprietary, or otherwise awkward system.
+
+**Strengths:** isolates product-specific complexity where it truly helps.
+
+**Tradeoffs:** becomes maintenance burden if used reflexively around every product.
+
+<div className="deep-note"><strong>Current AE position:</strong> adapters are optional. “Agents call capability contracts; adapters call products” is a possible implementation pattern, not a universal rule.</div>
+</div>
+
+<div className="deep-section">
+### Capability semantics should be clear
+Whatever transport is used, the system benefits when a capability exposes explicit semantics:
+- what action is requested;
+- required inputs;
+- target resource/environment;
+- possible outputs/errors;
+- destructive or irreversible consequences;
+- identity/authority requirements;
+- evidence/audit produced;
+- idempotency/retry expectations where relevant.
+
+This is more important than forcing every capability behind identical plumbing.
+</div>
+
+<div className="deep-section">
+### MCP and A2A solve different problems
+A useful shorthand:
+
+<div className="deep-mini-flow">
+<div><strong>MCP</strong>Equips an AI application/agent with tools and context.</div>
+<div><strong>A2A</strong>Allows independent agents/agentic applications to communicate as peers.</div>
+<div><strong>AE</strong>Decides when either fits inside a broader governed engineering system.</div>
+</div>
+
+Mnemonic: **MCP equips the worker. A2A lets workers talk to other workers.**
+
+Neither protocol replaces Contract, Planning, Validation, authority, or system-owned memory.
+</div>
+
+<div className="deep-section">
+### Inputs and outputs
+**Inputs:** Plan/task capability requirements, actor identity, target system, environment, organization integration choices, authorization context.
+
+**Outputs:** tool observations, resource mutations, evidence/audit, structured errors, approval requests, and source pointers that can feed Execution/Validation.
+
+Capability output should preserve enough provenance to know which real system/version/environment produced the result.
+</div>
+
+<div className="deep-section">
+### Interactions
+- **Planning** identifies required capabilities and may propose needed Operational Authority.
+- **Execution** invokes capabilities and adapts based on results.
+- **Governed Access** evaluates whether the actual action is allowed.
+- **Knowledge & Context** may retrieve source material through capabilities.
+- **Verification/Observability** consumes CI, runtime, scan, and telemetry capabilities as evidence sources.
+- **Portal** can present one human experience while hiding differences in underlying product integrations.
+</div>
+
+<div className="deep-section">
+### Access is not authority
+Possessing a connection to a system does not grant permission to perform every action that connection technically supports.
+
+For example, a GitHub-capable agent may be able to:
+- read source;
+- create a branch;
+- open a pull request;
+- merge a pull request;
+- delete a repository.
+
+AE treats those as different actions with different Operational Authority and Decision Authority. Policy/enforcement should constrain the requested action at the protected boundary.
+</div>
+
+<div className="deep-section">
+### Credential and secret handling
+Capabilities should prefer scoped, short-lived, or brokered credentials where practical. Agents should not copy long-lived secrets into prompts, handoffs, knowledge bases, or logs.
+
+Useful patterns include:
+- workload identity;
+- delegated OAuth/token exchange;
+- secret broker retrieval at action time;
+- environment-scoped credentials;
+- per-tool/service accounts;
+- approval-gated privileged sessions.
+
+The capability layer should return evidence about access without exposing secret values to memory unnecessarily.
+</div>
+
+<div className="deep-section">
+### Failure modes
+- **Vendor lock-in disguised as architecture:** the method only works if every adopter uses one tool suite.
+- **Adapter religion:** wrappers are added even when direct integration is clearer and safer.
+- **Protocol worship:** MCP/A2A adoption is treated as proof of agentic maturity.
+- **Tool ambiguity:** an action’s destructive consequence is not visible to the planner/worker.
+- **Credential sprawl:** agents accumulate broad long-lived secrets.
+- **Capability result without provenance:** later Validation cannot tell which environment/result was observed.
+- **Technical access = assumed permission:** a worker uses actions beyond its intended authority.
+</div>
+
+<div className="deep-section">
+### Implementation options
+Organizations can install AE over very different ecosystems:
+- GitHub + cloud-native CI/CD;
+- GitLab/Jenkins/on-prem runtime;
+- Jira/Confluence plus internal deployment systems;
+- fully custom enterprise brokers;
+- MCP-heavy tool exposure;
+- mixed direct + brokered integrations.
+
+The system should plug into the organization that exists rather than requiring a wholesale tool migration before AE becomes useful.
+</div>
 </section>
-<section className="pane">
-<span className="pill blue">How we work</span>
 
-## During installation
-Map AE capabilities to the organization’s real systems: source control, work tracker, CI/CD, runtime or sandbox, secrets, identity, telemetry, and deployment.
+<section className="deep-pane deep-work">
+<div className="deep-pane-header"><span className="pill blue">How we work</span><h2>Human Owner + AI practice</h2></div>
 
-## During Planning
-Select only the capabilities required for the work and define expected evidence and authority.
+<div className="deep-section">
+### Start with the work, not the integration technology
+When installing AE, inventory the real engineering path:
+- Where is source controlled?
+- How is work tracked?
+- How are builds/tests run?
+- How are environments deployed?
+- Where do secrets live?
+- Where is telemetry observed?
+- Which business/data systems matter?
+- Where do architecture and decisions live?
 
-## During Execution
-Use the organization’s approved integration path. Tool results are observations/evidence and should be traceable to the task.
+Then choose the simplest reliable way for agents to access each needed capability.
+</div>
 
-## Portability
-An organization can use GitHub directly, route through brokers, or implement adapters. The AE method should remain unchanged.
+<div className="deep-section">
+### Decide direct vs brokered deliberately
+For each capability, ask:
+1. Is there a mature native integration already available?
+2. Does the organization need semantic normalization across multiple products?
+3. Does credential isolation or policy justify a broker?
+4. Are there destructive/high-impact actions that need a Policy Enforcement Point?
+5. Would a custom adapter materially reduce coupling—or merely add code?
+
+Do not build a platform layer merely to make an architecture diagram look clean.
+</div>
+
+<div className="deep-section">
+### Give the AI a capability map
+A worker should be able to understand what tools exist and when to use them without receiving every credential or implementation detail.
+
+A useful capability description includes:
+- capability name/purpose;
+- supported actions;
+- required parameters;
+- environments/targets;
+- read vs write/destructive classification;
+- approval requirements;
+- expected evidence;
+- common failure modes;
+- authoritative docs/source.
+</div>
+
+<div className="deep-section">
+### Human judgment belongs at consequential tool use
+The interface should surface high-impact actions in human terms.
+
+Instead of:
+> `POST /deployments prod=true`
+
+show:
+> **Deploy version 2.4.1 to Production** — affects the customer-facing task service, uses the reviewed Plan, all required checks are green, rollback artifact exists. This action requires Release Authority.
+
+That is the same technical capability presented at the level where a human can exercise judgment.
+</div>
+
+<div className="deep-section">
+### Test capability behavior like product behavior
+Capability integrations deserve verification:
+- correct target/environment selection;
+- failure/error classification;
+- retries do not duplicate destructive actions;
+- credentials are properly scoped;
+- audit events are emitted;
+- approval gates cannot be skipped;
+- tool output is attributable and parseable;
+- version/API changes are detected.
+
+A flaky tool interface can make a strong model look unreliable.
+</div>
+
+<div className="deep-section">
+### Keep product-specific knowledge out of the method where possible
+The Field Guide/System should say **what capability is required and what invariants matter**. Installation-specific documentation can say how GitHub, Azure, AWS, Jira, Plane, internal brokers, or another environment implements it.
+
+This separation lets the canonical AE System remain portable while organizations retain local depth.
+</div>
+
+<div className="deep-section">
+### Observe real usage and simplify
+After adoption, look for:
+- adapters that add latency but no governance value;
+- duplicate integrations for the same capability;
+- capabilities nobody uses;
+- missing high-value read-only access that causes agents to guess;
+- privileged access that should be split into lower-authority actions;
+- repeated tool failures that deserve better structured errors.
+
+Integration architecture should evolve from evidence, not permanence.
+</div>
+
+<div className="deep-section">
+### Practical capability checklist
+Before giving a worker a capability:
+- Is the action semantics clear?
+- Is the target/environment explicit?
+- Is identity established?
+- Is the credential path appropriately scoped?
+- Is Operational Authority distinct from technical connectivity?
+- Is high-impact Decision Authority reserved?
+- Is enforcement at the resource boundary where needed?
+- Will success/failure generate usable evidence?
+- Can the agent retrieve help/docs without guessing?
+
+If yes, the capability is ready to become part of bounded Execution.
+</div>
 </section>
 </div>

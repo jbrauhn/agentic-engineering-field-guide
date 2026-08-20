@@ -1,46 +1,336 @@
 ---
 layout: ../../layouts/GuideLayout.astro
 title: Knowledge & Context
-description: Detailed memory architecture for durable knowledge, workflow state, architecture/code context, structured handoffs, retrieval, compaction, and fresh agent context.
+description: "Detailed system-owned memory, context assembly, fresh-agent continuity, structured handoffs, provenance, instruction files, retrieval, compaction, and Human + AI operating practice."
 section: deep
-kicker: Go Deeper · System-owned memory
+kicker: Go Deeper · Memory, context, and continuity
 keywords:
-  - context engineering
-  - AI agent memory
+  - agent context engineering
+  - AI memory architecture
   - structured handoff
   - AGENTS.md
+  - agentic engineering memory
 ---
-<div className="split">
-<section className="pane">
-<span className="pill purple">How it works</span>
+<div className="deep-columns">
+<section className="deep-pane deep-how">
+<div className="deep-pane-header"><span className="pill purple">How it works</span><h2>The system mechanics</h2></div>
 
-## Memory layers
-1. **Durable knowledge / system of record** — architecture, standards, decisions, lessons.
-2. **Workflow state** — current Plan, tasks, artifacts, risks, approvals.
-3. **Architecture/code graph** — components, interfaces, dependencies.
-4. **Structured handoff pack** — deliberate continuation state.
-5. **Fresh agent context** — the smallest trustworthy slice needed now.
+<div className="deep-section">
+### Purpose
+Knowledge & Context gives each agent enough high-signal information to do the current job **without making a chat transcript the system of record**.
+
+The governing principle is simple:
 
 <div className="quote">The agent does not own memory; the system owns memory. Agents read and write under rules.</div>
 
-## Candidate mechanisms
-`AGENTS.md`, `agent.md`, `soul.md`, an LLM Wiki or knowledge base, repository docs, state stores, session memory, compaction, just-in-time retrieval, experiment memory, and fresh-agent relays are composable mechanisms—not one mandatory stack.
+This matters because agent sessions end, models change, context windows differ, conversations compact, and providers come and go. Durable organizational knowledge must survive all of those events.
+</div>
 
-`AGENTS.md` is an established repository convention. `agent.md`, `soul.md`, the AE Handoff Pack, and “LLM Wiki” are AE/local candidate patterns rather than formal standards.
+<div className="deep-section">
+### Context is an economic resource
+A model’s context window is not an unlimited attic. Every instruction, document, transcript, retrieved chunk, tool result, and observation consumes attention that could otherwise be used for reasoning and current work.
+
+A useful mental model is a glass of water: pre-fill the glass with enough clean, high-signal context to make the agent effective; do not fill it with stale history before the work even begins.
+
+Larger context windows and caching reduce some pressure, but the principle still matters for quality, latency, cost, and especially budget/local models.
+
+<div className="deep-note deep-good"><strong>Design principle:</strong> fresh context and progressive elaboration beat endless conversation.</div>
+</div>
+
+<div className="deep-section">
+### Memory and context are different
+**Memory** is durable information the system preserves across sessions.
+
+**Context** is the task-specific working set assembled for a particular agent at a particular moment.
+
+A durable architecture may contain far more information than any one agent should receive. Context engineering selects the smallest useful subset and makes additional information retrievable just in time.
+</div>
+
+<div className="deep-section">
+### Candidate memory layers
+AE deliberately treats the final memory stack as composable and experimental rather than mandating one database or framework.
+
+1. **Durable knowledge base / System of Record** — architecture, standards, decisions, product knowledge, runbooks, validated lessons, domain references.
+2. **Project / workflow state** — active Contract, Plan, tasks, approvals, evidence, current status, blockers.
+3. **Architecture / code graph** — canonical system structure and relationships that can be retrieved by affected element.
+4. **Decision Records / ADR repository** — durable choices, context, alternatives, consequences, supersession.
+5. **Experiment / result memory** — model-task fit, planning-method outcomes, cost, quality, rework, failures, lessons.
+6. **Structured Handoff Pack** — explicit continuity artifact between sessions/agents.
+7. **Session memory** — local conversation continuity for a runtime; useful but not canonical project memory.
+8. **Standing instruction files** — concise repository-level guidance such as `AGENTS.md`; optional house patterns may include `agent.md` and `soul.md`.
+9. **Retrieval/index layer** — search, embeddings, graph traversal, direct file reads, APIs, database queries, or other methods that assemble context.
+
+The system may implement several of these with the same physical store or with separate services. The logical distinctions are more important than product count.
+</div>
+
+<div className="deep-section">
+### Standing instructions should be maps, not encyclopedias
+A concise repository instruction file can orient an agent to durable rules and point toward deeper sources of truth.
+
+**`AGENTS.md`** is an established convention in the Codex ecosystem for repository guidance. AE generalizes the underlying pattern: keep standing operational instructions short and use them as a map into architecture, decisions, standards, workflows, and relevant knowledge.
+
+**`agent.md`** is a candidate/local pattern for operational behavior when a team finds it useful.
+
+**`soul.md`** is a local house convention for personality and interaction style. It is not an industry standard and must never override Contract immutability, authority, validation, or other governance.
+
+Instruction files should not become giant manuals that are injected into every task regardless of relevance.
+</div>
+
+<div className="deep-section">
+### Fresh context assembly
+A Context Builder can assemble a task packet from stable identity plus current need:
+
+<div className="deep-mini-flow">
+<div><strong>Standing context</strong>Repository rules, system identity, authority boundaries, core conventions.</div>
+<div><strong>Task context</strong>Contract, Plan/task, affected architecture, relevant decisions, current code/system state.</div>
+<div><strong>Just-in-time context</strong>Retrieved documentation, logs, source files, prior experiments, domain references, tool observations.</div>
+</div>
+
+The packet should carry **source pointers**, not merely summaries. Agents need to distinguish authoritative sources from generated interpretation and be able to inspect the original when consequences matter.
+</div>
+
+<div className="deep-section">
+### Structured handoff is not compaction
+A **Structured Handoff Pack** intentionally transfers the state another worker needs to continue. Typical fields:
+- Contract / Plan references and versions;
+- current task and intended outcome;
+- decisions made and why;
+- changes made;
+- evidence/results produced;
+- verification already performed;
+- blockers / risks / unresolved questions;
+- source pointers;
+- next recommended action;
+- stop / escalation conditions.
+
+**Compaction** compresses a long context so a session can continue within limits. It may be useful, but it is not the canonical continuity mechanism because it can omit detail, blur provenance, and preserve conversational noise.
+
+<div className="deep-note"><strong>Rule:</strong> Compaction ≠ handoff.</div>
+</div>
+
+<div className="deep-section">
+### Session memory and runtime handoffs
+Runtime features can preserve conversation history or transfer control between specialized agents. Those are useful implementation mechanisms, but they solve different problems from durable AE memory.
+
+- **Session memory** helps one agent/runtime preserve short- or medium-term conversational continuity.
+- **Agent-to-agent handoff** transfers active control/context between workers.
+- **AE Structured Handoff Pack** preserves cross-session/project continuity in system-owned form.
+
+All three can coexist.
+</div>
+
+<div className="deep-section">
+### Knowledge write rules
+Not every observation deserves permanent memory. Durable write-back should prefer information that changes future decisions or reduces future re-discovery:
+- approved Contract/Plan versions;
+- architecture changes and decisions;
+- verified product/system facts;
+- reusable domain knowledge;
+- successful/failed experiment results;
+- recurring failure patterns;
+- operational lessons;
+- provenance-rich external references;
+- handoff state needed for continuation.
+
+Scratch reasoning, transient logs, duplicate summaries, and speculative ideas can remain ephemeral unless promoted deliberately.
+</div>
+
+<div className="deep-section">
+### Provenance and authority
+Knowledge should carry enough metadata to answer:
+- Where did this come from?
+- Is it observed fact, human decision, external source, generated inference, or experiment result?
+- When was it last validated?
+- Which product/system/version does it apply to?
+- Who or what is authorized to update it?
+- Has a newer decision superseded it?
+
+An agent should not be able to convert its own guess into canonical truth merely by writing to memory.
+</div>
+
+<div className="deep-section">
+### Interactions
+- **Contract** and **Plan** are high-priority context anchors.
+- **Architecture** scopes retrieval and prevents generic task context from ignoring real system boundaries.
+- **Execution** writes evidence, progress, lessons, and handoffs under controlled rules.
+- **Validation** can promote verified results and reject unsupported claims.
+- **Governed Access** controls which stores/data an agent may read or modify.
+- **Metrics & Learning** use experiment memory to improve future planning, routing, model selection, and context strategy.
+- **Portal** can make memory visible to humans and agents without exposing every backing implementation detail.
+</div>
+
+<div className="deep-section">
+### Access, authority, and enforcement
+Reading context is itself an access decision. Sensitive source material may be excluded, redacted, or retrieved only at action time.
+
+Writing canonical memory requires stronger controls than writing scratch state. A practical distinction:
+- scratch/session notes — low consequence, broad worker write;
+- workflow state — bounded worker write with provenance;
+- architecture/decision/product truth — controlled proposal/review or designated owner authority;
+- security secrets/private data — protected store with purpose-scoped retrieval and no casual memory replication.
+
+The memory system should not become a back door around normal access policy.
+</div>
+
+<div className="deep-section">
+### Failure modes
+- **Transcript-as-memory:** valuable decisions vanish inside proprietary chat history.
+- **Everything in context:** attention is consumed before reasoning begins.
+- **No provenance:** generated summaries become indistinguishable from source truth.
+- **Stale retrieval:** old architecture or superseded decisions are returned without status.
+- **Memory poisoning by inference:** an agent writes speculation as fact.
+- **Gigantic instruction files:** standing guidance overwhelms task-specific context.
+- **Compaction treated as continuity:** critical evidence or decisions disappear in summarization.
+- **Private-data replication:** sensitive information is copied into broad memory stores unnecessarily.
+- **Fresh agents with no handoff:** each session spends time rediscovering state and repeats mistakes.
+</div>
+
+<div className="deep-section">
+### Implementation options
+Possible stacks include repository-first knowledge, document/wiki systems, relational databases, graph stores, vector retrieval, agent-runtime session stores, workflow databases, or hybrids.
+
+AE does not require a vector database, an “LLM Wiki,” or a particular memory framework. Evaluate combinations against real outcomes: continuity, accuracy, retrieval quality, latency, cost, portability, security, and rework.
+</div>
 </section>
-<section className="pane">
-<span className="pill blue">How we work</span>
 
-## Context assembly
-Start with standing instructions, the Contract/Plan slice, current handoff/state, and relevant architecture. Retrieve deeper knowledge only when the next decision needs it.
+<section className="deep-pane deep-work">
+<div className="deep-pane-header"><span className="pill blue">How we work</span><h2>Human Owner + AI practice</h2></div>
 
-## Handoff pack
-Include current task, decisions, changes, evidence/results, verification state, blockers/risks, source pointers, next action, and stop/escalation condition.
+<div className="deep-section">
+### Begin each work session with orientation, not history replay
+A fresh agent should be able to ask the system: **What am I doing, what is the current truth, what decisions constrain me, and where can I retrieve more?**
 
-## Compaction
-Use compaction as lossy historical reference, not canonical state. **Compaction ≠ handoff.**
+A good startup packet usually includes:
+- active Contract and Plan/task references;
+- current architecture slice;
+- relevant decisions/standards;
+- authority boundaries;
+- recent handoff/progress state;
+- pointers to deeper sources.
 
-## Economic context design
-Context consumes model capacity and money. A smaller model with excellent context and verification may outperform indiscriminate frontier-model use. Measure model + context strategy by work type, quality, cost, retries, and rework.
+It should not automatically include the previous 200-page conversation.
+</div>
+
+<div className="deep-section">
+### Use progressive elaboration for context
+Give the smallest useful context first. Let the agent retrieve the next layer when the task demands it.
+
+Example:
+1. Task says “modify reminder scheduling in `ReminderService`.”
+2. Initial context contains the Contract, task, component ID, interface summary, and relevant ADR titles.
+3. Agent inspects the actual component and retrieves the scheduling ADR.
+4. A runtime failure causes just-in-time retrieval of telemetry/runbook context.
+
+This keeps the working set high-signal while preserving access to depth.
+</div>
+
+<div className="deep-section">
+### Human role in knowledge quality
+Humans should curate what is **consequential**, not manually maintain every fact.
+
+High-value human actions:
+- designate canonical sources;
+- correct domain misunderstandings;
+- approve decisions and significant changes;
+- identify sensitive or context-dependent knowledge;
+- decide when an experiment result is reusable versus local;
+- resolve contradictions the agent cannot safely infer through.
+
+The AI can do the mechanical work of indexing, linking, summarizing, detecting staleness, and proposing updates.
+</div>
+
+<div className="deep-section">
+### Side quests are allowed—capture their result deliberately
+Either the Human Owner or AI may pause the main loop to explore an unfamiliar technology, architecture option, product idea, or risk.
+
+At the end of the side quest, decide what the result is:
+- Contract change proposal;
+- Plan update;
+- ADR / Decision Record;
+- knowledge-base entry;
+- experiment record;
+- handoff note;
+- or simply ephemeral exploration with no durable write.
+
+The useful conclusion should not remain trapped in the conversation where it was discovered.
+</div>
+
+<div className="deep-section">
+### Build handoffs before context gets desperate
+Do not wait until a context window is nearly exhausted. At meaningful boundaries, have the agent produce a structured handoff while details and source pointers are still available.
+
+A practical handoff review asks:
+- Could a fresh capable agent continue without reading this transcript?
+- Are decisions distinguished from observations?
+- Are exact source/commit/artifact references included?
+- Is current state distinguished from planned state?
+- Are verification results and failures explicit?
+- Is the next action clear?
+</div>
+
+<div className="deep-section">
+### Promote verified lessons, not every event
+After a Validated Increment, the system can propose reusable lessons:
+- this Planning Method reduced rework for this task shape;
+- this model struggled with a particular framework;
+- this retrieval source was stale;
+- this architecture coupling repeatedly causes defects;
+- this verification pattern caught a class of failure cheaply.
+
+A curator agent can draft the update. Human or policy review should be proportional to how authoritative/reusable the memory becomes.
+</div>
+
+<div className="deep-section">
+### Context strategy can vary by model
+A frontier model with a large context window may tolerate more source material. A local or budget model may need tighter packets and more explicit decomposition.
+
+Do not treat this as a permanent ranking. Measure model-task-context combinations over completed work:
+- success / first-pass effectiveness;
+- rework;
+- human intervention;
+- latency;
+- token/context cost;
+- validation quality.
+
+Store enough result data to improve later routing.
+</div>
+
+<div className="deep-section">
+### Contradiction handling
+When sources disagree, the agent should not “average” them into a confident answer.
+
+Working pattern:
+1. identify the conflict;
+2. show source/status/version differences;
+3. prefer designated canonical/observed sources when policy says so;
+4. ask a human when consequential uncertainty remains;
+5. record the resolution or unresolved state.
+
+This is especially important for architecture, policy, security, operational state, and external standards that change over time.
+</div>
+
+<div className="deep-section">
+### Practical context checklist
+Before execution, ask:
+- Does the agent have the active Contract/Plan rather than stale copies?
+- Is the architecture slice relevant to the task?
+- Are important ADRs/DRs available by pointer?
+- Is standing guidance concise?
+- Can additional sources be retrieved just in time?
+- Are provenance and supersession visible?
+- Are sensitive sources purpose-scoped?
+- Is there a handoff path before the session ends?
+
+If yes, stop adding context. More context is not automatically more intelligence.
+</div>
+
+<div className="deep-section">
+### Training exercise
+Give two fresh agents the same bounded task:
+- Agent A receives a giant project transcript and broad repository dump.
+- Agent B receives a concise task packet plus reliable retrieval and a structured handoff from prior work.
+
+Compare correctness, time-to-orientation, tool calls, irrelevant exploration, token cost, and Validation outcome. This makes context engineering concrete rather than theoretical.
+</div>
 </section>
 </div>

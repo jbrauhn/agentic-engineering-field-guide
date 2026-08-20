@@ -4,9 +4,18 @@ import { journeys, sitePath } from '../../data/navigation';
 ---
 <BaseLayout title="Go Deeper" description="Detailed Agentic Engineering reference for Contract, Planning, Knowledge and Context, Execution, Capability Interfaces, Governance, Validation, and the Human Owner." section="deep">
   <main id="main-content" data-pagefind-body>
-    <header class="landing-hero shell"><p class="kicker">Learning path 03 · Detailed reference</p><h1>Go Deeper</h1><p class="lede">Each breakout keeps two questions side-by-side: <strong>How does the mechanism work?</strong> and <strong>How do a Human Owner and AI actually work with it?</strong></p></header>
+    <header class="landing-hero shell">
+      <p class="kicker">Learning path 03 · Full engineering reference</p>
+      <h1>Go Deeper</h1>
+      <p class="lede">This is the detailed reference layer—not another overview. Each breakout explains the system mechanics and the practical Human Owner + AI operating method in parallel, with enough depth to support implementation, training, review, and real engineering decisions.</p>
+    </header>
     <section class="shell">
-      <div class="callout"><strong>Reference pattern:</strong> Purpose → How it works → Inputs/outputs → Interactions → Access/authority/enforcement → Human KSAs → Agent support → Failure modes → Implementation options.</div>
+      <div class="grid three">
+        <div class="card purple-line"><span class="pill purple">Split View</span><h3>Reason across both sides</h3><p class="muted">Independently scroll <strong>How it works</strong> and <strong>How we work</strong> side by side. Use this when learning the mechanism and its operating practice together.</p></div>
+        <div class="card blue-line"><span class="pill blue">How it works</span><h3>Study the system</h3><p class="muted">Purpose, mechanics, inputs/outputs, interactions, authority/enforcement, Human KSAs, agent support, failure modes, and implementation options.</p></div>
+        <div class="card green-line"><span class="pill green">How we work</span><h3>Practice the method</h3><p class="muted">Human Owner + AI dialogue, decisions, review patterns, escalation, evidence, checklists, and training exercises grounded in the mechanism.</p></div>
+      </div>
+      <div class="callout good"><strong>Depth is intentional.</strong> Start Here gives the map. Explore the System explains the why. Go Deeper is where the compact explanations give way to the full reference. On desktop you can switch among Split View, How it works, and How we work; on narrow screens Split View becomes a readable stacked flow.</div>
       <div class="landing-list">
         {journeys.deep.map((page,index) => <a class="landing-item" href={sitePath(page.path)}><span class="num">{String(index+1).padStart(2,'0')}</span><span><strong>{page.title}</strong><small>{page.short}</small></span><span class="arrow">→</span></a>)}
       </div>

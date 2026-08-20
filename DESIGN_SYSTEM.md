@@ -33,10 +33,12 @@ Do not turn every acronym or sentence into a tooltip.
 - **Home** — choose the journey and understand the top-level value.
 - **Start Here** — the map, shared vocabulary, and worked example.
 - **Explore the System** — philosophy, failure prevented, core principles, and interactions.
-- **Go Deeper** — detailed Human + AI reference.
+- **Go Deeper** — the full detailed Human + AI engineering reference.
 - **Learn by Doing** — guided practice tied to the real AE System.
 
 Standing rule: **Never make someone understand the whole architecture before they can understand the value.**
+
+The learning layers are intentionally different depths. Do not normalize them into equally sized pages. In particular, **Go Deeper must not be reduced to Explore-level summaries during redesign, migration, or refactoring.**
 
 ## Navigation
 
@@ -75,14 +77,24 @@ Design mobile-first in the sense that every concept must remain understandable o
 
 Honor `prefers-reduced-motion`.
 
-## Deep-reference pattern
+## Deep-reference invariant
 
-Where useful, preserve the side-by-side model:
+Every Go Deeper breakout is the implementation/training reference for its subject. It should preserve the substance of the detailed breakout, not merely restate the Explore page with more words.
 
-1. **How it works** — purpose, mechanics, inputs/outputs, interactions, authority/enforcement, failure modes, implementation options.
-2. **How we work** — Human Owner actions, AI support, review/decision points, training/practice.
+The page has two complementary tracks:
 
-This becomes one column on narrow screens.
+1. **How it works** — Purpose → How it works → Inputs/outputs → Interactions → Access/authority/enforcement → Human knowledge, skills, and abilities (KSAs) → Agent support → Failure modes → Implementation options.
+2. **How we work** — practical Human Owner + AI operating guidance: dialogue/decision patterns, sequencing, review, escalation, evidence, checklists, and training/practice.
+
+Desktop pages support three reading modes:
+
+- **Split View** — independently scrolling How it works / How we work panes.
+- **How it works** — full-width mechanics reference.
+- **How we work** — full-width operating/training reference.
+
+Split View is the default because it reinforces the relationship between mechanism and practice. The selected mode may persist between pages. On narrow screens, Split View becomes a stacked reading flow rather than compressed columns.
+
+Deep pages should be allowed to be long. Progressive elaboration happens by choosing the Go Deeper journey and then choosing the reading mode; it does **not** require truncating the reference itself.
 
 ## Standing principles
 
