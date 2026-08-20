@@ -1,50 +1,403 @@
 ---
 layout: ../../layouts/GuideLayout.astro
 title: Human Owner & KSAs
-description: Detailed Human Owner responsibilities, twelve knowledge/skills/abilities areas, Human–AI thinking partnership, visual communication, and learning side quests.
+description: "Detailed Human Owner responsibilities, knowledge/skills/abilities, consequential judgment, decision interfaces, Human–AI collaboration, escalation, training, and operating practice across the AE lifecycle."
 section: deep
-kicker: Go Deeper · Human–AI collaboration
+kicker: Go Deeper · Human judgment where it creates leverage
 keywords:
   - Human Owner AI
-  - AI engineering skills
   - human AI collaboration
+  - AI governance human judgment
+  - knowledge skills abilities
+  - agentic engineering human owner
 ---
-<div className="split">
-<section className="pane">
-<span className="pill purple">How it works</span>
+<div className="deep-columns">
+<section className="deep-pane deep-how">
+<div className="deep-pane-header"><span className="pill purple">How it works</span><h2>The system mechanics</h2></div>
 
-## Human-owned value
-Intent, domain and contextual knowledge, logic, ingenuity, creativity, taste, values, consequential judgment, Decision Authority, and accountability.
+<div className="deep-section">
+### Purpose
+The Human Owner keeps **intent, consequential judgment, authority, and accountability** anchored in people while delegating substantial mechanical and analytical execution to AI.
 
-## Twelve competency areas
-1. Domain judgment & taste
-2. Problem framing & specification
-3. Clarification & requirements reasoning
-4. Decomposition & planning
-5. Prompt/instruction engineering
-6. Context curation
-7. Model/tool/resource selection
-8. Orchestration & delegation
-9. Verification & eval design
-10. Review/debugging/trace reading
-11. Risk/authority/guardrail design
-12. Knowledge capture & feedback flywheel
+This is not a design where the human becomes a slow approval API. The point is to move human effort toward the decisions where human strengths have the highest value and let AI absorb more synthesis, search, drafting, execution, checking, and repetitive work.
 
 <div className="quote">Delegation is not abdication.</div>
+</div>
+
+<div className="deep-section">
+### Human value is broader than judgment
+AE explicitly relies on human strengths that are difficult to reduce to a model score or automated rule:
+
+- **Contextual knowledge** — users, mission, organization, politics, history, tacit constraints, real consequences.
+- **Logic** — recognizing when premises, categories, or causal assumptions do not hold in the actual situation.
+- **Ingenuity** — reframing problems and creating alternatives that were not obvious from existing artifacts.
+- **Creativity** — imagining useful product/system possibilities and communicating them in human terms.
+- **Taste** — qualitative judgment about clarity, usability, coherence, maintainability, and what “good” feels like in context.
+- **Values** — deciding what tradeoffs are acceptable when objectives conflict.
+- **Judgment** — acting under incomplete information and uncertainty.
+- **Authority** — legitimately making consequential decisions on behalf of the product/system/organization.
+- **Accountability** — remaining responsible for outcomes rather than transferring responsibility to a model.
+
+AI contributes complementary strengths: speed, scale, persistence, broad technical knowledge, synthesis, search, comparison, and large amounts of bounded execution.
+</div>
+
+<div className="deep-section">
+### The Human Owner is a system role, not necessarily one job title
+Depending on the organization and decision, Human Owner authority may be exercised by:
+- Product Owner / product manager;
+- system owner;
+- architect/technical authority;
+- security/risk authority;
+- release/operations authority;
+- domain expert;
+- program/mission leader;
+- designated reviewer or approver.
+
+The important design question is **which human has the right knowledge and legitimate Decision Authority for this decision?** “A human approved it” is not enough.
+</div>
+
+<div className="deep-section">
+### Human decision points across the lifecycle
+#### Loop Context / Contract
+Humans clarify why the work matters, correct contextual assumptions, define boundaries/non-goals, judge acceptable Proof, and approve the target.
+
+#### Planning
+Humans decide architecture-significant choices, risk/mission tradeoffs, planning depth/method when consequential, and Contract-change proposals.
+
+#### Execution
+Most local adaptation stays with agents. Humans intervene when the worker reaches a decision/authority/risk boundary rather than for every command.
+
+#### Governed Access
+Authorized humans approve protected actions where reserved Decision Authority applies.
+
+#### Validation
+Humans judge outcomes that require contextual value, usability, policy, risk acceptance, taste, or mission suitability.
+
+#### Learning
+Humans help decide which lessons/experiments should influence future system behavior and which were local anomalies.
+</div>
+
+<div className="deep-section">
+### Human-native communication is a system requirement
+If a human must make a decision, the AI should communicate through forms people can reason with:
+- conversation;
+- diagrams;
+- interactive infographic-style views;
+- architecture overlays;
+- alternatives + consequences;
+- exact diffs;
+- evidence summaries with source pointers;
+- working product scenarios;
+- whiteboard-style comparison.
+
+The target interaction is closer to **two colleagues reasoning together at a whiteboard** than a human filling out forms for an automation engine.
+</div>
+
+<div className="deep-section">
+### Decision surfaces should show the affected system
+Consequential choices should be anchored to concrete context.
+
+For an architecture decision, show:
+- exact affected C4 elements/relationships;
+- current state;
+- alternatives;
+- consequences/tradeoffs;
+- evidence/constraints;
+- recommendation and uncertainty.
+
+For a Contract change, show:
+- exact Goal/Spec/Proof diff;
+- trigger/new evidence;
+- downstream impact;
+- consequence of accepting or deferring.
+
+For production authority, show:
+- exact action/environment;
+- prerequisite evidence;
+- rollback;
+- risk/impact.
+
+Humans should judge surfaced impact, not discover hidden coupling from prose.
+</div>
+
+<div className="deep-section">
+### Human KSA model
+A useful adoption model separates **knowledge, skills, and abilities (KSAs)**.
+
+#### Knowledge — what the Human Owner should understand
+- product/mission/user context;
+- basic AE lifecycle and artifact relationships;
+- distinction between Contract, Plan, Execution, Verification, and Validation;
+- architecture enough to understand affected system boundaries;
+- authority/governance responsibilities;
+- limitations of AI evidence and confidence;
+- relevant domain/security/regulatory context.
+
+#### Skills — what the Human Owner practices
+- framing outcomes and non-goals;
+- asking clarifying/challenging questions;
+- reading architecture diagrams and consequence views;
+- comparing alternatives;
+- judging evidence quality;
+- recognizing Plan vs Contract change;
+- delegating bounded work;
+- escalating uncertainty;
+- communicating corrections precisely.
+
+#### Abilities — what the Human Owner must be able to do in context
+- make consequential decisions under uncertainty;
+- integrate tacit organizational knowledge;
+- detect when machine output is technically plausible but contextually wrong;
+- accept responsibility for tradeoffs;
+- stop or redirect the system when confidence is insufficient.
+</div>
+
+<div className="deep-section">
+### AI roles that support the Human Owner
+The same underlying system can present specialized personas without fragmenting state:
+- Contract facilitator;
+- architecture/planning partner;
+- independent Plan reviewer;
+- coding/execution worker;
+- maker-checker;
+- validator;
+- knowledge curator;
+- tutor/explainer;
+- security/risk advisor.
+
+Personas should read governed shared system state. Switching persona must not create separate incompatible memories of the project.
+</div>
+
+<div className="deep-section">
+### Learning side quests
+Either the human or AI may initiate a side quest to explore unfamiliar technology, architecture, risk, product idea, or domain knowledge.
+
+The side quest is legitimate work when it reduces uncertainty. Its conclusion should be captured deliberately as one of:
+- Contract proposal;
+- Plan change;
+- ADR / Decision Record;
+- knowledge-base entry;
+- experiment record;
+- handoff;
+- or intentionally ephemeral learning.
+
+This protects curiosity without letting the main loop disappear into endless research.
+</div>
+
+<div className="deep-section">
+### Access, authority, and enforcement
+Human authority should be explicit, not inferred from being present in the conversation.
+
+The system should know:
+- which decisions are reserved;
+- who is authorized for each decision class;
+- whether one person or multiple roles are required;
+- what evidence/context must be shown;
+- how the decision is recorded;
+- what enforcement follows the decision.
+
+Human approval does not automatically grant every operational permission; operational execution still follows its protected path.
+</div>
+
+<div className="deep-section">
+### Agent support should reduce cognitive load, not agency
+AI should do the mechanical work around a human decision:
+- assemble relevant context;
+- retrieve sources;
+- compare alternatives;
+- trace dependencies;
+- summarize evidence;
+- generate diagrams;
+- explain technical terms progressively;
+- propose exact changes;
+- record the decision and follow-up impacts.
+
+The AI should not hide material uncertainty or frame its preferred option as inevitable merely to make approval faster.
+</div>
+
+<div className="deep-section">
+### Failure modes
+- **Human-in-the-loop theater:** a person clicks approve without understanding the decision.
+- **Human as command dispatcher:** every tool call requires manual instruction, eliminating agent leverage.
+- **Wrong human:** an available person approves something outside their expertise/authority.
+- **Over-trust in polished output:** fluency substitutes for evidence.
+- **Under-use of AI:** human performs mechanical comparison/synthesis the agent could do better/faster.
+- **AI suppresses alternatives:** recommendation is presented without consequences or uncertainty.
+- **No visible architecture:** human decisions are made from ticket text alone.
+- **Persona fragmentation:** each AI “role” maintains different project truth.
+- **Responsibility laundering:** failures are attributed to “the AI decided” even though the organization deployed the system.
+</div>
+
+<div className="deep-section">
+### Implementation options
+Human collaboration can be delivered through chat, voice, portal, pull-request reviews, architecture tools, approval workflows, interactive diagrams, whiteboards, or combinations.
+
+The portal direction is particularly aligned with AE when it can show conversation alongside artifacts, let human/AI point to exact diagram elements, expose Contract/Plan/evidence state, and maintain one governed project memory.
+
+The interface can vary; the core requirement is meaningful human judgment at consequential boundaries.
+</div>
 </section>
-<section className="pane">
-<span className="pill blue">How we work</span>
 
-## Thinking partnership
-AI should interview, challenge, ideate, explain, diagram, compare alternatives, execute delegated work, and surface evidence—not merely wait for commands.
+<section className="deep-pane deep-work">
+<div className="deep-pane-header"><span className="pill blue">How we work</span><h2>Human Owner + AI practice</h2></div>
 
-## Human-native communication
-Use visual architecture, IG-style explanations, alternatives, consequences, and evidence. The Human Owner should judge surfaced impact, not discover hidden coupling unaided.
+<div className="deep-section">
+### Learn the map before the machinery
+A Human Owner does not need to understand every agent framework or protocol before participating effectively.
 
-## Learning side quests
-Either partner can pause delivery to understand a technology, architecture, product idea, or risk. Capture useful conclusions back into the Plan, ADR, knowledge base, experiment record, or handoff.
+Start with the smallest mental model:
+1. define the outcome and evidence;
+2. plan against the real architecture;
+3. delegate bounded adaptive work;
+4. independently validate;
+5. keep human judgment at consequential decisions.
 
-## Agent support principle
-Agents should strengthen human competencies without quietly replacing human agency.
+Then expose deeper mechanics only when the current question requires them.
+</div>
+
+<div className="deep-section">
+### Work conversationally, but make durable decisions explicit
+The human should be able to say things naturally:
+- “That’s not the real reason we need this.”
+- “Show me what part of the architecture changes.”
+- “Compare the two options on operational burden.”
+- “That requirement is out of scope for this increment.”
+- “I don’t trust that evidence—what would independently prove it?”
+
+The AI turns useful conversation into governed artifacts when appropriate. The human should not have to manually translate every insight into system fields.
+</div>
+
+<div className="deep-section">
+### Ask the AI to challenge you
+A strong Human Owner uses the agent as a thinking partner, not a stenographer.
+
+Useful requests:
+- “What assumption am I making that could be wrong?”
+- “Argue the best case against this architecture choice.”
+- “What would a security reviewer challenge?”
+- “Which part of this Contract is ambiguous to an executor?”
+- “What evidence would falsify our current plan?”
+- “Show me the simplest approach we are overlooking.”
+
+The human remains the decision holder while benefiting from machine-scale synthesis and counterargument.
+</div>
+
+<div className="deep-section">
+### Know what not to review
+Human attention is scarce. Do not spend it approving:
+- harmless local implementation choices;
+- routine retries;
+- obvious formatting changes;
+- read-only retrieval already inside policy;
+- agent micro-plans with no consequential decision.
+
+Reserve human review for scope, architecture, risk, authority, user/mission quality, evidence ambiguity, and other meaningful decisions.
+</div>
+
+<div className="deep-section">
+### Use the architecture as a shared whiteboard
+When discussing a Plan or decision:
+1. display the current C4 view;
+2. highlight affected elements;
+3. let the AI explain current relationships;
+4. select an element and ask “why?” or “what if?”;
+5. compare alternatives visually;
+6. show ADR/decision beside the affected architecture;
+7. record the choice and update traceability.
+
+This is much easier for a human to reason about than a long list of abstract tasks.
+</div>
+
+<div className="deep-section">
+### Judge evidence, not confidence
+Models can sound certain when wrong. Train Human Owners to look for:
+- source provenance;
+- reproducible checks;
+- independent review;
+- environment/version identity;
+- contradictions;
+- uncertainty explicitly surfaced;
+- whether the evidence actually maps to Contract Proof.
+
+A humble result with strong evidence is more trustworthy than an eloquent “I’m confident this is correct.”
+</div>
+
+<div className="deep-section">
+### Practice authority boundaries
+For each common decision, ask:
+- Is this a local agent choice, Planning decision, Contract decision, operational approval, or final acceptance?
+- Who has Decision Authority?
+- Can the AI prepare the decision?
+- What evidence/context must the human see?
+- What system control enforces the result?
+
+This helps teams avoid both extremes: uncontrolled autonomy and constant human interruption.
+</div>
+
+<div className="deep-section">
+### Correct the AI precisely
+When an AI is wrong, prefer corrections that improve durable understanding:
+
+Weak:
+> “No, that’s not right.”
+
+Better:
+> “The reminder worker is not allowed to write task state; only the Task API owns that invariant. Update the Plan and architecture reasoning, and propose a decision record only if the alternative requires a boundary change.”
+
+The second correction can become system knowledge and helps future agents avoid repeating the mistake.
+</div>
+
+<div className="deep-section">
+### Use side quests intentionally
+When you encounter an unfamiliar concept, ask the AI to teach it progressively:
+1. one-sentence answer;
+2. mental model / diagram;
+3. alternatives and tradeoffs;
+4. primary sources;
+5. implication for the current AE decision.
+
+Then decide whether the learning changes the Contract/Plan/decision/knowledge base. Curiosity becomes part of disciplined engineering rather than a distraction.
+</div>
+
+<div className="deep-section">
+### Human Owner readiness checklist
+A Human Owner is ready to operate a loop when they can:
+- explain Goal / Spec / Proof;
+- distinguish Contract from Plan;
+- understand the affected architecture at the needed level;
+- recognize when an agent is adapting locally versus changing the target;
+- judge whether evidence is credible;
+- identify which decisions they are actually authorized to make;
+- ask the AI for alternatives/consequences instead of accepting the first answer;
+- stop/escalate when uncertainty is consequential.
+
+They do **not** need to become an AI engineer before using AE well.
+</div>
+
+<div className="deep-section">
+### Team adoption exercise
+Run a small, real increment with explicit role switching:
+- one person acts as Human Owner;
+- AI facilitates Contract;
+- AI plans against visible architecture;
+- agent executes;
+- a fresh validator checks Proof;
+- human accepts only where judgment is required.
+
+Afterward, discuss where the human added unique value, where AI saved mechanical effort, where approval felt like theater, and which context/evidence was missing. Use that result to tune the system.
+</div>
+
+<div className="deep-section">
+### The target collaboration
+The mature experience should feel like this:
+
+**Human:** brings purpose, context, creativity, values, tradeoff judgment, and authority.
+
+**AI:** brings rapid synthesis, technical breadth, persistent attention, visual explanation, implementation capacity, and independent checking.
+
+**System:** preserves Contract, architecture, memory, authority, evidence, and traceability so neither party has to hold the entire engineering state in their head.
+
+That is Human–AI collaboration as an engineering operating model, not merely “using a chatbot at work.”
+</div>
 </section>
 </div>
