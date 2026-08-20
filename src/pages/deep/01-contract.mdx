@@ -1,0 +1,51 @@
+---
+layout: ../../layouts/GuideLayout.astro
+title: Contract
+description: Detailed Goal / Spec / Proof mechanics, authority, change proposals, non-goals, and the Human + AI workflow for establishing a durable target.
+section: deep
+kicker: Go Deeper · Goal / Spec / Proof
+keywords:
+  - Goal Spec Proof
+  - immutable AI Contract
+  - Contract change proposal
+---
+<div className="split">
+<section className="pane">
+<span className="pill purple">How it works</span>
+
+## Purpose
+Provide a durable, human-owned target that Planning, Execution, and Validation can all reference without letting implementation redefine success.
+
+## Structure
+- **Loop Context:** lifecycle context + Plan category.
+- **Goal:** desired outcome.
+- **Spec:** requirements, constraints, non-goals, invariants, assumptions, boundaries.
+- **Proof:** required evidence of success.
+
+## Authority
+Approved Contracts are immutable to agents. Agents can submit versioned change proposals; any accepted change requires Human Owner approval and downstream impact review.
+
+<div className="callout"><strong>Machine rules:</strong> `contract_mutable_by_agents=false` · `changes_via_versioned_proposal_only=true` · `any_change_requires_owner_approval=true`</div>
+
+A useful change proposal includes the trigger/evidence, rationale, exact diff, alternatives, downstream impact, consequence if deferred, priority recommendation, and provenance.
+</section>
+<section className="pane">
+<span className="pill blue">How we work</span>
+
+## Human Owner
+Articulate intent, correct assumptions, decide non-goals and constraints, judge acceptable evidence, and approve the final Contract.
+
+## AI partner
+Interview, structure, challenge ambiguity, expose likely scope bleed, draft Goal / Spec / Proof, identify missing evidence, and propose exact change diffs when new information arrives.
+
+## Contract-writing loop
+1. Classify Loop Context.
+2. Refine Goal.
+3. Refine Spec and non-goals.
+4. Define Proof.
+5. Human Owner approves.
+6. Lock the approved version against agent mutation.
+
+<div className="quote">Welcome new information; control mutation.</div>
+</section>
+</div>
