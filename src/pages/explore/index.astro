@@ -1,38 +1,15 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const topics = [
-  ['Core philosophy', '01-philosophy.html', 'What the system optimizes for and why.'],
-  ['Contract', '02-contract.html', 'Goal, Spec, Proof, immutability, and change proposals.'],
-  ['Planning', '03-planning.html', 'Architecture-aware route selection and Plan Review.'],
-  ['Knowledge & Context', '04-knowledge-context.html', 'Fresh context, system-owned memory, retrieval, and handoffs.'],
-  ['Execution', '05-execution.html', 'Bounded adaptive work and execution patterns.'],
-  ['Capability Interfaces', '06-capabilities.html', 'Open interfaces and organizational tool choice.'],
-  ['Governed Access', '07-governance.html', 'Identity, access, operational authority, decision authority, enforcement.'],
-  ['Verification & Validation', '08-validation.html', 'Evidence production and independent judgment.'],
-  ['Human Owner', '09-human-owner.html', 'Context, creativity, judgment, authority, accountability.'],
-  ['System interactions', '10-interactions.html', 'How the components behave as one machine.'],
-  ['Standards & practices', '11-standards.html', 'What AE builds on, adopts, or treats as emerging.'],
-  ['Continue deeper', '12-continue.html', 'Move from philosophy to implementation mechanics.']
-];
+import { journeys, sitePath } from '../../data/navigation';
 ---
-<BaseLayout title="Explore the System" description="Explore why each Agentic Engineering component exists, the failure it prevents, and how Contract, Planning, context, execution, governance, validation, and human ownership interact." section="explore">
-  <main>
-    <section class="page-hero"><div class="shell">
-      <div class="breadcrumbs"><a href={`${base}/`}>Field Guide</a><span>/</span><b>Explore the System</b></div>
-      <div class="eyebrow">02 · The philosophy layer</div>
-      <h1>Understand why the pieces exist.</h1>
-      <p class="lede">This is the layer between the quick map and the detailed implementation reference. Each topic explains the component, the failure it prevents, its governing philosophy, and how it interacts with the rest of the system.</p>
-    </div></section>
-    <section class="content"><div class="shell">
-      <div class="grid two">
-        <article class="card blue"><span class="number">SYSTEM VIEW</span><h3>The model is a component, not the system.</h3><p>Trustworthiness emerges from the whole machine: instructions, context, tools, runtime, state, architecture, controls, evidence, and human decisions.</p></article>
-        <article class="card gold"><span class="number">CHANGE VIEW</span><h3>Welcome new information; control mutation.</h3><p>Agents should surface better information aggressively while durable intent, authority, and acceptance criteria change only through visible governance.</p></article>
+<BaseLayout title="Explore the System" description="Understand why each Agentic Engineering component exists, the failure it prevents, its philosophy, and how the parts reinforce one another." section="explore">
+  <main id="main-content" data-pagefind-body>
+    <header class="landing-hero shell"><p class="kicker">Learning path 02 · The why</p><h1>Explore the System</h1><p class="lede">This is the philosophy layer. Each page explains what a component is, why it exists, what failure it prevents, and how it interacts with the rest of the system.</p></header>
+    <section class="shell">
+      <div class="quote">A model can be brilliant and still be an unreliable production system. Agentic Engineering surrounds model capability with intent, architecture, context, tools, controls, evidence, and human judgment.</div>
+      <div class="landing-list">
+        {journeys.explore.map((page,index) => <a class="landing-item" href={sitePath(page.path)}><span class="num">{String(index+1).padStart(2,'0')}</span><span><strong>{page.title}</strong><small>{page.short}</small></span><span class="arrow">→</span></a>)}
       </div>
-      <h2>Explore by component</h2>
-      <div class="topic-list">
-        {topics.map(([title, href, note], index) => <a class="topic" href={`${base}/explore/${href}`}><span><small>{String(index + 1).padStart(2,'0')} · {note}</small><br/><strong>{title}</strong></span><span aria-hidden="true">→</span></a>)}
-      </div>
-    </div></section>
+    </section>
   </main>
 </BaseLayout>
