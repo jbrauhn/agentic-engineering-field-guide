@@ -1,0 +1,39 @@
+---
+layout: ../../layouts/GuideLayout.astro
+title: Verification & Observability
+description: Detailed mapping from Contract Proof to verification strategy, execution evidence, observability, independent Validation, and result routing.
+section: deep
+kicker: Go Deeper · Evidence against Proof
+keywords:
+  - AI agent verification
+  - observability evidence
+  - independent validation
+---
+<div className="split">
+<section className="pane">
+<span className="pill purple">How it works</span>
+
+## Definitions
+**Proof** defines required evidence. **Verification** creates and evaluates tests, checks, reviews, evals, and observations. **Observability** makes system evidence available. **Validation** is the gate that determines whether the outcome satisfies the Contract.
+
+<div className="flow"><div className="step"><h3>Contract Proof</h3></div><div className="step"><h3>Planned verification</h3></div><div className="step"><h3>Execution evidence</h3></div><div className="step"><h3>Independent Validation</h3></div><div className="step"><h3>Route result</h3></div></div>
+
+## Independence
+The executor cannot rewrite Proof, suppress failure, or control the final judge. Use as much independence as risk warrants.
+</section>
+<section className="pane">
+<span className="pill blue">How we work</span>
+
+## During Planning
+Map each load-bearing Proof item to credible tests, evals, reviews, environment, fixtures, thresholds, and evidence collection.
+
+## During Execution
+Run fast feedback continuously: unit/integration tests, static and security checks, benchmarks, telemetry, and Maker → Checker where useful.
+
+## At Validation
+Evaluate evidence independently and route: accept; execution defect/retry; Plan defect/replan; Contract-change proposal; or uncertain evidence/escalation.
+
+## Quality
+Include human-rated mission/user quality and independent engineering quality where automation cannot fully judge the outcome.
+</section>
+</div>
