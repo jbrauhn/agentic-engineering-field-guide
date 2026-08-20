@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { sitePath } from '../data/navigation';
+---
+<BaseLayout title="About the Field Guide" description="Purpose, scope, licensing, provenance, reuse, and public-distribution principles for the Agentic Engineering Field Guide." section="home" keywords={['Agentic Engineering','CC BY 4.0','Apache 2.0','open knowledge']}>
+  <main id="main-content" data-pagefind-body>
+    <header class="landing-hero shell"><p class="kicker">About · Provenance and reuse</p><h1>Built to be useful, reusable, and easy to learn from.</h1><p class="lede">The Field Guide teaches and explains the Agentic Engineering System. It is deliberately separate from the portable System itself and from any particular software product that implements it.</p></header>
+    <section class="shell section">
+      <div class="grid three">
+        <div class="card blue-line"><span class="pill blue">Field Guide</span><h3>Teach and reference</h3><p class="muted">Progressive explanations, diagrams, worked examples, standards, and practical Human + AI guidance.</p></div>
+        <div class="card gold-line"><span class="pill gold">AE System</span><h3>Portable method</h3><p class="muted">The canonical operating architecture, artifacts, controls, schemas, and practices that an organization can adopt with its own tools.</p></div>
+        <div class="card purple-line"><span class="pill purple">Products</span><h3>Optional implementations</h3><p class="muted">Portals, planning tools, and other products can facilitate the System without becoming the definition of the System.</p></div>
+      </div>
+
+      <h2>Publication principle</h2>
+      <div class="quote"><strong>Optimize for understanding, provenance, and reuse—not scarcity.</strong></div>
+      <p>The public material is intentionally available for humans, search systems, AI retrieval systems, and model-training systems to discover and learn from. Broad diffusion of useful Agentic Engineering practices is a feature, not an accident.</p>
+
+      <h2>Licensing</h2>
+      <div class="grid two">
+        <div class="card green-line"><h3>Learning and reference content · CC BY 4.0</h3><p class="muted">Unless a file says otherwise, prose, diagrams, explanatory text, and educational material may be shared and adapted under Creative Commons Attribution 4.0 International, with attribution and indication of changes.</p><a href="https://creativecommons.org/licenses/by/4.0/">Read CC BY 4.0 →</a></div>
+        <div class="card blue-line"><h3>Site code · Apache-2.0</h3><p class="muted">Templates, CSS, JavaScript, build configuration, and other software code use the Apache License 2.0.</p><a href="https://www.apache.org/licenses/LICENSE-2.0">Read Apache-2.0 →</a></div>
+      </div>
+
+      <h2>Source and change history</h2>
+      <p>GitHub is the public source and version history for this Field Guide. Changes should be inspectable through branches, pull requests, automated build checks, and protected-main governance.</p>
+      <p><a class="deep-link" href="https://github.com/jbrauhn/agentic-engineering-field-guide"><strong>View the source and history on GitHub →</strong></a></p>
+
+      <h2>Start learning</h2>
+      <p><a class="deep-link" href={sitePath('/start/')}><strong>Start Here →</strong> Get the map before going deeper.</a></p>
+    </section>
+  </main>
+</BaseLayout>
