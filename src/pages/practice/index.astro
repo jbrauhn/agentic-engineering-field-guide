@@ -1,22 +1,19 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+import { sitePath } from '../../data/navigation';
 ---
-<BaseLayout title="Learn by Doing" description="Guided practice for applying Agentic Engineering through realistic loops, worked examples, architecture-aware planning, evidence, and reflection." section="practice">
-  <main>
-    <section class="page-hero"><div class="shell">
-      <div class="breadcrumbs"><a href={`${base}/`}>Field Guide</a><span>/</span><b>Learn by Doing</b></div>
-      <div class="eyebrow">04 · Guided practice</div>
-      <h1>Knowledge becomes useful when it survives contact with work.</h1>
-      <p class="lede">This path will turn the reference model into guided Human Owner + AI practice: establish Loop Context, form a Contract, plan against architecture, execute in bounded increments, produce evidence, validate independently, and capture what the system should learn.</p>
-    </div></section>
-    <section class="content"><div class="shell">
-      <div class="grid two">
-        <article class="card green"><span class="number">UNDER CONSTRUCTION</span><h3>Guided AE loops</h3><p>Practice with realistic scenarios that reveal decisions one layer at a time rather than front-loading the entire system.</p></article>
-        <article class="card purple"><span class="number">TARGET EXPERIENCE</span><h3>Two colleagues at a whiteboard.</h3><p>The long-term interface should let a human and AI converse against diagrams, artifacts, alternatives, consequences, evidence, and exact architecture elements.</p></article>
+<BaseLayout title="Learn by Doing" description="A preview of the guided practice path for applying Agentic Engineering in progressively richer delivery loops." section="practice">
+  <main id="main-content" data-pagefind-body>
+    <header class="landing-hero shell"><p class="kicker">Learning path 04 · Guided practice</p><h1>Learn by Doing</h1><p class="lede">This path will become the bridge from understanding the method to operating it in a configured environment. It is intentionally not pretending to be finished before the real system exists.</p></header>
+    <section class="shell section">
+      <div class="callout warn"><strong>Under construction by design.</strong> The training path should be built against the working AE System so practice teaches the real operating model rather than a disconnected simulation.</div>
+      <div class="grid three">
+        <div class="card blue-line"><span class="pill blue">Practice 01</span><h3>Frame a loop</h3><p class="muted">Classify Loop Context, interview for Goal / Spec / Proof, expose non-goals, and decide what evidence would count.</p></div>
+        <div class="card purple-line"><span class="pill purple">Practice 02</span><h3>Plan against architecture</h3><p class="muted">Use a visual system model, choose Planning Depth and Method, identify decisions, and derive verification work.</p></div>
+        <div class="card green-line"><span class="pill green">Practice 03</span><h3>Execute and validate</h3><p class="muted">Delegate bounded work, preserve state and evidence, then route independent Validation results correctly.</p></div>
       </div>
-      <h2>What practice will reinforce</h2>
-      <p>The exercises will not reward process for its own sake. They will make the learner choose planning depth, planning method, model capability, context strategy, evidence, and human gates based on task shape and risk—then compare the result with what actually happened.</p>
-    </div></section>
+      <div class="quote">The target experience is closer to two colleagues reasoning together at a whiteboard than a human filling out forms for an automation engine.</div>
+      <p><a class="deep-link" href={sitePath('/start/06-contract-example.html')}><strong>For now: follow the worked task-app example →</strong></a></p>
+    </section>
   </main>
 </BaseLayout>
