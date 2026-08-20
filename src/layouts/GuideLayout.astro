@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { journeys, sectionMeta, sitePath, relativeSitePath, type SectionId } from '../data/navigation';
+import '../styles/deep.css';
 
 const { frontmatter } = Astro.props;
 const section = frontmatter.section as 'start' | 'explore' | 'deep';
@@ -12,6 +13,7 @@ const next = index >= 0 && index < pages.length - 1 ? pages[index + 1] : null;
 const progress = index >= 0 ? ((index + 1) / pages.length) * 100 : 0;
 const landing = sectionMeta[section].landing;
 const keywords = frontmatter.keywords || ['Agentic Engineering', sectionMeta[section].label];
+const isDeep = section === 'deep';
 ---
 <BaseLayout title={frontmatter.title} description={frontmatter.description} section={section as SectionId} type="article" keywords={keywords}>
   <main id="main-content">
@@ -40,7 +42,17 @@ const keywords = frontmatter.keywords || ['Agentic Engineering', sectionMeta[sec
         </ol>
       </details>
     </header>
-    <article class="prose shell" data-pagefind-body>
+    {isDeep && (
+      <div class="deep-modebar" data-pagefind-ignore aria-label="Deep reference reading mode">
+        <span class="mode-label">Reading mode</span>
+        <div class="deep-mode-buttons" role="group" aria-label="Choose deep reference view">
+          <button class="deep-mode-button" type="button" data-mode="split" aria-pressed="true">Split View</button>
+          <button class="deep-mode-button" type="button" data-mode="how" aria-pressed="false">How it works</button>
+          <button class="deep-mode-button" type="button" data-mode="work" aria-pressed="false">How we work</button>
+        </div>
+      </div>
+    )}
+    <article class:list={['prose','shell',{'deep-article':isDeep}]} data-pagefind-body data-deep-mode={isDeep ? 'split' : undefined}>
       <slot />
     </article>
     <nav class="page-nav shell" aria-label="Page navigation" data-pagefind-ignore>
@@ -85,5 +97,21 @@ const keywords = frontmatter.keywords || ['Agentic Engineering', sectionMeta[sec
         location.href = document.body.dataset.base + '/';
       }
     });
+
+    const deepArticle = document.querySelector('.deep-article');
+    const deepButtons = Array.from(document.querySelectorAll('.deep-mode-button'));
+    if (deepArticle instanceof HTMLElement && deepButtons.length) {
+      const stored = localStorage.getItem('ae-deep-reading-mode');
+      const initial = stored === 'how' || stored === 'work' || stored === 'split' ? stored : 'split';
+      const setMode = (mode) => {
+        deepArticle.dataset.deepMode = mode;
+        deepButtons.forEach((button) => {
+          if (button instanceof HTMLButtonElement) button.setAttribute('aria-pressed', button.dataset.mode === mode ? 'true' : 'false');
+        });
+        localStorage.setItem('ae-deep-reading-mode', mode);
+      };
+      setMode(initial);
+      deepButtons.forEach((button) => button.addEventListener('click', () => setMode(button.dataset.mode || 'split')));
+    }
   </script>
 </BaseLayout>
