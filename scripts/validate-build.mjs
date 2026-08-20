@@ -12,7 +12,7 @@ const expected = [
   ...start.map((name) => `start/${name}.html`),
   ...explore.map((name) => `explore/${name}.html`),
   ...deep.map((name) => `deep/${name}.html`),
-  'robots.txt','llms.txt','sitemap-index.xml','pagefind/pagefind.js'
+  'favicon.svg','robots.txt','llms.txt','sitemap-index.xml','pagefind/pagefind.js'
 ];
 
 const errors = [];
@@ -48,6 +48,7 @@ for (const file of htmlFiles) {
   const name = relative(root, file).replaceAll('\\','/');
   if (!html.includes('<meta name="description"')) errors.push(`${name}: missing meta description`);
   if (!html.includes('<link rel="canonical"')) errors.push(`${name}: missing canonical URL`);
+  if (!html.includes('<link rel="icon"')) errors.push(`${name}: missing favicon link`);
   if (!html.includes('application/ld+json')) errors.push(`${name}: missing JSON-LD`);
   if (!html.includes('data-pagefind-body')) errors.push(`${name}: missing Pagefind content region`);
   if (html.includes('assets/site.css') || html.includes('assets/site.js')) errors.push(`${name}: legacy site asset reference remains`);
@@ -81,6 +82,7 @@ for (const slug of deep) {
     errors.push(`deep/${slug}.html: missing required How it works / How we work deep-reference panes`);
   }
   if (!html.includes('data-deep-mode')) errors.push(`deep/${slug}.html: missing deep reading-mode support`);
+  if (!html.includes('split-mode-help')) errors.push(`deep/${slug}.html: missing linked Split View interaction cue`);
   const h3Count = (html.match(/<h3/g) || []).length;
   if (h3Count < 10) errors.push(`deep/${slug}.html: reference depth appears too shallow (${h3Count} h3 sections; expected at least 10)`);
 
@@ -101,6 +103,14 @@ const deepLanding = existsSync(join(root,'deep/index.html')) ? readFileSync(join
 if (!deepLanding.includes('Split View') || !deepLanding.includes('How it works') || !deepLanding.includes('How we work')) {
   errors.push('deep/index.html: missing explanation of Go Deeper reading modes.');
 }
+if (!deepLanding.includes('Click a section in either pane')) {
+  errors.push('deep/index.html: missing explanation of linked Split View section navigation.');
+}
+
+const standards = existsSync(join(root,'explore/11-standards.html')) ? readFileSync(join(root,'explore/11-standards.html'),'utf8') : '';
+if (!standards.includes('What it contributes.') || !standards.includes('How AE uses it.') || !standards.includes('What it prevents.')) {
+  errors.push('explore/11-standards.html: standards/practices must explain contribution, AE connection, and prevented failure.');
+}
 
 const robots = existsSync(join(root,'robots.txt')) ? readFileSync(join(root,'robots.txt'),'utf8') : '';
 if (!robots.includes('User-agent: *') || !robots.includes('Allow: /')) errors.push('robots.txt is not broadly crawlable.');
@@ -116,4 +126,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Validated ${htmlFiles.length} HTML pages, ${expected.length} required outputs, navigation, deep-reference sequence, metadata, crawler files, and local links.`);
+console.log(`Validated ${htmlFiles.length} HTML pages, ${expected.length} required outputs, favicon, navigation, deep-reference sequence, standards depth, metadata, crawler files, and local links.`);
