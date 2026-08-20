@@ -1,46 +1,345 @@
 ---
 layout: ../../layouts/GuideLayout.astro
 title: Governed Access & Zero Trust
-description: Detailed Identity, Access Path, Entitlement, Operational Authority, Decision Authority, scoped grants, and Policy Enforcement Point mechanics for agentic systems.
+description: "Detailed identity, Access Path, entitlement, Operational Authority, Decision Authority, policy decisions, Policy Enforcement Points, action-time checks, audit evidence, and Human + AI operating practice."
 section: deep
-kicker: Go Deeper · Access, authority, enforcement
+kicker: Go Deeper · Access is not authority
 keywords:
-  - agent Zero Trust
-  - Operational Authority
-  - Decision Authority
+  - AI agent zero trust
+  - operational authority
+  - decision authority
   - Policy Enforcement Point
+  - governed agent access
 ---
-<div className="split">
-<section className="pane">
-<span className="pill purple">How it works</span>
+<div className="deep-columns">
+<section className="deep-pane deep-how">
+<div className="deep-pane-header"><span className="pill purple">How it works</span><h2>The system mechanics</h2></div>
 
-## Five questions
-| Dimension | Question |
-| --- | --- |
-| **Identity** | Who or what is acting? |
-| **Access Path** | How can it technically reach the resource? |
-| **Entitlement** | What standing rights exist? |
-| **Operational Authority (OA)** | What may this actor do in this task/runtime? |
-| **Decision Authority (DA)** | Who may approve consequential decisions? |
+<div className="deep-section">
+### Purpose
+Governed Access lets agents do real work while keeping consequential authority explicit, enforceable, and auditable. It separates **what an actor can technically reach** from **what that actor is allowed to do** and from **what decisions that actor is authorized to make**.
 
-## Decision vs enforcement
-Policy/control logic decides what should be allowed. Policy Enforcement Points (PEPs) at protected boundaries make that decision real.
+The security foundation aligns with Zero Trust thinking: network location or possession of a credential is not sufficient reason to trust an action.
 
-<div className="flow"><div className="step"><h3>Request</h3></div><div className="step"><h3>Identity + context</h3></div><div className="step"><h3>Policy decision</h3></div><div className="step"><h3>Scoped grant</h3></div><div className="step"><h3>PEP + evidence</h3></div></div>
+<div className="quote">Access ≠ authority.</div>
+</div>
+
+<div className="deep-section">
+### Five questions at every significant capability boundary
+For an agent, human, service, or automated workflow, reason through:
+
+1. **Identity — Who/what is acting?**
+   - human identity;
+   - agent/runtime identity;
+   - service/workload identity;
+   - delegated identity/session.
+2. **Access Path — How does the actor reach the resource?**
+   - direct API/CLI;
+   - MCP server;
+   - internal broker;
+   - CI runner;
+   - portal/backend;
+   - privileged session.
+3. **Entitlement — What resources/actions is this identity generally eligible to request?**
+4. **Operational Authority (OA) — What action may it perform now in this context?**
+5. **Decision Authority (DA) — Is it authorized to make the underlying consequential decision?**
+
+The last two are deliberately separate. A worker may have OA to execute a deployment only after a human with Release DA approves it. A human may hold DA without personally possessing credentials to run the deployment command.
+</div>
+
+<div className="deep-section">
+### Operational Authority vs Decision Authority
+**Operational Authority** answers: *May this actor perform this operation under the current conditions?*
+
+Examples:
+- edit files in a worktree;
+- push to a feature branch;
+- run CI;
+- read production logs;
+- request a deployment;
+- execute an approved production deployment.
+
+**Decision Authority** answers: *May this actor decide that this consequential outcome should occur?*
+
+Examples:
+- approve Contract change;
+- accept architecture tradeoff;
+- authorize production release;
+- accept security risk;
+- approve data deletion;
+- declare Validation evidence acceptable when human judgment is required.
+
+<div className="deep-note"><strong>Important:</strong> a powerful system administrator credential may create broad technical capability while conferring zero legitimate Decision Authority over product intent or acceptance.</div>
+</div>
+
+<div className="deep-section">
+### Governance happens at more than one time
+A robust design does not make one permission decision at project start and assume it remains valid forever.
+
+#### System / Contract setup
+Define durable governance rules:
+- reserved human Decision Authority;
+- immutable/protected objects;
+- prohibited actions;
+- standing entitlements;
+- high-impact approval requirements;
+- evidence/audit expectations.
+
+#### Planning
+Identify which resources and capability classes Execution is likely to need. Planning may propose Operational Authority requirements and flag likely human decisions.
+
+#### Action time
+Evaluate the actual request using the current actor, task, target, environment, action, risk, and approval state.
+
+#### Resource boundary
+A **Policy Enforcement Point (PEP)** permits, constrains, denies, or pauses the real action. Enforcement may exist at an API gateway, broker, runtime, deployment service, secrets system, data access layer, cloud control plane, or other protected boundary.
+</div>
+
+<div className="deep-section">
+### Reference flow
+```text
+Requested action
+      ↓
+Identity + task/Contract/Plan context
+      ↓
+Policy decision
+      ↓
+Scoped grant / approval / deny
+      ↓
+Policy Enforcement Point
+      ↓
+Protected resource action
+      ↓
+Evidence + audit + result
+```
+
+Text instructions to an agent are useful guidance but are not the same as enforcement when the consequence matters.
+</div>
+
+<div className="deep-section">
+### Fail closed on protected invariants
+Some boundaries should not depend on a model deciding to behave:
+- agent mutation of an approved Contract;
+- bypass of required Plan/Validation gate;
+- unapproved production deployment;
+- unauthorized secret/data access;
+- destructive resource deletion;
+- privilege escalation outside approved path.
+
+When a prohibited action is attempted, the system should block it and return an actionable reason/route—not silently fall back to a weaker path.
+</div>
+
+<div className="deep-section">
+### Context-sensitive authorization
+The same identity/action may be acceptable in one context and prohibited in another.
+
+Example:
+- read application logs in staging → standing OA;
+- read production logs containing sensitive user data → purpose-scoped OA with stronger audit;
+- delete production data → requires a separate protected action plus authorized Decision Authority;
+- delete disposable test fixtures → allowed within bounded test environment.
+
+Policies should therefore incorporate task/environment/resource context rather than merely role names.
+</div>
+
+<div className="deep-section">
+### Human decision gates should carry information
+A good approval request presents:
+- requested outcome/action;
+- actor and target environment;
+- Contract/Plan linkage;
+- why the action is needed;
+- affected architecture/resource;
+- evidence/check status;
+- alternatives;
+- consequences/rollback;
+- what authority the human is exercising.
+
+“Approve?” without context is not strong human governance; it is interruption theater.
+</div>
+
+<div className="deep-section">
+### Evidence and audit
+Governance events become part of engineering evidence:
+- identity that requested/performed action;
+- policy evaluated;
+- approval/denial and decision holder;
+- scoped grant/conditions;
+- protected resource result;
+- timestamps/environment/version;
+- relevant Contract/Plan/task refs.
+
+This helps incident analysis, compliance, reproducibility, and future system learning without requiring every low-risk action to generate heavyweight ceremony.
+</div>
+
+<div className="deep-section">
+### Interactions
+- **Contract** reserves immutable objects and important DA boundaries.
+- **Planning** surfaces likely capability and authority needs.
+- **Capability Interfaces** carry requests to real systems.
+- **Execution** asks for actions and responds to permit/deny/approval results.
+- **Knowledge & Context** must not bypass access policy while retrieving information.
+- **Validation** may require protected access to independent evidence or environments.
+- **Human Owner** exercises consequential DA where required.
+</div>
+
+<div className="deep-section">
+### Human knowledge, skills, and abilities
+Humans exercising DA need enough understanding to judge consequences. Depending on the action, that can require:
+- product/mission context;
+- architecture and dependency awareness;
+- security/privacy risk literacy;
+- operational/release knowledge;
+- understanding of evidence and rollback;
+- organizational policy authority.
+
+The system should route a decision to the **right human authority**, not merely “a human.”
+</div>
+
+<div className="deep-section">
+### Agent support
+AI can reduce governance burden by:
+- classifying requested action/risk;
+- gathering relevant Contract/Plan/architecture context;
+- showing exact resource impact;
+- explaining why approval is required;
+- comparing alternatives;
+- checking prerequisite evidence;
+- preparing least-privilege scope;
+- recording the resulting decision/audit trail;
+- recommending future standing policy when repeated safe patterns emerge.
+
+AI can prepare the decision without pretending to own reserved DA.
+</div>
+
+<div className="deep-section">
+### Failure modes
+- **Root access = authority:** technical privilege is treated as organizational permission.
+- **Prompt-only security:** agent instructions say “don’t deploy” while credentials allow unrestricted deploys.
+- **One-time authorization:** approval at Plan time is assumed valid for any later action/environment.
+- **Approval fatigue:** every trivial tool call interrupts a human.
+- **Opaque approval:** the human lacks architecture/evidence/rollback context.
+- **Over-broad credentials:** one agent identity can read/write every environment and secret.
+- **No enforcement point:** policy exists on paper but not at the protected resource.
+- **No audit/provenance:** later teams cannot determine who authorized a consequential action.
+- **Governance as maximal friction:** low-risk work receives controls designed for production-critical changes.
+</div>
+
+<div className="deep-section">
+### Implementation options
+Organizations may implement governed access with cloud IAM, OAuth/delegation, policy engines, API gateways, internal brokers, CI environments, secrets managers, runtime sandboxes, approval services, repository rulesets, deployment protection, or custom PEPs.
+
+AE does not mandate one policy product. It requires the conceptual chain to be real: identity → access path → entitlement → OA/DA → policy decision → enforcement → evidence.
+</div>
 </section>
-<section className="pane">
-<span className="pill blue">How we work</span>
 
-## Setup
-Define reserved Decision Authority, immutable objects, standing entitlements, and high-impact actions.
+<section className="deep-pane deep-work">
+<div className="deep-pane-header"><span className="pill blue">How we work</span><h2>Human Owner + AI practice</h2></div>
 
-## Planning
-Identify required resources and capabilities and propose the least practical Operational Authority for the work.
+<div className="deep-section">
+### Start with an authority map
+During installation or product orientation, identify consequential actions and who currently controls them.
 
-## Action time
-Evaluate actual actor + task + target + environment + requested action. Permit, constrain, block, or route for approval.
+For each major agent/runtime, ask:
+- What identity does it actually use?
+- Through what path does it reach resources?
+- What can it technically do today?
+- Which of those actions is it intended to do?
+- Which decisions does it effectively make today even if nobody documented them?
+- Where is enforcement real versus merely instructed?
 
-## Evidence
-Record policy decision, approval where required, enforcement result, actor identity, target, and task context. Unauthorized Contract mutation fails closed.
+This often reveals that “admin” agents are already making governance decisions accidentally.
+</div>
+
+<div className="deep-section">
+### Reserve Decision Authority deliberately
+Define a small set of decisions that remain human-owned or require designated organizational authority. Examples may include:
+- approving/superseding Contract;
+- accepting significant architecture/risk choices;
+- authorizing production release;
+- approving irreversible/destructive actions;
+- accepting final outcome where Proof requires human judgment.
+
+Do not reserve every choice. Human attention should move toward consequential judgment, not mechanical confirmation.
+</div>
+
+<div className="deep-section">
+### Plan required access early—but re-evaluate later
+During Planning, let the AI identify likely capability and environment needs. This prevents Execution from discovering obvious access gaps halfway through a task.
+
+But treat Plan-time access as a **proposal/expectation**, not permanent authorization. When the worker actually requests the action, evaluate current context again.
+</div>
+
+<div className="deep-section">
+### Design approvals as decision briefs
+A useful AI-generated approval brief might say:
+
+> **Decision: deploy Task Service v2.4.1 to production.** This implements Contract C-17 / Plan P-23. CI, security scan, migration dry-run, and staging Proof checks passed. The deployment changes containers `task-web` and `task-worker`; database schema change is backward compatible. Rollback is image v2.4.0 plus reversible migration step. Production Release DA is required.
+
+That is far more useful than a modal with “Agent wants permission to run command.”
+</div>
+
+<div className="deep-section">
+### Use least privilege as a design tool, not a slogan
+Split capabilities when the consequence differs:
+- read vs write;
+- feature branch vs protected branch;
+- staging vs production;
+- view secret metadata vs retrieve secret value;
+- create deployment request vs execute deployment;
+- query data vs delete data.
+
+This creates smaller authority surfaces that agents can use autonomously without repeatedly asking for blanket permission.
+</div>
+
+<div className="deep-section">
+### Tune governance from observed work
+Collect approval and denial evidence:
+- Which approvals are always granted and low-risk?
+- Which actions repeatedly require extra explanation?
+- Which policies block legitimate work for the wrong reason?
+- Which actions occur without enough visibility?
+- Where do agents ask for more privilege than they actually need?
+
+Use those results to propose standing policy improvements. Governance should learn rather than calcify.
+</div>
+
+<div className="deep-section">
+### Human Owner interaction pattern
+When the agent needs a consequential decision:
+1. pause before the protected action;
+2. state the exact decision required;
+3. show affected architecture/resource;
+4. show prerequisite evidence and unresolved risk;
+5. show reasonable alternatives and consequence of delay;
+6. identify which authority the human is exercising;
+7. record the decision and conditions;
+8. continue only through the enforced authorized path.
+
+This preserves human judgment without turning the human into a command-line operator.
+</div>
+
+<div className="deep-section">
+### Practical governance checklist
+For a protected action, ask:
+- Is the actor identity known and attributable?
+- Is the Access Path controlled?
+- Is entitlement scoped to the necessary resource/action?
+- Is Operational Authority valid in this task/environment now?
+- Does the action require separate Decision Authority?
+- Is the right decision holder involved?
+- Will a Policy Enforcement Point enforce the result?
+- Will the action produce audit/evidence?
+- Is rollback/recovery understood where relevant?
+
+If the consequence is low, keep the path lightweight. Heavier governance is not inherently safer if it trains people to click through everything.
+</div>
+
+<div className="deep-section">
+### Training exercise
+Choose one real agent and map five actions it can perform—from harmless read-only work through a high-impact destructive action. For each, assign Identity, Access Path, Entitlement, OA, DA, Enforcement, and Evidence.
+
+The exercise usually makes the distinction between **permissions** and **authority** tangible within minutes.
+</div>
 </section>
 </div>
