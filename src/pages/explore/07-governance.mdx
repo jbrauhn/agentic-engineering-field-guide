@@ -1,0 +1,31 @@
+---
+layout: ../../layouts/GuideLayout.astro
+title: Governed Access & Zero Trust
+description: Agentic Engineering separates technical access from Operational Authority and Decision Authority, then enforces policy at protected resource boundaries.
+section: explore
+kicker: Explore · Technical access is not authority
+keywords:
+  - Zero Trust agents
+  - Operational Authority
+  - Decision Authority
+  - Policy Enforcement Point
+---
+import InfoTip from '../../components/InfoTip.astro';
+
+A system becomes dangerous when it confuses “the agent can reach this resource” with “the agent is allowed to make this decision.”
+
+<div className="grid four">
+  <div className="card"><h3>What it is</h3><p className="muted">Identity, access path, entitlement, Operational Authority (OA), Decision Authority (DA), policy decisions, and enforcement.</p></div>
+  <div className="card"><h3>Why it matters</h3><p className="muted">Agent capability can exceed appropriate authority.</p></div>
+  <div className="card"><h3>Failure prevented</h3><p className="muted">The “god-agent” with broad standing credentials and no meaningful boundary.</p></div>
+  <div className="card green-line"><h3>Core philosophy</h3><p className="muted">Access ≠ authority. Policy decision and enforcement are separate.</p></div>
+</div>
+
+## When does it happen?
+
+<div className="grid two">
+  <div className="card gold-line"><h3>Decisions</h3><p className="muted">System/Contract setup reserves consequential Decision Authority. Planning identifies resources and proposes Operational Authority. At action time, the actual actor/task/resource request is evaluated and may require approval.</p></div>
+  <div className="card green-line"><h3>Enforcement</h3><p className="muted">A Policy Enforcement Point (PEP) <InfoTip label="Policy Enforcement Point">The control at or near a protected resource boundary that permits, constrains, blocks, or pauses an action according to policy.</InfoTip> enforces the decision when the action reaches a protected tool, API, runtime, secret, data boundary, or deployment system.</p></div>
+</div>
+
+<a className="deep-link" href="../deep/06-governance.html"><strong>Go Deeper:</strong> identity, entitlements, OA/DA, scoped grants, and distributed enforcement →</a>
