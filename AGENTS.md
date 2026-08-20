@@ -21,6 +21,7 @@ This repository contains the **Agentic Engineering Field Guide**, the public lea
 - Never require understanding the whole architecture before explaining the current value/question.
 - Use progressive elaboration; keep the first layer concise and expose optional depth deliberately. Choosing Go Deeper is itself a request for depth, so do not truncate the reference after the learner has chosen it.
 - Distinguish formal standards/frameworks, established practices, emerging protocols, and AE/local patterns.
+- On standards/practices pages, explain **what the item contributes, how AE uses it, and what failure it helps prevent** before sending the reader to an outside source.
 - Expand unfamiliar acronyms on first meaningful use in a learning section.
 - Prefer primary sources for external standards/protocol/product claims.
 - Do not invent industry-standard status for AE house terminology or candidate patterns.
@@ -43,13 +44,16 @@ This repository contains the **Agentic Engineering Field Guide**, the public lea
 - Use Astro/MDX and shared components instead of duplicating page chrome.
 - Preserve stable public URLs in `src/data/navigation.ts` unless a deliberate migration decision changes them.
 - Preserve the sticky-header navigation contract: desktop learning-path dropdowns plus Previous / Next topic controls on detailed pages. Do not remove those controls during visual redesign.
+- Internal links stay in the current tab. External HTTP(S) links open in a new tab with `noopener noreferrer`; the shared site shell enforces this behavior.
+- Keep `public/favicon.svg` wired into the shared page `<head>` so the Field Guide has a recognizable browser-tab identity.
 - Important content must exist in prerendered HTML; do not make core meaning depend on client-side JavaScript.
 - Use `InfoTip.astro` selectively for second-layer explanations.
 - Keep pages usable on narrow screens and with reduced motion.
 - Keep search/discoverability metadata truthful and aligned with visible content.
 - For Go Deeper, maintain the reading modes implemented by `GuideLayout.astro` / `deep.css` in this order: **How it works → How we work → Split View**. The first-use default is How it works.
 - The bottom Go Deeper navigation is instructional: **Next from How it works opens How we work for the same topic; Next from How we work advances to the next topic and returns to How it works.** Top Previous / Next controls remain topic navigation.
-- Split panes should scroll independently on desktop and stack readably on narrow screens.
+- Split panes scroll independently on desktop and stack readably on narrow screens.
+- **Split View is linked.** Clicking a non-interactive part of a `.deep-section` in either pane should move the opposite pane to the related section and visibly mark the pair. Preserve this behavior during refactors. Prefer explicit `data-sync-key` mappings when a topic needs more precise semantic pairing than the default ordinal/relative-position mapping.
 
 ## Before merge
 
