@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<BaseLayout title="Learn by Doing" description="Guided practice for applying Agentic Engineering through realistic loops, worked examples, architecture-aware planning, evidence, and reflection." section="practice">
+  <main>
+    <section class="page-hero"><div class="shell">
+      <div class="breadcrumbs"><a href={`${base}/`}>Field Guide</a><span>/</span><b>Learn by Doing</b></div>
+      <div class="eyebrow">04 · Guided practice</div>
+      <h1>Knowledge becomes useful when it survives contact with work.</h1>
+      <p class="lede">This path will turn the reference model into guided Human Owner + AI practice: establish Loop Context, form a Contract, plan against architecture, execute in bounded increments, produce evidence, validate independently, and capture what the system should learn.</p>
+    </div></section>
+    <section class="content"><div class="shell">
+      <div class="grid two">
+        <article class="card green"><span class="number">UNDER CONSTRUCTION</span><h3>Guided AE loops</h3><p>Practice with realistic scenarios that reveal decisions one layer at a time rather than front-loading the entire system.</p></article>
+        <article class="card purple"><span class="number">TARGET EXPERIENCE</span><h3>Two colleagues at a whiteboard.</h3><p>The long-term interface should let a human and AI converse against diagrams, artifacts, alternatives, consequences, evidence, and exact architecture elements.</p></article>
+      </div>
+      <h2>What practice will reinforce</h2>
+      <p>The exercises will not reward process for its own sake. They will make the learner choose planning depth, planning method, model capability, context strategy, evidence, and human gates based on task shape and risk—then compare the result with what actually happened.</p>
+    </div></section>
+  </main>
+</BaseLayout>
