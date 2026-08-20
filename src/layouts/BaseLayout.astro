@@ -1,7 +1,13 @@
 ---
 import '../styles/global.css';
+import '../styles/navigation.css';
 import SearchOverlay from '../components/SearchOverlay.astro';
-import { sectionMeta, sitePath, type SectionId } from '../data/navigation';
+import { journeys, sectionMeta, sitePath, type SectionId } from '../data/navigation';
+
+interface PageControl {
+  href: string;
+  title: string;
+}
 
 interface Props {
   title: string;
@@ -9,6 +15,11 @@ interface Props {
   section?: SectionId | 'home';
   type?: 'website' | 'article';
   keywords?: string[];
+  pageNavigation?: {
+    previous: PageControl;
+    next: PageControl;
+    counter: string;
+  };
 }
 
 const {
@@ -16,7 +27,8 @@ const {
   description,
   section = 'home',
   type = 'website',
-  keywords = ['Agentic Engineering', 'AI agents', 'software engineering', 'AI engineering']
+  keywords = ['Agentic Engineering', 'AI agents', 'software engineering', 'AI engineering'],
+  pageNavigation
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -92,18 +104,52 @@ const schema = {
           <span class="brand-copy"><strong>Agentic Engineering</strong><small>Field Guide</small></span>
         </a>
         <nav class="desktop-nav" aria-label="Primary navigation">
-          {primarySections.map((id) => (
-            <a href={sitePath(sectionMeta[id].landing)} aria-current={section === id ? 'page' : undefined}>{sectionMeta[id].label}</a>
-          ))}
+          {primarySections.map((id) => {
+            const topicPages = id === 'practice' ? [] : journeys[id];
+            return (
+              <div class:list={['nav-group', { active: section === id }]}>
+                <a class="nav-section-link" href={sitePath(sectionMeta[id].landing)} aria-current={section === id ? 'page' : undefined}>{sectionMeta[id].label}</a>
+                <details class="nav-dropdown">
+                  <summary aria-label={`Open ${sectionMeta[id].label} topics`} title={`Open ${sectionMeta[id].label} topics`}>▾</summary>
+                  <div class="nav-dropdown-menu">
+                    <a class="menu-overview" href={sitePath(sectionMeta[id].landing)}>{sectionMeta[id].label} overview<small>{sectionMeta[id].description}</small></a>
+                    {topicPages.map((page) => (
+                      <a href={sitePath(page.path)} aria-current={Astro.url.pathname.endsWith(page.path) ? 'page' : undefined}>{page.title}<small>{page.short}</small></a>
+                    ))}
+                  </div>
+                </details>
+              </div>
+            );
+          })}
         </nav>
         <div class="nav-actions">
+          {pageNavigation && (
+            <div class="top-page-controls" aria-label="Topic navigation">
+              <a class="top-page-button" href={pageNavigation.previous.href} title={`Previous: ${pageNavigation.previous.title}`} aria-label={`Previous: ${pageNavigation.previous.title}`} data-top-prev>
+                ← <span>Previous</span>
+              </a>
+              <span class="top-page-counter" aria-label={`Page ${pageNavigation.counter}`}>{pageNavigation.counter}</span>
+              <a class="top-page-button" href={pageNavigation.next.href} title={`Next: ${pageNavigation.next.title}`} aria-label={`Next: ${pageNavigation.next.title}`} data-top-next>
+                <span>Next</span> →
+              </a>
+            </div>
+          )}
           <SearchOverlay />
           <details class="mobile-menu">
             <summary aria-label="Open navigation">Menu</summary>
             <nav aria-label="Mobile navigation">
-              {primarySections.map((id) => (
-                <a href={sitePath(sectionMeta[id].landing)} aria-current={section === id ? 'page' : undefined}>{sectionMeta[id].label}</a>
-              ))}
+              {primarySections.map((id) => {
+                const topicPages = id === 'practice' ? [] : journeys[id];
+                return (
+                  <details class="mobile-section" open={section === id}>
+                    <summary>{sectionMeta[id].label}</summary>
+                    <div class="mobile-section-links">
+                      <a class="mobile-overview" href={sitePath(sectionMeta[id].landing)}>{sectionMeta[id].label} overview</a>
+                      {topicPages.map((page) => <a href={sitePath(page.path)}>{page.title}</a>)}
+                    </div>
+                  </details>
+                );
+              })}
               <a href={sitePath('/about.html')}>About</a>
             </nav>
           </details>
@@ -125,5 +171,29 @@ const schema = {
         <p class="license-note">Learning/reference content: CC BY 4.0<br />Site code: Apache-2.0</p>
       </div>
     </footer>
+    <script>
+      const desktopDropdowns = Array.from(document.querySelectorAll('.nav-dropdown'));
+      desktopDropdowns.forEach((dropdown) => {
+        dropdown.addEventListener('toggle', () => {
+          if (!(dropdown instanceof HTMLDetailsElement) || !dropdown.open) return;
+          desktopDropdowns.forEach((other) => {
+            if (other instanceof HTMLDetailsElement && other !== dropdown) other.open = false;
+          });
+        });
+      });
+      document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof Node)) return;
+        desktopDropdowns.forEach((dropdown) => {
+          if (dropdown instanceof HTMLDetailsElement && dropdown.open && !dropdown.contains(target)) dropdown.open = false;
+        });
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        desktopDropdowns.forEach((dropdown) => {
+          if (dropdown instanceof HTMLDetailsElement) dropdown.open = false;
+        });
+      });
+    </script>
   </body>
 </html>
