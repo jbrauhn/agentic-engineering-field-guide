@@ -1,0 +1,40 @@
+---
+layout: ../../layouts/GuideLayout.astro
+title: Decompose only as far as the work needs
+description: Planning Depth controls how far work is decomposed before execution; Planning Method controls how work is sliced and ordered.
+section: start
+kicker: Start Here · How much planning is enough?
+keywords:
+  - Planning Depth
+  - Planning Method
+  - AI agent planning
+---
+import InfoTip from '../../components/InfoTip.astro';
+
+<div className="callout good"><strong>Choose the simplest useful pattern. Heavier process is not more mature.</strong> Bias toward the lightest Planning Depth and Method that can credibly satisfy the Contract; then learn from measured results.</div>
+
+## Planning Depth
+
+<div className="grid four">
+  <div className="card"><span className="pill blue">L1</span><h3>Product/System baseline <InfoTip label="L1 product/system baseline">Durable capability and architecture context. Most normal loops reference it rather than recreate it.</InfoTip></h3><p className="muted">Established early or reconstructed when adopting an existing system.</p></div>
+  <div className="card"><span className="pill purple">L2</span><h3>Execution increment <InfoTip label="L2 execution increment">A bounded deliverable meaningful enough to validate on its own.</InfoTip></h3><p className="muted">The common unit for an ongoing work loop.</p></div>
+  <div className="card"><span className="pill teal">L3</span><h3>Executable tasks <InfoTip label="L3 executable tasks">Dependency-aware implementation and test/eval tasks that a coding agent can execute against.</InfoTip></h3><p className="muted">Produced during Planning for the selected increment.</p></div>
+  <div className="card"><span className="pill green">L4</span><h3>Agent micro-plan <InfoTip label="L4 agent micro-plan">Local implementation steps chosen during execution; usually ephemeral unless they reveal a durable decision.</InfoTip></h3><p className="muted">The agent controls this within approved boundaries.</p></div>
+</div>
+
+The **Contract is above this hierarchy**. Planning Depth is not a way to change the target; it is a choice about how far to decompose the route before execution.
+
+## Planning Method is a mandatory choice—and an experiment
+
+<div className="grid four">
+  <div className="card"><h3>Lightweight / agent-led <InfoTip label="Lightweight agent-led planning">Tiny, well-understood, low-risk changes where one clean run is plausible.</InfoTip></h3></div>
+  <div className="card"><h3>Explicit task plan <InfoTip label="Explicit task planning">Normal feature/change work with predictable decomposition and dependencies.</InfoTip></h3></div>
+  <div className="card"><h3>Vertical slices <InfoTip label="Vertical-slice planning">Product work where independently usable behavior and early Validation matter.</InfoTip></h3></div>
+  <div className="card"><h3>Dependency-first <InfoTip label="Dependency-first planning">Greenfield, platform, infrastructure, or migration work with true prerequisites.</InfoTip></h3></div>
+  <div className="card"><h3>Rolling-wave <InfoTip label="Rolling-wave planning">Uncertain work: plan the near term deeply and elaborate later work only when useful.</InfoTip></h3></div>
+  <div className="card"><h3>Spec-of-specs <InfoTip label="Spec-of-specs planning">Work too large for one Plan/context; split it into independently planned sub-features.</InfoTip></h3></div>
+  <div className="card"><h3>Orchestrator-worker <InfoTip label="Orchestrator-worker planning">Complex work whose exact subtask structure cannot be confidently predicted up front.</InfoTip></h3></div>
+  <div className="card"><h3>Evidence / test-first <InfoTip label="Evidence or test-first planning">Crisp behavior, regressions, APIs, security, and reliability work where feedback quality drives outcome quality.</InfoTip></h3></div>
+</div>
+
+<div className="callout"><strong>Learning loop:</strong> record work type, Planning Depth/Method, model placement, quality, cost, human time, retries, and rework. System memory should improve future recommendations.</div>
