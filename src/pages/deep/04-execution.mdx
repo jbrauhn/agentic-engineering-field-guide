@@ -1,0 +1,46 @@
+---
+layout: ../../layouts/GuideLayout.astro
+title: Execution Loop & Pattern Library
+description: Detailed bounded adaptive execution loop, retry and escalation boundaries, fresh-agent relays, Maker-to-Checker, parallel work, and coordinated multi-agent patterns.
+section: deep
+kicker: Go Deeper · Bounded adaptive work
+keywords:
+  - agent execution loop
+  - Maker Checker
+  - multi-agent orchestration
+---
+<div className="split">
+<section className="pane">
+<span className="pill purple">How it works</span>
+
+## Loop
+<div className="flow"><div className="step"><h3>Execute</h3></div><div className="step"><h3>Observe</h3></div><div className="step"><h3>Compare</h3></div><div className="step"><h3>Adjust</h3></div><div className="step"><h3>Continue / Validate / Escalate</h3></div></div>
+
+## Boundaries
+Execution may adapt local implementation inside the reviewed Plan. If a Plan assumption fails, route to Planning. If the target should change, submit a Contract proposal.
+
+## Patterns
+- single-agent iterative loop;
+- fresh-agent relay;
+- parallel independent workers;
+- Maker → Checker;
+- coordinated multi-agent orchestration.
+
+<div className="callout"><strong>More agents ≠ more agentic.</strong> Use the simplest topology that fits the task.</div>
+</section>
+<section className="pane">
+<span className="pill blue">How we work</span>
+
+## Give the worker
+A bounded L3 task or L2 increment, relevant Contract + architecture + dependencies, fresh context/handoff, allowed capabilities and authority, and required evidence hooks.
+
+## Worker behavior
+Use tools, inspect feedback, test continuously, retry where reasonable, capture state, and stop or escalate when evidence says the boundary or Plan is wrong.
+
+## Maker → Checker
+Maker → Checker is a useful **execution topology**. It does not replace lifecycle Validation against Contract Proof.
+
+## Open experiment
+Whether Execution Loop deserves its own reusable skill remains intentionally unresolved; validate the pattern through real work rather than declaring it universal up front.
+</section>
+</div>
