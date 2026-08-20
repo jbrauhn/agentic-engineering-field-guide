@@ -1,0 +1,35 @@
+---
+layout: ../../layouts/GuideLayout.astro
+title: Knowledge & Context
+description: Agentic Engineering treats memory as system-owned durable knowledge and assembles fresh, task-specific context instead of relying on endless conversations.
+section: explore
+kicker: Explore · Keep memory in the system, not the session
+keywords:
+  - AI agent memory
+  - context engineering
+  - structured handoff
+---
+import InfoTip from '../../components/InfoTip.astro';
+
+Context is finite. Projects are not. Knowledge & Context lets work continue reliably without stuffing the whole history into every model call.
+
+<div className="grid four">
+  <div className="card"><h3>What it is</h3><p className="muted">System-owned memory plus fresh, task-specific context.</p></div>
+  <div className="card"><h3>Why it matters</h3><p className="muted">The context window is not a system of record.</p></div>
+  <div className="card"><h3>Failure prevented</h3><p className="muted">Context landfill, stale summaries, session dependence, and wasted model capacity.</p></div>
+  <div className="card blue-line"><h3>Core philosophy</h3><p className="muted"><strong>Fresh context and progressive elaboration beat endless conversation.</strong></p></div>
+</div>
+
+## Memory is a portfolio
+
+<div className="grid three">
+  <div className="card"><h3>agent.md / soul.md <InfoTip label="agent.md and soul.md">agent.md can hold operational guidance; soul.md is a local convention for personality and interaction behavior. Neither overrides Contract, authority, or Proof.</InfoTip></h3><p className="muted">Standing agent instructions and interaction style.</p></div>
+  <div className="card"><h3>LLM Wiki / knowledge base <InfoTip label="LLM Wiki or knowledge base">Durable architecture, decisions, standards, lessons, and product knowledge live outside active model context and are retrieved when needed.</InfoTip></h3><p className="muted">Agent-accessible durable knowledge.</p></div>
+  <div className="card"><h3>Structured handoff packs <InfoTip label="structured handoff pack">Current task, decisions, changes, evidence, blockers, source pointers, next action, and stop/escalation condition for the next worker.</InfoTip></h3><p className="muted">Deliberate continuation state.</p></div>
+</div>
+
+<div className="quote"><strong>Glass-of-water model:</strong> context pre-fills the glass before work begins. Fill it with enough high-signal information to make the agent smart on the task—but every unnecessary token consumes room for reasoning, tool results, and new work.</div>
+
+<div className="callout"><strong>Economic design:</strong> model placement is also an experiment. Test budget, local, specialist, and frontier models by task type and phase; preserve quality/cost/rework results so routing improves over time.</div>
+
+<a className="deep-link" href="../deep/03-knowledge-context.html"><strong>Go Deeper:</strong> durable state, retrieval, handoffs, compaction, and fresh-context assembly →</a>
