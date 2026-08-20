@@ -44,9 +44,9 @@ The production build:
 
 ## GitHub Pages
 
-`.github/workflows/deploy.yml` publishes the built `dist/` directory through GitHub Actions. After the modernization PR is merged, repository **Settings → Pages → Source** must be changed from branch publishing to **GitHub Actions**.
+`.github/workflows/deploy.yml` publishes the built `dist/` directory through GitHub Actions. Repository **Settings → Pages → Source** is configured for **GitHub Actions**, so pushes to protected `main` trigger the production deployment workflow.
 
-Expected public site:
+Public site:
 
 `https://jbrauhn.github.io/agentic-engineering-field-guide/`
 
