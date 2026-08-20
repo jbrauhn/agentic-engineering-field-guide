@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && pagefind --site dist",
+    "build": "astro build && pagefind --site dist && node scripts/validate-build.mjs",
     "validate": "node scripts/validate-build.mjs",
     "preview": "astro preview"
   },
