@@ -1,43 +1,44 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import JourneyCard from '../components/JourneyCard.astro';
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+import { sectionMeta, sitePath } from '../data/navigation';
 ---
 <BaseLayout
   title="Agentic Engineering Field Guide"
   description="A practical field guide for trustworthy Agentic Engineering: human judgment, AI execution, architecture, context, governance, verification, and iterative learning."
   section="home"
+  keywords={['Agentic Engineering','AI agents','AI software engineering','human AI collaboration','agent governance','AI verification']}
 >
-  <main>
-    <section class="hero">
-      <div class="shell">
-        <div class="eyebrow">Human–AI engineering, built for trustworthy outcomes</div>
-        <h1>Engineer the system, not just the <span class="accent">prompt.</span></h1>
-        <p class="lede">In this Field Guide, <strong>Agentic Engineering</strong> means engineering a human–AI system that can repeatedly turn intent into validated outcomes. The model matters—but so do architecture, context, tools, authority, evidence, and human judgment.</p>
-        <div class="hero-actions">
-          <a class="button primary" href={`${base}/start/`}>Start with the map <span aria-hidden="true">→</span></a>
-          <a class="button" href={`${base}/explore/`}>Explore the system</a>
+  <main id="main-content" data-pagefind-body>
+    <section class="home-hero">
+      <div class="shell hero-grid">
+        <div>
+          <p class="kicker">Human–AI engineering for trustworthy outcomes</p>
+          <h1>Engineer the system, not just the prompt.</h1>
+          <p class="lede">Agentic Engineering combines AI speed with the professional engineering practices that make complex work reliable. The model matters—but so do architecture, context, tools, authority, evidence, and human judgment.</p>
+          <p><a class="deep-link" href={sitePath('/start/01-elevator.html')}><strong>Start with the 60-second mental model →</strong></a></p>
         </div>
+        <aside class="hero-aside" aria-label="Core principle">
+          <span class="pill gold">Core principle</span>
+          <h2>AI changes the scale of engineering—not the need for engineering discipline.</h2>
+          <p>Agents can multiply useful work dramatically. They can also multiply defects, weak decisions, and low-quality output just as quickly.</p>
+        </aside>
       </div>
     </section>
 
-    <section class="section">
-      <div class="shell">
-        <div class="statement"><strong>AI changes the scale of engineering—not the need for engineering discipline.</strong> Agents can multiply useful work dramatically; they can also multiply defects, weak decisions, and low-quality output just as quickly.</div>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="journeys">
+    <section class="section" aria-labelledby="paths">
       <div class="shell">
         <div class="section-head">
-          <div><div class="eyebrow">Choose your learning path</div><h2 id="journeys">One system. Four depths.</h2></div>
-          <p class="section-intro">You do not need to understand the whole architecture before you can understand the value. Start with the smallest useful mental model, then go deeper when the next question appears.</p>
+          <div><p class="kicker">Choose your learning path</p><h2 id="paths">One system. Four depths.</h2></div>
+          <p>Never make someone understand the whole architecture before they can understand the value. Start with the smallest useful mental model and expose the next layer when the next question appears.</p>
         </div>
-        <div class="grid four">
-          <JourneyCard number="01" title="Start Here" description="Get the map, the core mental model, and a worked example." href={`${base}/start/`} tone="blue" />
-          <JourneyCard number="02" title="Explore the System" description="Understand why each component exists and what failure it prevents." href={`${base}/explore/`} tone="gold" />
-          <JourneyCard number="03" title="Go Deeper" description="Study mechanics, interfaces, governance, memory, and validation." href={`${base}/deep/`} tone="purple" />
-          <JourneyCard number="04" title="Learn by Doing" description="Practice the method in guided loops and eventually in a configured system." href={`${base}/practice/`} tone="green" />
+        <div class="path-grid">
+          {(['start','explore','deep','practice'] as const).map((id, index) => (
+            <a class="path-card" href={sitePath(sectionMeta[id].landing)}>
+              <small>{String(index + 1).padStart(2,'0')}</small>
+              <h3>{sectionMeta[id].label}</h3>
+              <p>{sectionMeta[id].description}</p>
+            </a>
+          ))}
         </div>
       </div>
     </section>
@@ -45,26 +46,39 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <section class="section" aria-labelledby="loop">
       <div class="shell">
         <div class="section-head">
-          <div><div class="eyebrow">The operating loop</div><h2 id="loop">Intent becomes evidence.</h2></div>
-          <p class="section-intro">The system does heavy work, but it does not get to silently redefine success or approve its own outcome.</p>
+          <div><p class="kicker">The operating loop</p><h2 id="loop">Intent becomes evidence.</h2></div>
+          <p>The system does the heavy lifting, but it does not silently redefine success or approve its own outcome.</p>
         </div>
         <div class="flow" aria-label="Agentic Engineering operating loop">
-          <div class="flow-step"><b>Loop Context</b><small>What kind of work is this?</small></div>
-          <div class="flow-step"><b>Contract</b><small>Goal · Spec · Proof</small></div>
-          <div class="flow-step"><b>Planning</b><small>Architecture-aware route</small></div>
-          <div class="flow-step"><b>Execution</b><small>Bounded adaptive work</small></div>
-          <div class="flow-step"><b>Validation</b><small>Independent judgment</small></div>
-          <div class="flow-step"><b>Learn</b><small>Capture evidence and improve</small></div>
+          <div class="step"><span class="pill blue">0</span><h3>Loop Context</h3><p class="muted">What kind of work is this?</p></div>
+          <div class="step"><span class="pill gold">1</span><h3>Contract</h3><p class="muted">Goal · Spec · Proof</p></div>
+          <div class="step"><span class="pill purple">2</span><h3>Planning</h3><p class="muted">Architecture-aware route</p></div>
+          <div class="step"><span class="pill teal">3</span><h3>Execution</h3><p class="muted">Bounded adaptive work</p></div>
+          <div class="step"><span class="pill green">4</span><h3>Validation</h3><p class="muted">Independent judgment</p></div>
+          <div class="step"><span class="pill orange">5</span><h3>Learn</h3><p class="muted">Capture evidence and improve</p></div>
         </div>
       </div>
     </section>
 
     <section class="section" aria-labelledby="collaboration">
       <div class="shell">
-        <div class="section-head"><div><div class="eyebrow">Human–AI collaboration</div><h2 id="collaboration">Different strengths. Shared work.</h2></div></div>
+        <div class="section-head"><div><p class="kicker">Human–AI collaboration</p><h2 id="collaboration">Different strengths. Shared work.</h2></div></div>
         <div class="grid two">
-          <article class="card blue"><span class="number">AI VALUE</span><h3>Speed, scale, persistence.</h3><p>Rapid synthesis, broad technical knowledge, repeated bounded execution, tool use, testing, comparison, and continuous work across large problem spaces.</p></article>
-          <article class="card gold"><span class="number">HUMAN VALUE</span><h3>Context, ingenuity, judgment.</h3><p>Logic, creativity, taste, values, mission context, authority, accountability, and the ability to decide what should happen—not merely what can happen.</p></article>
+          <article class="card blue-line"><span class="pill blue">AI Value</span><h3>Speed, scale, synthesis, and execution</h3><p class="muted">Rapid analysis, broad technical knowledge, persistence, tool use, testing, comparison, and large amounts of bounded execution inside strong engineering rails.</p></article>
+          <article class="card gold-line"><span class="pill gold">Human Value</span><h3>Context, logic, ingenuity, creativity, and judgment</h3><p class="muted">Contextual knowledge, taste, values, authority, accountability, and the ability to decide what should happen—not merely what can happen.</p></article>
+        </div>
+        <div class="quote"><strong>Target experience:</strong> closer to two colleagues reasoning together at a whiteboard than a human filling out forms for an automation engine.</div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="rails">
+      <div class="shell">
+        <div class="section-head"><div><p class="kicker">The engineering rails</p><h2 id="rails">Speed without compounding errors.</h2></div><p>Agentic Engineering builds on decades of product, software, architecture, security, testing, risk management, and iterative delivery practice.</p></div>
+        <div class="grid four">
+          <div class="card"><h3>Stable intent</h3><p class="muted">Approved Contract targets do not drift with implementation convenience.</p></div>
+          <div class="card"><h3>Architecture-aware planning</h3><p class="muted">Work is decomposed against the actual system, decisions, interfaces, and dependencies.</p></div>
+          <div class="card"><h3>Governed execution</h3><p class="muted">Agents adapt locally without quietly gaining new authority.</p></div>
+          <div class="card"><h3>Independent evidence</h3><p class="muted">The doer does not control the judge or rewrite Proof.</p></div>
         </div>
       </div>
     </section>
