@@ -43,12 +43,15 @@ The learning layers are intentionally different depths. Do not normalize them in
 ## Navigation
 
 - Sticky global header, not a permanent scrolling table of contents.
-- Desktop primary navigation and compact mobile menu.
-- Collapsible **Journey map** on detailed pages.
-- Stable Previous / Next controls.
-- Left/right arrows or PageUp/PageDown navigate the journey.
+- Each desktop learning-path label has a compact dropdown exposing the pages within that path; selecting the label itself opens the path landing page.
+- Detailed journey pages keep compact **Previous / Next topic controls in the top bar** so navigation remains available without scrolling to the page bottom.
+- Compact mobile navigation exposes the same learning-path/topic structure.
+- Collapsible **Journey map** remains available inside detailed pages as a second navigation surface.
+- Bottom Previous / Next cards communicate the reading sequence and may differ from the top topic controls in Go Deeper.
+- Left/right arrows or PageUp/PageDown navigate topics, matching the top Previous / Next controls.
 - `H` returns Home.
 - `/` opens search.
+- `Esc` closes open desktop navigation dropdowns.
 - Skip-to-content link for keyboard users.
 
 ## Content model
@@ -86,15 +89,15 @@ The page has two complementary tracks:
 1. **How it works** — Purpose → How it works → Inputs/outputs → Interactions → Access/authority/enforcement → Human knowledge, skills, and abilities (KSAs) → Agent support → Failure modes → Implementation options.
 2. **How we work** — practical Human Owner + AI operating guidance: dialogue/decision patterns, sequencing, review, escalation, evidence, checklists, and training/practice.
 
-Desktop pages support three reading modes:
+Deep-reference reading modes appear in this order:
 
-- **Split View** — independently scrolling How it works / How we work panes.
-- **How it works** — full-width mechanics reference.
-- **How we work** — full-width operating/training reference.
+1. **How it works** — full-width mechanics reference and the normal starting point for a topic.
+2. **How we work** — full-width operating/training reference.
+3. **Split View** — independently scrolling How it works / How we work panes on desktop; stacked on narrow screens.
 
-Split View is the default because it reinforces the relationship between mechanism and practice. The selected mode may persist between pages. On narrow screens, Split View becomes a stacked reading flow rather than compressed columns.
+The bottom navigation follows the instructional sequence. At the end of **How it works**, **Next** opens **How we work for the same topic**. At the end of **How we work**, **Next** advances to the next topic and returns to How it works. Split View is an alternate reference mode, not the first step in the teaching sequence.
 
-Deep pages should be allowed to be long. Progressive elaboration happens by choosing the Go Deeper journey and then choosing the reading mode; it does **not** require truncating the reference itself.
+The selected mode may persist when useful, but the first-use default is **How it works**. Deep pages should be allowed to be long. Progressive elaboration happens by choosing the Go Deeper journey and then choosing the reading mode; it does **not** require truncating the reference itself.
 
 ## Standing principles
 

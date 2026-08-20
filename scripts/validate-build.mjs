@@ -57,6 +57,20 @@ for (const file of htmlFiles) {
   }
 }
 
+// Detailed journey pages must preserve the established global navigation model:
+// section dropdowns in the sticky header plus always-available previous/next topic controls.
+for (const [section, slugs] of [['start', start], ['explore', explore], ['deep', deep]]) {
+  for (const slug of slugs) {
+    const path = join(root, `${section}/${slug}.html`);
+    if (!existsSync(path)) continue;
+    const html = readFileSync(path, 'utf8');
+    if (!html.includes('nav-dropdown-menu')) errors.push(`${section}/${slug}.html: missing top section dropdown navigation`);
+    if (!html.includes('top-page-controls') || !html.includes('data-top-prev') || !html.includes('data-top-next')) {
+      errors.push(`${section}/${slug}.html: missing top previous/next topic controls`);
+    }
+  }
+}
+
 // Go Deeper is intentionally the full reference layer. Protect against future
 // migrations accidentally collapsing the pages back into Explore-level summaries.
 for (const slug of deep) {
@@ -69,6 +83,18 @@ for (const slug of deep) {
   if (!html.includes('data-deep-mode')) errors.push(`deep/${slug}.html: missing deep reading-mode support`);
   const h3Count = (html.match(/<h3/g) || []).length;
   if (h3Count < 10) errors.push(`deep/${slug}.html: reference depth appears too shallow (${h3Count} h3 sections; expected at least 10)`);
+
+  const how = html.indexOf('data-mode="how"');
+  const work = html.indexOf('data-mode="work"');
+  const split = html.indexOf('data-mode="split"');
+  if (!(how >= 0 && work > how && split > work)) {
+    errors.push(`deep/${slug}.html: reading modes must be ordered How it works → How we work → Split View`);
+  }
+  if (!html.includes('data-deep-mode="how"')) errors.push(`deep/${slug}.html: How it works must be the initial deep reading mode`);
+  if (!html.includes('data-set-deep-mode="work"') || !html.includes('<strong>How we work</strong>')) {
+    errors.push(`deep/${slug}.html: bottom navigation must advance How it works → How we work before the next topic`);
+  }
+  if (!html.includes('deep-topic-next')) errors.push(`deep/${slug}.html: missing next-topic control after How we work / Split View`);
 }
 
 const deepLanding = existsSync(join(root,'deep/index.html')) ? readFileSync(join(root,'deep/index.html'),'utf8') : '';
@@ -90,4 +116,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Validated ${htmlFiles.length} HTML pages, ${expected.length} required outputs, deep-reference structure, metadata, crawler files, and local links.`);
+console.log(`Validated ${htmlFiles.length} HTML pages, ${expected.length} required outputs, navigation, deep-reference sequence, metadata, crawler files, and local links.`);

@@ -17,7 +17,7 @@ This repository contains the **Agentic Engineering Field Guide**, the public lea
 - Preserve the learning hierarchy: Home → Start Here → Explore the System → Go Deeper → Learn by Doing.
 - Preserve the intentional difference in depth among those layers; do not normalize them into similarly shallow pages.
 - **Go Deeper is the full reference layer. Never collapse a Go Deeper page into an Explore-level summary during migration, redesign, or refactoring.**
-- Every Go Deeper breakout must preserve both tracks: **How it works** (full system mechanics) and **How we work** (practical Human Owner + AI operating/training guidance), with Split View available on desktop.
+- Every Go Deeper breakout must preserve both tracks: **How it works** (full system mechanics) and **How we work** (practical Human Owner + AI operating/training guidance), with Split View available as the third reading option.
 - Never require understanding the whole architecture before explaining the current value/question.
 - Use progressive elaboration; keep the first layer concise and expose optional depth deliberately. Choosing Go Deeper is itself a request for depth, so do not truncate the reference after the learner has chosen it.
 - Distinguish formal standards/frameworks, established practices, emerging protocols, and AE/local patterns.
@@ -42,11 +42,14 @@ This repository contains the **Agentic Engineering Field Guide**, the public lea
 
 - Use Astro/MDX and shared components instead of duplicating page chrome.
 - Preserve stable public URLs in `src/data/navigation.ts` unless a deliberate migration decision changes them.
+- Preserve the sticky-header navigation contract: desktop learning-path dropdowns plus Previous / Next topic controls on detailed pages. Do not remove those controls during visual redesign.
 - Important content must exist in prerendered HTML; do not make core meaning depend on client-side JavaScript.
 - Use `InfoTip.astro` selectively for second-layer explanations.
 - Keep pages usable on narrow screens and with reduced motion.
 - Keep search/discoverability metadata truthful and aligned with visible content.
-- For Go Deeper, maintain the three reading modes implemented by `GuideLayout.astro` / `deep.css`: Split View, How it works, How we work. Split panes should scroll independently on desktop and stack readably on narrow screens.
+- For Go Deeper, maintain the reading modes implemented by `GuideLayout.astro` / `deep.css` in this order: **How it works → How we work → Split View**. The first-use default is How it works.
+- The bottom Go Deeper navigation is instructional: **Next from How it works opens How we work for the same topic; Next from How we work advances to the next topic and returns to How it works.** Top Previous / Next controls remain topic navigation.
+- Split panes should scroll independently on desktop and stack readably on narrow screens.
 
 ## Before merge
 

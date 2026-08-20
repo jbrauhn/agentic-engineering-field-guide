@@ -14,9 +14,20 @@ const progress = index >= 0 ? ((index + 1) / pages.length) * 100 : 0;
 const landing = sectionMeta[section].landing;
 const keywords = frontmatter.keywords || ['Agentic Engineering', sectionMeta[section].label];
 const isDeep = section === 'deep';
+const previousControl = previous
+  ? { href: sitePath(previous.path), title: previous.title }
+  : { href: sitePath(landing), title: `${sectionMeta[section].label} overview` };
+const nextControl = next
+  ? { href: sitePath(next.path), title: next.title }
+  : { href: sitePath('/'), title: 'Choose another learning path' };
+const pageNavigation = {
+  previous: previousControl,
+  next: nextControl,
+  counter: `${index + 1} / ${pages.length}`
+};
 ---
-<BaseLayout title={frontmatter.title} description={frontmatter.description} section={section as SectionId} type="article" keywords={keywords}>
-  <main id="main-content">
+<BaseLayout title={frontmatter.title} description={frontmatter.description} section={section as SectionId} type="article" keywords={keywords} pageNavigation={pageNavigation}>
+  <main id="main-content" class:list={{ 'deep-guide': isDeep }} data-deep-mode={isDeep ? 'how' : undefined}>
     <header class="article-hero shell">
       <nav class="breadcrumbs" aria-label="Breadcrumb" data-pagefind-ignore>
         <a href={sitePath('/')}>Field Guide</a><span aria-hidden="true">/</span><a href={sitePath(landing)}>{sectionMeta[section].label}</a>
@@ -46,35 +57,40 @@ const isDeep = section === 'deep';
       <div class="deep-modebar" data-pagefind-ignore aria-label="Deep reference reading mode">
         <span class="mode-label">Reading mode</span>
         <div class="deep-mode-buttons" role="group" aria-label="Choose deep reference view">
-          <button class="deep-mode-button" type="button" data-mode="split" aria-pressed="true">Split View</button>
-          <button class="deep-mode-button" type="button" data-mode="how" aria-pressed="false">How it works</button>
+          <button class="deep-mode-button" type="button" data-mode="how" aria-pressed="true">How it works</button>
           <button class="deep-mode-button" type="button" data-mode="work" aria-pressed="false">How we work</button>
+          <button class="deep-mode-button" type="button" data-mode="split" aria-pressed="false">Split View</button>
         </div>
       </div>
     )}
-    <article class:list={['prose','shell',{'deep-article':isDeep}]} data-pagefind-body data-deep-mode={isDeep ? 'split' : undefined}>
+    <article class:list={['prose','shell',{'deep-article':isDeep}]} data-pagefind-body data-deep-mode={isDeep ? 'how' : undefined}>
       <slot />
     </article>
-    <nav class="page-nav shell" aria-label="Page navigation" data-pagefind-ignore>
-      {previous ? (
-        <a class="page-nav-card prev" href={sitePath(previous.path)} data-prev-link>
-          <span>← Previous</span><strong>{previous.title}</strong>
+    {isDeep ? (
+      <nav class="page-nav shell deep-page-nav" aria-label="Deep reference navigation" data-pagefind-ignore>
+        <a class="page-nav-card prev deep-topic-prev" href={previousControl.href} data-prev-link>
+          <span>← Previous topic</span><strong>{previousControl.title}</strong>
         </a>
-      ) : (
-        <a class="page-nav-card prev" href={sitePath(landing)} data-prev-link>
-          <span>← {sectionMeta[section].label}</span><strong>Journey overview</strong>
+        <button class="page-nav-card prev deep-mode-prev" type="button" data-set-deep-mode="how">
+          <span>← Previous</span><strong>How it works</strong>
+        </button>
+        <button class="page-nav-card next deep-mode-next" type="button" data-set-deep-mode="work">
+          <span>Next →</span><strong>How we work</strong>
+        </button>
+        <a class="page-nav-card next deep-topic-next" href={nextControl.href} data-next-link>
+          <span>{next ? 'Next topic →' : 'Continue →'}</span><strong>{nextControl.title}</strong>
         </a>
-      )}
-      {next ? (
-        <a class="page-nav-card next" href={sitePath(next.path)} data-next-link>
-          <span>Next →</span><strong>{next.title}</strong>
+      </nav>
+    ) : (
+      <nav class="page-nav shell" aria-label="Page navigation" data-pagefind-ignore>
+        <a class="page-nav-card prev" href={previousControl.href} data-prev-link>
+          <span>{previous ? '← Previous' : `← ${sectionMeta[section].label}`}</span><strong>{previousControl.title}</strong>
         </a>
-      ) : (
-        <a class="page-nav-card next" href={sitePath('/')} data-next-link>
-          <span>Continue →</span><strong>Choose another path</strong>
+        <a class="page-nav-card next" href={nextControl.href} data-next-link>
+          <span>{next ? 'Next →' : 'Continue →'}</span><strong>{nextControl.title}</strong>
         </a>
-      )}
-    </nav>
+      </nav>
+    )}
   </main>
   <script>
     document.addEventListener('keydown', (event) => {
@@ -82,8 +98,8 @@ const isDeep = section === 'deep';
       const target = event.target;
       const typing = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement || target?.isContentEditable;
       if (typing) return;
-      const previous = document.querySelector('[data-prev-link]');
-      const next = document.querySelector('[data-next-link]');
+      const previous = document.querySelector('[data-top-prev]');
+      const next = document.querySelector('[data-top-next]');
       if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
         event.preventDefault();
         if (previous instanceof HTMLAnchorElement) location.href = previous.href;
@@ -98,20 +114,38 @@ const isDeep = section === 'deep';
       }
     });
 
+    const deepGuide = document.querySelector('.deep-guide');
     const deepArticle = document.querySelector('.deep-article');
     const deepButtons = Array.from(document.querySelectorAll('.deep-mode-button'));
-    if (deepArticle instanceof HTMLElement && deepButtons.length) {
-      const stored = localStorage.getItem('ae-deep-reading-mode');
-      const initial = stored === 'how' || stored === 'work' || stored === 'split' ? stored : 'split';
-      const setMode = (mode) => {
+    if (deepGuide instanceof HTMLElement && deepArticle instanceof HTMLElement && deepButtons.length) {
+      const storageKey = 'ae-deep-reading-mode-v2';
+      const stored = localStorage.getItem(storageKey);
+      const initial = stored === 'how' || stored === 'work' || stored === 'split' ? stored : 'how';
+      const setMode = (mode, scrollToTop = false) => {
+        deepGuide.dataset.deepMode = mode;
         deepArticle.dataset.deepMode = mode;
         deepButtons.forEach((button) => {
           if (button instanceof HTMLButtonElement) button.setAttribute('aria-pressed', button.dataset.mode === mode ? 'true' : 'false');
         });
-        localStorage.setItem('ae-deep-reading-mode', mode);
+        localStorage.setItem(storageKey, mode);
+        if (scrollToTop) {
+          const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          deepArticle.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+        }
       };
       setMode(initial);
-      deepButtons.forEach((button) => button.addEventListener('click', () => setMode(button.dataset.mode || 'split')));
+      deepButtons.forEach((button) => button.addEventListener('click', () => setMode(button.dataset.mode || 'how')));
+      document.querySelectorAll('[data-set-deep-mode]').forEach((control) => {
+        control.addEventListener('click', () => {
+          if (control instanceof HTMLElement) setMode(control.dataset.setDeepMode || 'how', true);
+        });
+      });
+      const topicNext = document.querySelector('.deep-topic-next');
+      if (topicNext instanceof HTMLAnchorElement) {
+        topicNext.addEventListener('click', () => {
+          if (deepArticle.dataset.deepMode === 'work') localStorage.setItem(storageKey, 'how');
+        });
+      }
     }
   </script>
 </BaseLayout>
