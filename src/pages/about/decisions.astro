@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DecisionRegister from '../../content/decision-register-v1.md';
+import { sitePath } from '../../data/navigation';
+---
+<BaseLayout title="Decision Register" description="The living record of consequential Agentic Engineering decisions, working rules, candidate product directions, and explicit experiments." section="home" type="article" keywords={['Agentic Engineering decisions','Decision Register','ADR','Agentic Engineering experiments']}>
+  <main id="main-content" data-pagefind-body>
+    <header class="landing-hero shell">
+      <p class="kicker">About & Evolution · Why the system is the way it is</p>
+      <h1>Decision Register</h1>
+      <p class="lede">Agentic Engineering evolves through explicit decisions rather than invisible drift. This register preserves the current reasoning baseline, including adopted rules, candidates, provisional ideas, and open experiments.</p>
+    </header>
+    <section class="shell section">
+      <div class="grid four">
+        <div class="card green-line"><span class="pill green">64</span><h3>Adopted</h3><p class="muted">Current system/design decisions unless explicitly superseded.</p></div>
+        <div class="card orange-line"><span class="pill orange">7</span><h3>Open experiments</h3><p class="muted">Intentionally unresolved. Evidence should decide.</p></div>
+        <div class="card purple-line"><span class="pill purple">9</span><h3>Candidates</h3><p class="muted">Three design candidates plus six candidate product directions.</p></div>
+        <div class="card blue-line"><span class="pill blue">1</span><h3>Provisional</h3><p class="muted">Useful current model still being validated through use.</p></div>
+      </div>
+
+      <div class="callout good"><strong>Change should be easy to propose and impossible to hide.</strong> When a consequential decision changes, preserve the old record and supersede it explicitly rather than rewriting history.</div>
+
+      <p class="muted"><strong>Current published baseline:</strong> Agentic Engineering Decision Register v1 · generated 2026-08-20 · 81 records. This Field Guide publication should move forward with the canonical register as AE evolves.</p>
+
+      <a class="deep-link" href={sitePath('/about/experiments.html')}><strong>Experiments & Learnings →</strong> See the unresolved questions and how conclusions are recorded.</a>
+
+      <div class="decision-register">
+        <DecisionRegister />
+      </div>
+    </section>
+  </main>
+</BaseLayout>
