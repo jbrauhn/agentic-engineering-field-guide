@@ -1,0 +1,30 @@
+.info-tip{position:relative;display:inline-block;vertical-align:middle}
+.info-tip[open]{z-index:120}
+
+/* Progressive-elaboration tooltips must be able to escape visual cards/panes.
+   Several shared containers intentionally clip decorative content, so any
+   container hosting an InfoTip opts back into visible overflow. */
+.card:has(.info-tip),
+.pane:has(.info-tip),
+.step:has(.info-tip),
+.callout:has(.info-tip){overflow:visible!important}
+
+.card:has(.info-tip[open]),
+.pane:has(.info-tip[open]),
+.step:has(.info-tip[open]),
+.callout:has(.info-tip[open]){position:relative;z-index:80}
+
+.info-tip .tip-panel{
+  z-index:140;
+  width:min(360px,calc(100vw - 28px));
+  max-width:calc(100vw - 28px);
+}
+
+@media(max-width:560px){
+  .info-tip .tip-panel{
+    left:auto;
+    right:-12px;
+    transform:none;
+    width:min(320px,calc(100vw - 28px));
+  }
+}
