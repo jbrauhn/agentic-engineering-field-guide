@@ -38,6 +38,7 @@ const fullTitle = title === 'Agentic Engineering Field Guide' ? title : `${title
 const licenseUrl = 'https://creativecommons.org/licenses/by/4.0/';
 const sourceUrl = 'https://github.com/jbrauhn/agentic-engineering-field-guide';
 const primarySections = ['start', 'explore', 'deep', 'practice'] as SectionId[];
+const aboutActive = Astro.url.pathname.includes('/about');
 const schema = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -100,10 +101,30 @@ const schema = {
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header" data-pagefind-ignore>
       <div class="shell nav-shell">
-        <a class="brand" href={sitePath('/')} aria-label="Agentic Engineering Field Guide home">
-          <span class="brand-mark">AE</span>
-          <span class="brand-copy"><strong>Agentic Engineering</strong><small>Field Guide</small></span>
-        </a>
+        <div class="brand-group">
+          <a class="brand" href={sitePath('/')} aria-label="Agentic Engineering Field Guide home">
+            <span class="brand-mark">AE</span>
+            <span class="brand-copy"><strong>Agentic Engineering</strong><small>Field Guide</small></span>
+          </a>
+          <details class:list={['brand-info','nav-dropdown',{active:aboutActive}]}>
+            <summary aria-label="Open About and Evolution" title="About & Evolution">▾</summary>
+            <div class="nav-dropdown-menu brand-info-menu">
+              <a class="menu-overview" href={sitePath('/about.html')} aria-current={Astro.url.pathname.endsWith('/about.html') ? 'page' : undefined}>
+                About & Evolution<small>Purpose, provenance, licensing, and how this living guide changes.</small>
+              </a>
+              <a href={sitePath('/about/system-summary.html')} aria-current={Astro.url.pathname.endsWith('/about/system-summary.html') ? 'page' : undefined}>
+                AE System Summary<small>What it is, highest-level flow, capabilities, and portability.</small>
+              </a>
+              <a href={sitePath('/about/decisions.html')} aria-current={Astro.url.pathname.endsWith('/about/decisions.html') ? 'page' : undefined}>
+                Decision Register<small>The decisions and reasoning behind the system.</small>
+              </a>
+              <a href={sitePath('/about/experiments.html')} aria-current={Astro.url.pathname.endsWith('/about/experiments.html') ? 'page' : undefined}>
+                Experiments & Learnings<small>Open questions, evidence, conclusions, and updates.</small>
+              </a>
+              <a href={sourceUrl}>Field Guide source<small>Branches, pull requests, and public change history.</small></a>
+            </div>
+          </details>
+        </div>
         <nav class="desktop-nav" aria-label="Primary navigation">
           {primarySections.map((id) => {
             const topicPages = id === 'practice' ? [] : journeys[id];
@@ -139,6 +160,15 @@ const schema = {
           <details class="mobile-menu">
             <summary aria-label="Open navigation">Menu</summary>
             <nav aria-label="Mobile navigation">
+              <details class="mobile-section" open={aboutActive}>
+                <summary>About & Evolution</summary>
+                <div class="mobile-section-links">
+                  <a class="mobile-overview" href={sitePath('/about.html')}>About & Evolution overview</a>
+                  <a href={sitePath('/about/system-summary.html')}>AE System Summary</a>
+                  <a href={sitePath('/about/decisions.html')}>Decision Register</a>
+                  <a href={sitePath('/about/experiments.html')}>Experiments & Learnings</a>
+                </div>
+              </details>
               {primarySections.map((id) => {
                 const topicPages = id === 'practice' ? [] : journeys[id];
                 return (
@@ -151,7 +181,6 @@ const schema = {
                   </details>
                 );
               })}
-              <a href={sitePath('/about.html')}>About</a>
             </nav>
           </details>
         </div>
@@ -165,7 +194,8 @@ const schema = {
           <p>AI changes the scale of engineering—not the need for engineering discipline.</p>
         </div>
         <nav aria-label="Footer navigation">
-          <a href={sitePath('/about.html')}>About & licensing</a>
+          <a href={sitePath('/about.html')}>About & Evolution</a>
+          <a href={sitePath('/about/decisions.html')}>Decision Register</a>
           <a href={sourceUrl}>GitHub source</a>
           <a href={sitePath('/llms.txt')}>AI-readable guide map</a>
         </nav>

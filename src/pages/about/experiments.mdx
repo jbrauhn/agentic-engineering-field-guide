@@ -1,0 +1,73 @@
+---
+layout: ../../layouts/BaseLayout.astro
+title: Experiments & Learnings
+description: "The living Agentic Engineering experiment ledger: open questions, candidate directions, evidence, conclusions, and changes to the system."
+section: home
+type: article
+keywords:
+  - Agentic Engineering experiments
+  - AI engineering metrics
+  - Planning Method experiment
+  - model placement
+  - context engineering
+---
+
+<main id="main-content" data-pagefind-body>
+<header class="landing-hero shell">
+<p class="kicker">About & Evolution · Learn from use</p>
+<h1>Experiments & Learnings</h1>
+<p class="lede">Some parts of Agentic Engineering are deliberately unsettled. We would rather measure what works than turn preferences into doctrine. This page keeps the open questions visible and records what changes when evidence produces a conclusion.</p>
+</header>
+
+<section class="shell section">
+<div class="callout good"><strong>The point of an experiment is not the experiment.</strong> A completed experiment should change a recommendation, a Decision Record, an implementation option, or our confidence that no change is needed.</div>
+
+<h2>How conclusions are recorded</h2>
+<div class="grid four">
+<div class="card"><span class="pill blue">1</span><h3>Hypothesis</h3><p class="muted">What do we believe might be better, and under what task/risk conditions?</p></div>
+<div class="card"><span class="pill teal">2</span><h3>Evidence</h3><p class="muted">Quality, elapsed time, human effort, model/tool cost, retries, rework, defects, and relevant context.</p></div>
+<div class="card"><span class="pill gold">3</span><h3>Conclusion</h3><p class="muted">What the evidence actually supports—including uncertainty and scope limits.</p></div>
+<div class="card"><span class="pill green">4</span><h3>System update</h3><p class="muted">Update the DR, guidance, baseline, implementation option, or recommendation. Preserve the prior state.</p></div>
+</div>
+
+<h2>Open experiments</h2>
+<p>These seven questions are explicitly marked <strong>Open Experiment</strong> in Decision Register v1.</p>
+<div class="grid two">
+<div class="card orange-line"><span class="pill orange">DR-030 · Open Experiment</span><h3>Planning methods are intentionally experimental</h3><p>Teams should test methods against work type, complexity/risk, quality, elapsed time, AI/tool cost, human effort, retries, rework, and downstream defects.</p><p class="muted"><strong>What evidence should decide:</strong> System memory should improve future Planning Method recommendations.</p></div>
+<div class="card orange-line"><span class="pill orange">DR-047 · Open Experiment</span><h3>Memory stack is intentionally composable</h3><p>Candidate mechanisms include instruction files, LLM Wiki, workflow state, architecture graph, session memory, compaction, structured handoffs, just-in-time retrieval, and fresh-agent relays.</p><p class="muted"><strong>What evidence should decide:</strong> Measure which combinations improve continuity, quality, cost, and speed.</p></div>
+<div class="card orange-line"><span class="pill orange">DR-049 · Open Experiment</span><h3>Model placement is task- and phase-specific</h3><p>Do not send every task to the strongest frontier model by default.</p><p class="muted"><strong>What evidence should decide:</strong> Record task type, context strategy, model used, cost, quality, retries, and rework to improve routing decisions.</p></div>
+<div class="card orange-line"><span class="pill orange">DR-053 · Open Experiment</span><h3>Whether Execution Loop needs its own reusable skill remains open</h3><p>Current working position: Contract + reviewed Plan + runtime rails may be sufficient.</p><p class="muted"><strong>What evidence should decide:</strong> Validate through live use.</p></div>
+<div class="card orange-line"><span class="pill orange">DR-102 · Open Experiment</span><h3>Compare governed AE against lighter baselines</h3><p>Use matched work where practical to test whether Contract/Plan/Proof controls justify their overhead.</p><p class="muted"><strong>What evidence should decide:</strong> Do not assume heavy wins.</p></div>
+<div class="card orange-line"><span class="pill orange">DR-103 · Open Experiment</span><h3>High-capability model placement should be tested</h3><p>Establish a baseline using practical budget/mid-tier models, then test whether high-capability models earlier in Planning reduce rework, elapsed time, and total cost enough to justify unit cost.</p><p class="muted"><strong>What evidence should decide:</strong> Placement may matter more than 'best model everywhere'.</p></div>
+<div class="card orange-line"><span class="pill orange">DR-104 · Open Experiment</span><h3>ASD-STE100-style technical explanation is experimental</h3><p>Compare constrained vs unconstrained explanations for clarity, nuance, and reasoning.</p><p class="muted"><strong>What evidence should decide:</strong> Do not make it a system requirement until evidence supports it.</p></div>
+</div>
+
+<h2>Provisional model</h2>
+<div class="grid two">
+<div class="card blue-line"><span class="pill blue">DR-100 · Provisional</span><h3>Validated Increment is the provisional unit of outcome measurement</h3><p>A bounded deliverable passes Contract Proof and is accepted.</p><p class="muted">May be feature, component, release, or full small application; validate terminology through live use.</p></div>
+</div>
+
+<h2>Candidate directions</h2>
+<p>Candidates are visible because a favored direction is not the same thing as an adopted rule. Product directions should be validated through real use before they become system obligations.</p>
+<div class="grid two">
+<div class="card purple-line"><span class="pill purple">DR-044 · Candidate</span><h3>Use concise agent.md-style standing operational instructions</h3><p>agent.md can define role, workflow expectations, tool behavior, quality, and escalation while pointing into deeper sources of truth.</p><p class="muted">It cannot override Contract, authority, or Proof.</p></div>
+<div class="card purple-line"><span class="pill purple">DR-045 · Candidate</span><h3>Use soul.md for local agent personality/interaction behavior</h3><p>soul.md is a house convention to shape voice, personality, and interaction style for system personas.</p><p class="muted">It cannot override Contract, authority, Proof, or enforcement.</p></div>
+<div class="card purple-line"><span class="pill purple">DR-046 · Candidate</span><h3>Use an agent-accessible LLM Wiki / structured knowledge base</h3><p>Store canonical architecture, standards, decisions, lessons, references, product knowledge, and source pointers outside active agent context.</p><p class="muted">Exact implementation remains open.</p></div>
+<div class="card purple-line"><span class="pill purple">DR-130 · Candidate Product Direction</span><h3>Design the portal around the AE operating loop</h3><p>The portal should make Loop Context → Contract → Planning → Review → Execution → Validation → outcome/iteration visible and navigable.</p><p class="muted">The user should never infer current lifecycle position from a chat transcript.</p></div>
+<div class="card purple-line"><span class="pill purple">DR-131 · Candidate Product Direction</span><h3>Artifacts are first-class visual objects with state</h3><p>Show completion, in-progress, changed/impact-review, blocked/authority-needed, proposed/awaiting-decision, and superseded states.</p><p class="muted">Examples include Contract parts, ADRs, C4 views, Planning Depth/Method, tasks, tests/evidence, handoffs, Validation and experiment records.</p></div>
+<div class="card purple-line"><span class="pill purple">DR-132 · Candidate Product Direction</span><h3>Portal interaction should resemble a shared whiteboard</h3><p>Support voice conversation, IG-style visual presentation, interactive/selectable architecture and artifact elements, and human/AI highlighting of the exact object under discussion.</p><p class="muted">The human and AI should be able to reason against the same visible system.</p></div>
+<div class="card purple-line"><span class="pill purple">DR-133 · Candidate Product Direction</span><h3>Multiple AI personas share governed state</h3><p>Possible personas include Contract facilitator, planner/architect, independent reviewer, coder, checker, validator, knowledge curator, tutor, and security/risk advisor.</p><p class="muted">Persona changes must not fragment project memory.</p></div>
+<div class="card purple-line"><span class="pill purple">DR-134 · Candidate Product Direction</span><h3>Learning and operating interfaces should reinforce one another</h3><p>The same progressive-elaboration content should support onboarding, contextual help, and eventually Learn by Doing inside the real portal workflow.</p><p class="muted">The method should become easier to use because the UI carries the rigor.</p></div>
+<div class="card purple-line"><span class="pill purple">DR-135 · Candidate Product Direction</span><h3>Planning selectors should become interactive portal controls</h3><p>Planning Depth and Planning Method are mandatory underlying fields even if shown as dropdowns/cards with information tooltips.</p><p class="muted">Future recommendations should incorporate team/system experiment history.</p></div>
+<div class="card purple-line"><span class="pill purple">Recent product direction</span><h3>Sketch-to-official-diagram copilot</h3><p>Let a human communicate architecture by talking, drawing on a tablet, or photographing paper/whiteboard sketches. AI translates the sketch into a governed diagram-as-code representation, identifies missing information for the selected standard/viewpoint, and helps the human complete it conversationally.</p><p class="muted"><strong>Success condition:</strong> this becomes the easiest way to create and maintain a professional engineering diagram. PlantUML is an initial candidate output, not yet a universal AE requirement.</p><a href="https://github.com/jbrauhn/agentic-engineering-system/issues/1">See the recorded product idea →</a></div>
+</div>
+
+<h2>Concluded experiments</h2>
+<div class="callout"><strong>No experiment has been promoted to a final conclusion in the published v1 register yet.</strong> When one is, this section should record the hypothesis, evidence, conclusion, decision change, effective date/version, and downstream guidance that changed.</div>
+
+<h2>Why this matters</h2>
+<p>Agentic systems make it easy to encode a preference and then scale it everywhere. The experiment ledger is a counterweight: important choices such as Planning Method, context strategy, model placement, and orchestration complexity should improve from measured outcomes rather than fashion.</p>
+
+<a class="deep-link" href="/agentic-engineering-field-guide/about/decisions.html"><strong>Decision Register →</strong> See the full reasoning baseline and statuses.</a>
+</section>
+</main>

@@ -37,17 +37,31 @@ Do not turn every acronym or sentence into a tooltip.
 - **Explore the System** — philosophy, failure prevented, core principles, and interactions.
 - **Go Deeper** — the full detailed Human + AI engineering reference.
 - **Learn by Doing** — guided practice tied to the real AE System.
+- **About & Evolution** — the living system summary, Decision Register, experiment/learning ledger, provenance, licensing, and source history.
 
 Standing rule: **Never make someone understand the whole architecture before they can understand the value.**
 
 The learning layers are intentionally different depths. Do not normalize them into equally sized pages. In particular, **Go Deeper must not be reduced to Explore-level summaries during redesign, migration, or refactoring.**
 
+### About & Evolution is a living record
+
+The Field Guide should explain not only what AE currently recommends, but also enough of the reasoning and learning history for readers to understand why.
+
+Maintain three linked surfaces:
+
+1. **AE System Summary** — concise current state: what AE is/is not, lifecycle, major design logic, capability model, and portability model.
+2. **Decision Register** — consequential decisions with status and explicit supersession rather than silent rewriting.
+3. **Experiments & Learnings** — open hypotheses/candidates plus evidence, conclusions, and what changed when an experiment resolves.
+
+When the canonical AE System materially changes, update these surfaces together where relevant. The summary shows the current state; the register preserves decision history; the experiment ledger preserves how evidence changed our confidence or guidance.
+
 ## Navigation
 
 - Sticky global header, not a permanent scrolling table of contents.
+- The **Agentic Engineering / Field Guide** brand remains a direct Home link and has a compact adjacent dropdown for **About & Evolution**, System Summary, Decision Register, Experiments & Learnings, and source history.
 - Each desktop learning-path label has a compact dropdown exposing the pages within that path; selecting the label itself opens the path landing page.
 - Detailed journey pages keep compact **Previous / Next topic controls in the top bar** so navigation remains available without scrolling to the page bottom.
-- Compact mobile navigation exposes the same learning-path/topic structure.
+- Compact mobile navigation exposes the learning-path/topic structure; About routes through the About & Evolution hub.
 - Collapsible **Journey map** remains available inside detailed pages as a second navigation surface.
 - Bottom Previous / Next cards communicate the reading sequence and may differ from the top topic controls in Go Deeper.
 - Left/right arrows or PageUp/PageDown navigate topics, matching the top Previous / Next controls.
@@ -68,6 +82,8 @@ Detailed learning pages are MDX documents rendered through a shared `GuideLayout
 
 The canonical journey structure lives in `src/data/navigation.ts`. Adding or moving a page should not require editing repeated navigation markup across the site.
 
+The living Decision Register source is currently published under `src/content/decision-register-v1.md` and rendered by the About & Evolution Decision Register page. When the canonical System repository becomes the authoritative home of later register versions, the Field Guide should mirror/publish that canonical state rather than fork it silently.
+
 ## Search and discoverability
 
 Search is static and client-side through Pagefind. Important content remains present in prerendered HTML so the site is useful without client-side JavaScript and remains crawlable by conventional search and AI retrieval systems.
@@ -81,6 +97,8 @@ Every meaningful page should have:
 - useful internal relationships;
 - page content in the Pagefind region;
 - stable public URL where practical.
+
+The System Summary, Decision Register, and Experiments & Learnings are especially valuable retrieval/provenance surfaces and must be listed in `llms.txt` and normal site navigation.
 
 ## Responsive behavior
 

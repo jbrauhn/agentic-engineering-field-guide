@@ -2,15 +2,33 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { sitePath } from '../data/navigation';
 ---
-<BaseLayout title="About the Field Guide" description="Purpose, scope, licensing, provenance, reuse, and public-distribution principles for the Agentic Engineering Field Guide." section="home" keywords={['Agentic Engineering','CC BY 4.0','Apache 2.0','open knowledge']}>
+<BaseLayout title="About & Evolution" description="Purpose, system summary, decision history, experiments, licensing, provenance, and public-distribution principles for the Agentic Engineering Field Guide." section="home" keywords={['Agentic Engineering','Decision Register','AI engineering experiments','CC BY 4.0','Apache 2.0','open knowledge']}>
   <main id="main-content" data-pagefind-body>
-    <header class="landing-hero shell"><p class="kicker">About · Provenance and reuse</p><h1>Built to be useful, reusable, and easy to learn from.</h1><p class="lede">The Field Guide teaches and explains the Agentic Engineering System. It is deliberately separate from the portable System itself and from any particular software product that implements it.</p></header>
+    <header class="landing-hero shell">
+      <p class="kicker">About & Evolution · The living record around the guide</p>
+      <h1>Learn the system—and see why it keeps changing.</h1>
+      <p class="lede">The Field Guide explains the Agentic Engineering System. This section preserves the concise system story, the decisions behind it, and the experiments that may change it as we learn from real use.</p>
+    </header>
+
     <section class="shell section">
       <div class="grid three">
+        <a class="card blue-line" href={sitePath('/about/system-summary.html')}><span class="pill blue">Summary</span><h3>AE System Summary</h3><p class="muted">What AE is and is not, the highest-level lifecycle, why it exists, required capabilities, and the portability model.</p></a>
+        <a class="card purple-line" href={sitePath('/about/decisions.html')}><span class="pill purple">Reasoning</span><h3>Decision Register</h3><p class="muted">The living record of adopted decisions, candidates, provisional models, and open experiments—without rewriting history.</p></a>
+        <a class="card orange-line" href={sitePath('/about/experiments.html')}><span class="pill orange">Learning</span><h3>Experiments & Learnings</h3><p class="muted">What is intentionally unsettled, what evidence should decide, and what conclusions change in the system.</p></a>
+      </div>
+
+      <div class="callout good"><strong>Why keep this public?</strong> The Guide should not only say <em>what</em> Agentic Engineering recommends. It should make the reasoning, uncertainty, changes, and learning visible enough that others can understand or challenge them.</div>
+
+      <h2>Three related things—not one repository</h2>
+      <div class="grid three">
         <div class="card blue-line"><span class="pill blue">Field Guide</span><h3>Teach and reference</h3><p class="muted">Progressive explanations, diagrams, worked examples, standards, and practical Human + AI guidance.</p></div>
-        <div class="card gold-line"><span class="pill gold">AE System</span><h3>Portable method</h3><p class="muted">The canonical operating architecture, artifacts, controls, schemas, and practices that an organization can adopt with its own tools.</p></div>
+        <div class="card gold-line"><span class="pill gold">AE System</span><h3>Portable method</h3><p class="muted">The canonical operating architecture, artifacts, controls, schemas, decisions, experiments, and practices that an organization can adopt with its own tools.</p></div>
         <div class="card purple-line"><span class="pill purple">Products</span><h3>Optional implementations</h3><p class="muted">Portals, planning tools, and other products can facilitate the System without becoming the definition of the System.</p></div>
       </div>
+
+      <h2>Living maintenance principle</h2>
+      <p>The System Summary, Decision Register, and Experiments & Learnings pages should move with the canonical AE System. When a consequential decision changes, the summary should reflect the new state, the Decision Register should preserve what changed and why, and experiment conclusions should record the evidence that justified the update.</p>
+      <div class="quote"><strong>Welcome new information; control mutation.</strong></div>
 
       <h2>Publication principle</h2>
       <div class="quote"><strong>Optimize for understanding, provenance, and reuse—not scarcity.</strong></div>
@@ -24,7 +42,8 @@ import { sitePath } from '../data/navigation';
 
       <h2>Source and change history</h2>
       <p>GitHub is the public source and version history for this Field Guide. Changes should be inspectable through branches, pull requests, automated build checks, and protected-main governance.</p>
-      <p><a class="deep-link" href="https://github.com/jbrauhn/agentic-engineering-field-guide"><strong>View the source and history on GitHub →</strong></a></p>
+      <p><a class="deep-link" href="https://github.com/jbrauhn/agentic-engineering-field-guide"><strong>View the Field Guide source and history on GitHub →</strong></a></p>
+      <p><a class="deep-link" href="https://github.com/jbrauhn/agentic-engineering-system"><strong>View the canonical AE System repository →</strong> The System repository is the long-term source for method semantics, artifacts, decisions, and implementation guidance.</a></p>
 
       <h2>Start learning</h2>
       <p><a class="deep-link" href={sitePath('/start/')}><strong>Start Here →</strong> Get the map before going deeper.</a></p>
