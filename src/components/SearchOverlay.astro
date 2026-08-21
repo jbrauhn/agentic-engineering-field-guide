@@ -14,26 +14,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div class="search-results" data-search-results></div>
 </dialog>
 <script define:vars={{ base }}>
-  // The brand remains a direct Home link. A compact adjacent disclosure turns it
-  // into the requested About & Evolution navigation surface without making the
-  // learner journeys compete with provenance/history material.
-  const brand = document.querySelector('.brand');
-  if (brand instanceof HTMLAnchorElement && !document.querySelector('.brand-info')) {
-    const details = document.createElement('details');
-    details.className = 'brand-info nav-dropdown';
-    if (location.pathname.includes('/about')) details.classList.add('active');
-    details.innerHTML = `
-      <summary aria-label="Open About and Evolution" title="About & Evolution">▾</summary>
-      <div class="nav-dropdown-menu brand-info-menu">
-        <a class="menu-overview" href="${base}/about.html">About & Evolution<small>Purpose, provenance, licensing, and how this living guide changes.</small></a>
-        <a href="${base}/about/system-summary.html">AE System Summary<small>What it is, highest-level flow, capabilities, and portability.</small></a>
-        <a href="${base}/about/decisions.html">Decision Register<small>The decisions and reasoning behind the system.</small></a>
-        <a href="${base}/about/experiments.html">Experiments & Learnings<small>Open questions, evidence, conclusions, and updates.</small></a>
-        <a href="https://github.com/jbrauhn/agentic-engineering-field-guide">Field Guide source<small>Branches, pull requests, and public change history.</small></a>
-      </div>`;
-    brand.insertAdjacentElement('afterend', details);
-  }
-
   const dialog = document.querySelector('[data-search-dialog]');
   const input = document.querySelector('[data-search-input]');
   const results = document.querySelector('[data-search-results]');
