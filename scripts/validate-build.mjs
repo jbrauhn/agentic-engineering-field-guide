@@ -66,6 +66,34 @@ if (!home.includes('brand-info-menu') || !home.includes('About & Evolution') || 
   errors.push('Global shell: missing About & Evolution brand dropdown/navigation payload.');
 }
 
+// Named AE concepts presented as learning objects must preserve progressive
+// cross-layer navigation: Why -> Explore and Technical how -> Go Deeper.
+const conceptNavigationChecks = [
+  { path: 'index.html', minimumLinks: 9, title: 'The Agentic Engineering Loop' },
+  { path: 'start/03-bridge.html', minimumLinks: 5, title: 'The Agentic Engineering Loop' },
+  { path: 'start/04-operating-model.html', minimumLinks: 6 },
+  { path: 'start/06-contract-example.html', minimumLinks: 1 },
+  { path: 'start/07-planning-example.html', minimumLinks: 1 },
+  { path: 'start/08-decomposition.html', minimumLinks: 1 }
+];
+for (const check of conceptNavigationChecks) {
+  const file = join(root, check.path);
+  if (!existsSync(file)) continue;
+  const html = readFileSync(file, 'utf8');
+  const count = (html.match(/concept-depth-links/g) || []).length;
+  if (count < check.minimumLinks) {
+    errors.push(`${check.path}: expected at least ${check.minimumLinks} paired concept-depth link groups, found ${count}.`);
+  }
+  if (check.title && !html.includes(check.title)) errors.push(`${check.path}: missing ${check.title} framing.`);
+  if (!html.includes(`${base}/explore/`) || !html.includes(`${base}/deep/`)) {
+    errors.push(`${check.path}: missing Explore / Go Deeper cross-layer destinations.`);
+  }
+}
+const operatingModel = existsSync(join(root,'start/04-operating-model.html')) ? readFileSync(join(root,'start/04-operating-model.html'),'utf8') : '';
+if (!operatingModel.includes('0 · Loop Context') || !operatingModel.includes(`${base}/explore/02-contract.html`) || !operatingModel.includes(`${base}/deep/01-contract.html`)) {
+  errors.push('start/04-operating-model.html: Loop Context / Contract must link to their Explore and Go Deeper destinations.');
+}
+
 // Detailed journey pages must preserve the established global navigation model:
 // section dropdowns in the sticky header plus always-available previous/next topic controls.
 for (const [section, slugs] of [['start', start], ['explore', explore], ['deep', deep]]) {
@@ -150,4 +178,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Validated ${htmlFiles.length} HTML pages, ${expected.length} required outputs, favicon, navigation, About & Evolution, deep-reference sequence, standards depth, metadata, crawler files, and local links.`);
+console.log(`Validated ${htmlFiles.length} HTML pages, ${expected.length} required outputs, favicon, navigation, cross-layer concept links, About & Evolution, deep-reference sequence, standards depth, metadata, crawler files, and local links.`);
