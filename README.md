@@ -11,6 +11,8 @@ A progressive public guide and reference for Agentic Engineering: how humans, AI
 - **Go Deeper** — detailed Human + AI reference for mechanics, authority, failure modes, and implementation choices.
 - **Learn by Doing** — guided practice; intentionally under construction until it can teach against the working AE System.
 
+Named AE concepts presented on Home and Start Here expose paired depth links so a learner can jump directly to **Why → Explore the System** or **Technical how → Go Deeper** without searching for the matching topic manually.
+
 ## Site architecture
 
 The Field Guide uses **Astro 7 + MDX + reusable AE design components**. It is static-first and prerendered for GitHub Pages: modern frontend architecture without requiring a server runtime.

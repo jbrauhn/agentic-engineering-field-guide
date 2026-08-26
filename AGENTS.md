@@ -11,6 +11,7 @@ This repository contains the **Agentic Engineering Field Guide**, the public lea
 - `docs/DISCOVERABILITY.md` — SEO/GEO/AEO and provenance principles.
 - `LICENSE.md` — content/code licensing boundary.
 - `src/data/navigation.ts` — canonical learning journeys and public topic URLs.
+- `src/data/concepts.ts` — canonical learner-facing cross-layer destinations for named AE concepts.
 - `src/content/decision-register-v1.md` — current published Decision Register baseline until a later canonical version supersedes it.
 
 ## Standing content rules
@@ -22,6 +23,8 @@ This repository contains the **Agentic Engineering Field Guide**, the public lea
 - Every Go Deeper breakout must preserve both tracks: **How it works** (full system mechanics) and **How we work** (practical Human Owner + AI operating/training guidance), with Split View available as the third reading option.
 - Never require understanding the whole architecture before explaining the current value/question.
 - Use progressive elaboration; keep the first layer concise and expose optional depth deliberately. Choosing Go Deeper is itself a request for depth, so do not truncate the reference after the learner has chosen it.
+- When a named AE concept is presented as a learning object on Home or Start Here—such as a loop step, card, component label, or focused example—expose its paired learning path: **Why → Explore the System** and **Technical how → Go Deeper**. Use `src/data/concepts.ts` + `ConceptDepthLinks.astro` rather than duplicating destinations. Do not turn incidental prose mentions into link clutter.
+- Explore pages should continue to point to the corresponding Go Deeper technical reference when one exists.
 - Distinguish formal standards/frameworks, established practices, emerging protocols, and AE/local patterns.
 - On standards/practices pages, explain **what the item contributes, how AE uses it, and what failure it helps prevent** before sending the reader to an outside source.
 - Expand unfamiliar acronyms on first meaningful use in a learning section.

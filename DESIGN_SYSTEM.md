@@ -43,6 +43,17 @@ Standing rule: **Never make someone understand the whole architecture before the
 
 The learning layers are intentionally different depths. Do not normalize them into equally sized pages. In particular, **Go Deeper must not be reduced to Explore-level summaries during redesign, migration, or refactoring.**
 
+### Cross-layer concept navigation
+
+When Home or Start Here presents a named AE concept as a learning object—such as a loop step, card, component label, or focused example—the learner should be able to move directly to both deeper interpretations:
+
+- **Why → Explore the System** — rationale, philosophy, failure prevented, and interactions.
+- **Technical how → Go Deeper** — mechanics, authority, interfaces, failure modes, and implementation practice.
+
+Use the shared destinations in `src/data/concepts.ts` and the `ConceptDepthLinks.astro` component so repeated concepts remain consistent as the site evolves. This rule applies to deliberate concept presentations, not every incidental word in prose; avoid turning explanatory paragraphs into link clutter.
+
+Explore pages should continue to link onward to the matching Go Deeper reference when one exists. The relationship is a progressive-learning path, not a demand to make each layer repeat the same content.
+
 ### About & Evolution is a living record
 
 The Field Guide should explain not only what AE currently recommends, but also enough of the reasoning and learning history for readers to understand why.
@@ -80,7 +91,7 @@ External links should normally be secondary references—especially on standards
 
 Detailed learning pages are MDX documents rendered through a shared `GuideLayout`. Page content owns meaning; shared components own navigation, styling, metadata, progress, and interaction.
 
-The canonical journey structure lives in `src/data/navigation.ts`. Adding or moving a page should not require editing repeated navigation markup across the site.
+The canonical journey structure lives in `src/data/navigation.ts`. Cross-layer concept destinations live in `src/data/concepts.ts`. Adding or moving a page should not require editing repeated navigation markup across the site.
 
 The living Decision Register source is currently published under `src/content/decision-register-v1.md` and rendered by the About & Evolution Decision Register page. When the canonical System repository becomes the authoritative home of later register versions, the Field Guide should mirror/publish that canonical state rather than fork it silently.
 
