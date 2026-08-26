@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ConceptDepthLinks from '../components/ConceptDepthLinks.astro';
 import { sectionMeta, sitePath } from '../data/navigation';
 ---
 <BaseLayout
@@ -46,17 +47,43 @@ import { sectionMeta, sitePath } from '../data/navigation';
     <section class="section" aria-labelledby="loop">
       <div class="shell">
         <div class="section-head">
-          <div><p class="kicker">The operating loop</p><h2 id="loop">Intent becomes evidence.</h2></div>
-          <p>The system does the heavy lifting, but it does not silently redefine success or approve its own outcome.</p>
+          <div><p class="kicker">The operating loop</p><h2 id="loop">The Agentic Engineering Loop</h2></div>
+          <p>Human-owned intent moves through architecture-aware Planning and bounded Execution to independent Validation. The system can do substantial work, but consequential judgment remains governed and explicit.</p>
         </div>
         <div class="flow" aria-label="Agentic Engineering operating loop">
-          <div class="step"><span class="pill blue">0</span><h3>Loop Context</h3><p class="muted">What kind of work is this?</p></div>
-          <div class="step"><span class="pill gold">1</span><h3>Contract</h3><p class="muted">Goal · Spec · Proof</p></div>
-          <div class="step"><span class="pill purple">2</span><h3>Planning</h3><p class="muted">Architecture-aware route</p></div>
-          <div class="step"><span class="pill teal">3</span><h3>Execution</h3><p class="muted">Bounded adaptive work</p></div>
-          <div class="step"><span class="pill green">4</span><h3>Validation</h3><p class="muted">Independent judgment</p></div>
-          <div class="step"><span class="pill orange">5</span><h3>Learn</h3><p class="muted">Capture evidence and improve</p></div>
+          <div class="step">
+            <span class="pill gold">Human Owner</span>
+            <h3>Sets intent</h3>
+            <p class="muted">Provides context and retains consequential judgment, authority, and accountability.</p>
+            <ConceptDepthLinks concept="human-owner" />
+          </div>
+          <div class="step">
+            <span class="pill gold">Contract</span>
+            <h3>Defines success</h3>
+            <p class="muted">Goal · Spec · Proof</p>
+            <ConceptDepthLinks concept="contract" />
+          </div>
+          <div class="step">
+            <span class="pill purple">Planning</span>
+            <h3>Designs the route</h3>
+            <p class="muted">Plans against the real architecture, constraints, dependencies, and required evidence.</p>
+            <ConceptDepthLinks concept="planning" />
+          </div>
+          <div class="step">
+            <span class="pill teal">Execution</span>
+            <h3>Performs bounded work</h3>
+            <p class="muted">Agents use tools, observe, retry, and adapt inside governed boundaries.</p>
+            <ConceptDepthLinks concept="execution" />
+          </div>
+          <div class="step">
+            <span class="pill green">Validation</span>
+            <h3>Determines whether it worked</h3>
+            <p class="muted">Independent judgment evaluates evidence against the approved Proof.</p>
+            <ConceptDepthLinks concept="validation" />
+          </div>
         </div>
+        <div class="quote">The system does the heavy lifting, but it does not self-approve.</div>
+        <p><a class="deep-link" href={sitePath('/start/03-bridge.html')}><strong>Start Here:</strong> walk through the Agentic Engineering Loop →</a></p>
       </div>
     </section>
 
@@ -75,10 +102,10 @@ import { sectionMeta, sitePath } from '../data/navigation';
       <div class="shell">
         <div class="section-head"><div><p class="kicker">The engineering rails</p><h2 id="rails">Speed without compounding errors.</h2></div><p>Agentic Engineering builds on decades of product, software, architecture, security, testing, risk management, and iterative delivery practice.</p></div>
         <div class="grid four">
-          <div class="card"><h3>Stable intent</h3><p class="muted">Approved Contract targets do not drift with implementation convenience.</p></div>
-          <div class="card"><h3>Architecture-aware planning</h3><p class="muted">Work is decomposed against the actual system, decisions, interfaces, and dependencies.</p></div>
-          <div class="card"><h3>Governed execution</h3><p class="muted">Agents adapt locally without quietly gaining new authority.</p></div>
-          <div class="card"><h3>Independent evidence</h3><p class="muted">The doer does not control the judge or rewrite Proof.</p></div>
+          <div class="card"><h3>Stable intent</h3><p class="muted">Approved Contract targets do not drift with implementation convenience.</p><ConceptDepthLinks concept="contract" /></div>
+          <div class="card"><h3>Architecture-aware planning</h3><p class="muted">Work is decomposed against the actual system, decisions, interfaces, and dependencies.</p><ConceptDepthLinks concept="planning" /></div>
+          <div class="card"><h3>Governed execution</h3><p class="muted">Agents adapt locally without quietly gaining new authority.</p><ConceptDepthLinks concept="execution" /></div>
+          <div class="card"><h3>Independent evidence</h3><p class="muted">The doer does not control the judge or rewrite Proof.</p><ConceptDepthLinks concept="validation" /></div>
         </div>
       </div>
     </section>
