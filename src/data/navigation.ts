@@ -33,7 +33,7 @@ export const journeys: Record<'start' | 'explore' | 'deep', GuidePage[]> = {
   start: [
     { path: '/start/01-elevator.html', title: 'The elevator pitch', short: 'Why Agentic Engineering?' },
     { path: '/start/02-ecosystem.html', title: 'The agentic ecosystem', short: 'Model, context, tools, loop, controls' },
-    { path: '/start/03-bridge.html', title: 'Where Agentic Engineering fits', short: 'From agents to an engineered lifecycle' },
+    { path: '/start/03-bridge.html', title: 'The Agentic Engineering Loop', short: 'Human intent through independent Validation' },
     { path: '/start/04-operating-model.html', title: 'How the system works', short: 'Loop Context through Validation' },
     { path: '/start/05-discipline.html', title: 'Why this is engineering', short: 'Discipline is leverage' },
     { path: '/start/06-contract-example.html', title: 'Worked Contract', short: 'Goal / Spec / Proof' },
