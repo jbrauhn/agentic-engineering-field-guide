@@ -1,21 +1,24 @@
 ---
 layout: ../../layouts/GuideLayout.astro
-title: Where Agentic Engineering fits
-description: Agentic Engineering adds a durable target, architecture-aware planning, governed execution, independent evidence, and explicit human authority around model-and-tool capability.
+title: The Agentic Engineering Loop
+description: The Agentic Engineering Loop connects human-owned intent, a durable Contract, architecture-aware Planning, bounded Execution, and independent Validation.
 section: start
-kicker: Start Here · From agents to an engineered lifecycle
+kicker: Start Here · The operating loop
 keywords:
   - Agentic Engineering lifecycle
+  - Agentic Engineering Loop
   - Contract Planning Execution Validation
 ---
-Most agent demos stop at model + tools. Agentic Engineering adds a durable target, architecture-aware planning, governed execution, independent evidence, and explicit human authority.
+import ConceptDepthLinks from '../../components/ConceptDepthLinks.astro';
+
+Agentic Engineering turns human-owned intent into independently validated outcomes through a governed operating loop.
 
 <div className="flow">
-  <div className="step"><span className="pill gold">Human Owner</span><h3>Sets intent</h3></div>
-  <div className="step"><span className="pill gold">Contract</span><h3>Defines success</h3><p className="muted">Goal / Spec / Proof</p></div>
-  <div className="step"><span className="pill purple">Planning</span><h3>Designs the route</h3></div>
-  <div className="step"><span className="pill teal">Execution</span><h3>Performs bounded work</h3></div>
-  <div className="step"><span className="pill green">Validation</span><h3>Determines whether it worked</h3></div>
+  <div className="step"><span className="pill gold">Human Owner</span><h3>Sets intent</h3><ConceptDepthLinks concept="human-owner" /></div>
+  <div className="step"><span className="pill gold">Contract</span><h3>Defines success</h3><p className="muted">Goal / Spec / Proof</p><ConceptDepthLinks concept="contract" /></div>
+  <div className="step"><span className="pill purple">Planning</span><h3>Designs the route</h3><ConceptDepthLinks concept="planning" /></div>
+  <div className="step"><span className="pill teal">Execution</span><h3>Performs bounded work</h3><ConceptDepthLinks concept="execution" /></div>
+  <div className="step"><span className="pill green">Validation</span><h3>Determines whether it worked</h3><ConceptDepthLinks concept="validation" /></div>
 </div>
 
 <div className="quote">The system does the heavy lifting, but it does not self-approve.</div>
