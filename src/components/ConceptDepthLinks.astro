@@ -1,0 +1,21 @@
+---
+import { conceptDestinations, type ConceptId } from '../data/concepts';
+import { sitePath } from '../data/navigation';
+
+interface Props {
+  concept: ConceptId;
+}
+
+const { concept } = Astro.props;
+const destination = conceptDestinations[concept];
+---
+<nav class="concept-depth-links" aria-label={`${destination.label} learning depth`} data-pagefind-ignore>
+  <a href={sitePath(destination.explore)}>
+    <span>Why</span>
+    Explore the System →
+  </a>
+  <a href={sitePath(destination.deep)}>
+    <span>Technical how</span>
+    Go Deeper →
+  </a>
+</nav>
